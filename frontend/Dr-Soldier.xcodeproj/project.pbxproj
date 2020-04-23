@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0DBB6E4C245169DB004E1BFD /* GlobalClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBB6E4B245169DB004E1BFD /* GlobalClass.swift */; };
+		591A08AB1308A48690F5F202 /* libPods-Dr-Soldier.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A07FDD3D21679BBBADA8218 /* libPods-Dr-Soldier.a */; };
 		776E2462244F04B8008CA6A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776E2461244F04B8008CA6A9 /* AppDelegate.swift */; };
 		776E2464244F04B8008CA6A9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776E2463244F04B8008CA6A9 /* SceneDelegate.swift */; };
 		776E2466244F04B8008CA6A9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776E2465244F04B8008CA6A9 /* ViewController.swift */; };
@@ -25,6 +26,8 @@
 
 /* Begin PBXFileReference section */
 		0DBB6E4B245169DB004E1BFD /* GlobalClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalClass.swift; sourceTree = "<group>"; };
+		3A07FDD3D21679BBBADA8218 /* libPods-Dr-Soldier.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Dr-Soldier.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		49570D258E2E19BB55963FD1 /* Pods-Dr-Soldier.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dr-Soldier.debug.xcconfig"; path = "Target Support Files/Pods-Dr-Soldier/Pods-Dr-Soldier.debug.xcconfig"; sourceTree = "<group>"; };
 		776E245E244F04B8008CA6A9 /* Dr-Soldier.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dr-Soldier.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		776E2461244F04B8008CA6A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		776E2463244F04B8008CA6A9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -40,6 +43,7 @@
 		776E247D244F097F008CA6A9 /* FinanceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinanceViewController.swift; sourceTree = "<group>"; };
 		776E247F244F09B6008CA6A9 /* GoalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalViewController.swift; sourceTree = "<group>"; };
 		776E2481244F09FA008CA6A9 /* BodyChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyChartViewController.swift; sourceTree = "<group>"; };
+		925F1284403E25BEC0F9A8CA /* Pods-Dr-Soldier.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dr-Soldier.release.xcconfig"; path = "Target Support Files/Pods-Dr-Soldier/Pods-Dr-Soldier.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,17 +51,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				591A08AB1308A48690F5F202 /* libPods-Dr-Soldier.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4DF1241A2F837E58272F4925 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				49570D258E2E19BB55963FD1 /* Pods-Dr-Soldier.debug.xcconfig */,
+				925F1284403E25BEC0F9A8CA /* Pods-Dr-Soldier.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		776E2455244F04B7008CA6A9 = {
 			isa = PBXGroup;
 			children = (
 				776E2460244F04B8008CA6A9 /* Dr-Soldier */,
 				776E245F244F04B8008CA6A9 /* Products */,
+				4DF1241A2F837E58272F4925 /* Pods */,
+				DDD4AE0C286B4B4A137A1E17 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -91,6 +108,14 @@
 			path = "Dr-Soldier";
 			sourceTree = "<group>";
 		};
+		DDD4AE0C286B4B4A137A1E17 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3A07FDD3D21679BBBADA8218 /* libPods-Dr-Soldier.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -98,6 +123,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 776E2472244F04BA008CA6A9 /* Build configuration list for PBXNativeTarget "Dr-Soldier" */;
 			buildPhases = (
+				8BD4EDC2E58C66D4D29F488C /* [CP] Check Pods Manifest.lock */,
 				776E245A244F04B8008CA6A9 /* Sources */,
 				776E245B244F04B8008CA6A9 /* Frameworks */,
 				776E245C244F04B8008CA6A9 /* Resources */,
@@ -156,6 +182,31 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		8BD4EDC2E58C66D4D29F488C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Dr-Soldier-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		776E245A244F04B8008CA6A9 /* Sources */ = {
@@ -314,6 +365,7 @@
 		};
 		776E2473244F04BA008CA6A9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 49570D258E2E19BB55963FD1 /* Pods-Dr-Soldier.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -331,6 +383,7 @@
 		};
 		776E2474244F04BA008CA6A9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 925F1284403E25BEC0F9A8CA /* Pods-Dr-Soldier.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
