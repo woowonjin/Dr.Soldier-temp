@@ -1,0 +1,6 @@
+module Pods_Dr_Soldier {
+  umbrella header "Pods-Dr-Soldier-umbrella.h"
+
+  export *
+  module * { export * }
+}
