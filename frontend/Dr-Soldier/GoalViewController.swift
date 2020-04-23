@@ -23,7 +23,8 @@ class GoalViewController: UIViewController {
            subNavigation.selectedSegmentIndex = 0;
            self.navigationItem.hidesBackButton = true;
            self.navigationItem.leftBarButtonItem = nil;
-           self.navigationItem.titleView = UIImageView(image: UIImage(named: "doctor3.png"))
+           let navview = Variable_Functions.init()
+           self.navigationItem.titleView = navview.navView
        }
        
        @IBAction func _changeMenu(_ sender: Any) {
