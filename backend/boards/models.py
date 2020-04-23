@@ -1,6 +1,5 @@
 from django.db import models
 from core import models as core_models
-import numpy as np
 
 
 class Board(core_models.TimeStampedModel):
