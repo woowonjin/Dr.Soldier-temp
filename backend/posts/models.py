@@ -13,7 +13,6 @@ class Post(core_models.TimeStampedModel):
     board = models.ForeignKey("boards.Board",
                               on_delete=models.CASCADE,
                               related_name="posts")
-
     is_deleted = models.BooleanField(default=False)
 
     def __str__(self):
