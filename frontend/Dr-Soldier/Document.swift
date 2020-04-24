@@ -7,3 +7,14 @@
 //
 
 import Foundation
+
+struct Document {
+    var title : String
+    var description : String
+    var created : Date
+    var writer : String
+    var thumbsUp : Int
+    var thumbsDown : Int
+    var isDeleted : Bool
+}
+

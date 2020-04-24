@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		0DBB6E4C245169DB004E1BFD /* GlobalClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBB6E4B245169DB004E1BFD /* GlobalClass.swift */; };
 		591A08AB1308A48690F5F202 /* libPods-Dr-Soldier.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A07FDD3D21679BBBADA8218 /* libPods-Dr-Soldier.a */; };
+		775A7D512451F75200B3081C /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775A7D502451F75200B3081C /* Document.swift */; };
+		775A7D532451F88A00B3081C /* DocumentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775A7D522451F88A00B3081C /* DocumentCell.swift */; };
 		776E2462244F04B8008CA6A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776E2461244F04B8008CA6A9 /* AppDelegate.swift */; };
 		776E2464244F04B8008CA6A9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776E2463244F04B8008CA6A9 /* SceneDelegate.swift */; };
 		776E2466244F04B8008CA6A9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776E2465244F04B8008CA6A9 /* ViewController.swift */; };
@@ -28,6 +30,8 @@
 		0DBB6E4B245169DB004E1BFD /* GlobalClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalClass.swift; sourceTree = "<group>"; };
 		3A07FDD3D21679BBBADA8218 /* libPods-Dr-Soldier.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Dr-Soldier.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		49570D258E2E19BB55963FD1 /* Pods-Dr-Soldier.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dr-Soldier.debug.xcconfig"; path = "Target Support Files/Pods-Dr-Soldier/Pods-Dr-Soldier.debug.xcconfig"; sourceTree = "<group>"; };
+		775A7D502451F75200B3081C /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
+		775A7D522451F88A00B3081C /* DocumentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentCell.swift; sourceTree = "<group>"; };
 		776E245E244F04B8008CA6A9 /* Dr-Soldier.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dr-Soldier.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		776E2461244F04B8008CA6A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		776E2463244F04B8008CA6A9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -64,7 +68,6 @@
 				49570D258E2E19BB55963FD1 /* Pods-Dr-Soldier.debug.xcconfig */,
 				925F1284403E25BEC0F9A8CA /* Pods-Dr-Soldier.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -99,11 +102,13 @@
 				776E2475244F08BD008CA6A9 /* InfoViewController.swift */,
 				776E2477244F08DC008CA6A9 /* CalendarViewController.swift */,
 				776E2479244F090F008CA6A9 /* CommunityViewController.swift */,
+				775A7D522451F88A00B3081C /* DocumentCell.swift */,
 				776E247B244F096D008CA6A9 /* FitnessViewController.swift */,
 				776E247D244F097F008CA6A9 /* FinanceViewController.swift */,
 				776E247F244F09B6008CA6A9 /* GoalViewController.swift */,
 				776E2481244F09FA008CA6A9 /* BodyChartViewController.swift */,
 				0DBB6E4B245169DB004E1BFD /* GlobalClass.swift */,
+				775A7D502451F75200B3081C /* Document.swift */,
 			);
 			path = "Dr-Soldier";
 			sourceTree = "<group>";
@@ -221,8 +226,10 @@
 				776E2476244F08BD008CA6A9 /* InfoViewController.swift in Sources */,
 				0DBB6E4C245169DB004E1BFD /* GlobalClass.swift in Sources */,
 				776E2480244F09B6008CA6A9 /* GoalViewController.swift in Sources */,
+				775A7D512451F75200B3081C /* Document.swift in Sources */,
 				776E247C244F096D008CA6A9 /* FitnessViewController.swift in Sources */,
 				776E2464244F04B8008CA6A9 /* SceneDelegate.swift in Sources */,
+				775A7D532451F88A00B3081C /* DocumentCell.swift in Sources */,
 				776E2482244F09FA008CA6A9 /* BodyChartViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
