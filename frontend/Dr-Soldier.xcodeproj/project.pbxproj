@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D67F1BE245C0DD800244669 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D67F1BD245C0DD800244669 /* Database.swift */; };
 		0DBB6E4C245169DB004E1BFD /* GlobalClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBB6E4B245169DB004E1BFD /* GlobalClass.swift */; };
 		591A08AB1308A48690F5F202 /* libPods-Dr-Soldier.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A07FDD3D21679BBBADA8218 /* libPods-Dr-Soldier.a */; };
 		775A7D512451F75200B3081C /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775A7D502451F75200B3081C /* Document.swift */; };
@@ -27,6 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0D67F1BD245C0DD800244669 /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		0DBB6E4B245169DB004E1BFD /* GlobalClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalClass.swift; sourceTree = "<group>"; };
 		3A07FDD3D21679BBBADA8218 /* libPods-Dr-Soldier.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Dr-Soldier.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		49570D258E2E19BB55963FD1 /* Pods-Dr-Soldier.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dr-Soldier.debug.xcconfig"; path = "Target Support Files/Pods-Dr-Soldier/Pods-Dr-Soldier.debug.xcconfig"; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 				776E2481244F09FA008CA6A9 /* BodyChartViewController.swift */,
 				0DBB6E4B245169DB004E1BFD /* GlobalClass.swift */,
 				775A7D502451F75200B3081C /* Document.swift */,
+				0D67F1BD245C0DD800244669 /* Database.swift */,
 			);
 			path = "Dr-Soldier";
 			sourceTree = "<group>";
@@ -230,6 +233,7 @@
 				776E247C244F096D008CA6A9 /* FitnessViewController.swift in Sources */,
 				776E2464244F04B8008CA6A9 /* SceneDelegate.swift in Sources */,
 				775A7D532451F88A00B3081C /* DocumentCell.swift in Sources */,
+				0D67F1BE245C0DD800244669 /* Database.swift in Sources */,
 				776E2482244F09FA008CA6A9 /* BodyChartViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
