@@ -41,6 +41,7 @@ PROJECT_APPS = [
     "boards.apps.BoardsConfig",
     "comments.apps.CommentsConfig",
     "likes.apps.LikesConfig",
+    "dislikes.apps.DislikesConfig",
     "posts.apps.PostsConfig",
     "users.apps.UsersConfig",
 ]

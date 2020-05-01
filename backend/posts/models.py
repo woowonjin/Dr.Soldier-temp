@@ -27,3 +27,8 @@ class Post(core_models.TimeStampedModel):
         return self.comments.count()
 
     count_comments.short_description = "Comments"
+
+    def count_dislikes(self):
+        return self.dislikes.count()
+
+    count_dislikes.short_description = "Dislikes"

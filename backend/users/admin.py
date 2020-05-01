@@ -8,7 +8,6 @@ class UserAdmin(UserAdmin):
     fieldsets = UserAdmin.fieldsets + (("CustomProfile", {
         "fields": (
             "nickname",
-            "birthdate",
             "login_method",
         )
     }), )
@@ -16,6 +15,5 @@ class UserAdmin(UserAdmin):
     list_display = (
         "username",
         "nickname",
-        "birthdate",
         "login_method",
     )
