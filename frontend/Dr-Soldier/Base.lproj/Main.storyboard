@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="lt6-9M-R9o">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="m0e-4L-Pid">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -10,7 +10,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="UMF-Dg-Tpc">
             <objects>
-                <tabBarController id="lt6-9M-R9o" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="Main" id="lt6-9M-R9o" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="LBw-ay-CZ0">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -105,6 +105,31 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0qM-Q0-Azt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-4033" y="307"/>
+        </scene>
+        <!--Login View Controller-->
+        <scene sceneID="3sH-rs-Ke2">
+            <objects>
+                <viewController id="m0e-4L-Pid" customClass="LoginViewController" customModule="Dr_Soldier" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="U18-Sc-GiW">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iby-rD-rkx">
+                                <rect key="frame" x="135" y="591" width="145" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Kakao Login"/>
+                                <connections>
+                                    <action selector="kakaoLoginOnClick:" destination="m0e-4L-Pid" eventType="touchUpInside" id="gz9-c3-yC8"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="NAG-PS-bwl"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Tbz-nF-Sza" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3272.4637681159425" y="-1348.6607142857142"/>
         </scene>
         <!--Item-->
         <scene sceneID="Mss-yf-8Fi">
@@ -464,10 +489,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="hand.thumbsdown" catalog="system" width="128" height="128"/>
-        <image name="hand.thumbsup" catalog="system" width="128" height="128"/>
-        <image name="message.circle.fill" catalog="system" width="128" height="121"/>
-        <image name="pencil.circle.fill" catalog="system" width="128" height="121"/>
-        <image name="person.circle.fill" catalog="system" width="128" height="121"/>
+        <image name="hand.thumbsdown" catalog="system" width="64" height="64"/>
+        <image name="hand.thumbsup" catalog="system" width="64" height="64"/>
+        <image name="message.circle.fill" catalog="system" width="64" height="60"/>
+        <image name="pencil.circle.fill" catalog="system" width="64" height="60"/>
+        <image name="person.circle.fill" catalog="system" width="64" height="60"/>
     </resources>
 </document>
