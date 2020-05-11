@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D67F1BE245C0DD800244669 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D67F1BD245C0DD800244669 /* Database.swift */; };
+		0DBB6E4C245169DB004E1BFD /* GlobalClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBB6E4B245169DB004E1BFD /* GlobalClass.swift */; };
+		11AA922F2463F86D00765FC4 /* KakaoOpenSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11AA922E2463F86D00765FC4 /* KakaoOpenSDK.framework */; };
+		11AA92322463FB8000765FC4 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11AA92312463FB8000765FC4 /* LoginViewController.swift */; };
+		591A08AB1308A48690F5F202 /* libPods-Dr-Soldier.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A07FDD3D21679BBBADA8218 /* libPods-Dr-Soldier.a */; };
+		775A7D512451F75200B3081C /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775A7D502451F75200B3081C /* Document.swift */; };
+		775A7D532451F88A00B3081C /* DocumentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775A7D522451F88A00B3081C /* DocumentCell.swift */; };
 		776E2462244F04B8008CA6A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776E2461244F04B8008CA6A9 /* AppDelegate.swift */; };
 		776E2464244F04B8008CA6A9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776E2463244F04B8008CA6A9 /* SceneDelegate.swift */; };
 		776E2466244F04B8008CA6A9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776E2465244F04B8008CA6A9 /* ViewController.swift */; };
@@ -23,6 +30,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0D67F1BD245C0DD800244669 /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
+		0DBB6E4B245169DB004E1BFD /* GlobalClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalClass.swift; sourceTree = "<group>"; };
+		11AA922E2463F86D00765FC4 /* KakaoOpenSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KakaoOpenSDK.framework; sourceTree = "<group>"; };
+		11AA92312463FB8000765FC4 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		11E52D5B2463FE3A0060531B /* Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
+		3A07FDD3D21679BBBADA8218 /* libPods-Dr-Soldier.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Dr-Soldier.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		49570D258E2E19BB55963FD1 /* Pods-Dr-Soldier.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dr-Soldier.debug.xcconfig"; path = "Target Support Files/Pods-Dr-Soldier/Pods-Dr-Soldier.debug.xcconfig"; sourceTree = "<group>"; };
+		775A7D502451F75200B3081C /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
+		775A7D522451F88A00B3081C /* DocumentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentCell.swift; sourceTree = "<group>"; };
 		776E245E244F04B8008CA6A9 /* Dr-Soldier.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dr-Soldier.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		776E2461244F04B8008CA6A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		776E2463244F04B8008CA6A9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -38,6 +54,7 @@
 		776E247D244F097F008CA6A9 /* FinanceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinanceViewController.swift; sourceTree = "<group>"; };
 		776E247F244F09B6008CA6A9 /* GoalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalViewController.swift; sourceTree = "<group>"; };
 		776E2481244F09FA008CA6A9 /* BodyChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyChartViewController.swift; sourceTree = "<group>"; };
+		925F1284403E25BEC0F9A8CA /* Pods-Dr-Soldier.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dr-Soldier.release.xcconfig"; path = "Target Support Files/Pods-Dr-Soldier/Pods-Dr-Soldier.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,17 +62,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				591A08AB1308A48690F5F202 /* libPods-Dr-Soldier.a in Frameworks */,
+				11AA922F2463F86D00765FC4 /* KakaoOpenSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4DF1241A2F837E58272F4925 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				49570D258E2E19BB55963FD1 /* Pods-Dr-Soldier.debug.xcconfig */,
+				925F1284403E25BEC0F9A8CA /* Pods-Dr-Soldier.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		776E2455244F04B7008CA6A9 = {
 			isa = PBXGroup;
 			children = (
 				776E2460244F04B8008CA6A9 /* Dr-Soldier */,
 				776E245F244F04B8008CA6A9 /* Products */,
+				4DF1241A2F837E58272F4925 /* Pods */,
+				DDD4AE0C286B4B4A137A1E17 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -70,6 +100,7 @@
 		776E2460244F04B8008CA6A9 /* Dr-Soldier */ = {
 			isa = PBXGroup;
 			children = (
+				11E52D5B2463FE3A0060531B /* Bridging-Header.h */,
 				776E2461244F04B8008CA6A9 /* AppDelegate.swift */,
 				776E2463244F04B8008CA6A9 /* SceneDelegate.swift */,
 				776E2465244F04B8008CA6A9 /* ViewController.swift */,
@@ -80,12 +111,26 @@
 				776E2475244F08BD008CA6A9 /* InfoViewController.swift */,
 				776E2477244F08DC008CA6A9 /* CalendarViewController.swift */,
 				776E2479244F090F008CA6A9 /* CommunityViewController.swift */,
+				775A7D522451F88A00B3081C /* DocumentCell.swift */,
 				776E247B244F096D008CA6A9 /* FitnessViewController.swift */,
 				776E247D244F097F008CA6A9 /* FinanceViewController.swift */,
 				776E247F244F09B6008CA6A9 /* GoalViewController.swift */,
 				776E2481244F09FA008CA6A9 /* BodyChartViewController.swift */,
+				0DBB6E4B245169DB004E1BFD /* GlobalClass.swift */,
+				775A7D502451F75200B3081C /* Document.swift */,
+				0D67F1BD245C0DD800244669 /* Database.swift */,
+				11AA92312463FB8000765FC4 /* LoginViewController.swift */,
 			);
 			path = "Dr-Soldier";
+			sourceTree = "<group>";
+		};
+		DDD4AE0C286B4B4A137A1E17 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				11AA922E2463F86D00765FC4 /* KakaoOpenSDK.framework */,
+				3A07FDD3D21679BBBADA8218 /* libPods-Dr-Soldier.a */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -95,6 +140,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 776E2472244F04BA008CA6A9 /* Build configuration list for PBXNativeTarget "Dr-Soldier" */;
 			buildPhases = (
+				8BD4EDC2E58C66D4D29F488C /* [CP] Check Pods Manifest.lock */,
 				776E245A244F04B8008CA6A9 /* Sources */,
 				776E245B244F04B8008CA6A9 /* Frameworks */,
 				776E245C244F04B8008CA6A9 /* Resources */,
@@ -154,6 +200,31 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		8BD4EDC2E58C66D4D29F488C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Dr-Soldier-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		776E245A244F04B8008CA6A9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -162,12 +233,17 @@
 				776E2478244F08DC008CA6A9 /* CalendarViewController.swift in Sources */,
 				776E247E244F097F008CA6A9 /* FinanceViewController.swift in Sources */,
 				776E2466244F04B8008CA6A9 /* ViewController.swift in Sources */,
+				11AA92322463FB8000765FC4 /* LoginViewController.swift in Sources */,
 				776E247A244F090F008CA6A9 /* CommunityViewController.swift in Sources */,
 				776E2462244F04B8008CA6A9 /* AppDelegate.swift in Sources */,
 				776E2476244F08BD008CA6A9 /* InfoViewController.swift in Sources */,
+				0DBB6E4C245169DB004E1BFD /* GlobalClass.swift in Sources */,
 				776E2480244F09B6008CA6A9 /* GoalViewController.swift in Sources */,
+				775A7D512451F75200B3081C /* Document.swift in Sources */,
 				776E247C244F096D008CA6A9 /* FitnessViewController.swift in Sources */,
 				776E2464244F04B8008CA6A9 /* SceneDelegate.swift in Sources */,
+				775A7D532451F88A00B3081C /* DocumentCell.swift in Sources */,
+				0D67F1BE245C0DD800244669 /* Database.swift in Sources */,
 				776E2482244F09FA008CA6A9 /* BodyChartViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -310,16 +386,24 @@
 		};
 		776E2473244F04BA008CA6A9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 49570D258E2E19BB55963FD1 /* Pods-Dr-Soldier.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = "Dr-Soldier/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.dohyuninfo.Dr-Soldier";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -327,16 +411,24 @@
 		};
 		776E2474244F04BA008CA6A9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 925F1284403E25BEC0F9A8CA /* Pods-Dr-Soldier.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = "Dr-Soldier/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.dohyuninfo.Dr-Soldier";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
