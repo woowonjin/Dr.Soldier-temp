@@ -11,16 +11,51 @@ import SQLite3
 
 class DataBaseQuery {
     
-    let CreateCalenderTable = """
-    CREATE TABLE `CalenderTable` (
-    `Kind` VARCHAR(10) NOT NULL,
-    `Date` DATE NOT NULL,
-    `Is_deleted` BOOLEAN NOT NULL
+    let CreateUserTable = """
+    CREATE TABLE "User" (
+    "name"    TEXT NOT NULL,
+    "grade"    INTEGER NOT NULL,
+    "start_date"    TEXT NOT NULL,
+    "end_date"    TEXT NOT NULL,
+    "image_url"    TEXT
     );
     """
     
+    let CreateTodoTable = """
+    CREATE TABLE "Todo" (
+        "goal"    TEXT NOT NULL,
+        "completed"    INTEGER NOT NULL DEFAULT 0
+    );
+    """
+    
+    let CreateRecordTable = """
+    CREATE TABLE "Record" (
+        "checked_date"    TEXT NOT NULL,
+        "height"    REAL,
+        "weight"    REAL
+    );
+    """
+    
+    let CreateFitnessTable = """
+    CREATE TABLE "Fitness" (
+        "checked_date"    TEXT NOT NULL,
+        "pushup"    INTEGER,
+        "situp"    INTEGER,
+        "run"    TEXT
+    );
+    """
+    
+    let CreateCalenderTable = """
+    CREATE TABLE "Calendar" (
+    "marked_date"    TEXT NOT NULL,
+    "type"    INTEGER NOT NULL
+    );
+    """
+    
+    
+    
     public func SelectStar(Tablename:String) ->String{
-        return "SLECT * FROM " + Tablename + ";"
+        return "SELECT * FROM " + Tablename + ";"
     }
 }
 
@@ -31,8 +66,16 @@ class DataBaseAPI {
     
     public init()
     {
-        let fileURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) .appendingPathComponent("db.sqlite")
-        sqlite3_open("\(fileURL)",&self.database)
+        /*
+        let fileURL = FileManager.default.currentDirectoryPath
+        print(fileURL)
+        
+        let fileURL1 = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) .appendingPathComponent("db.sqlite")
+        print(fileURL1)
+        */
+        let fileURL2 = "/Users/leejungjae/Desktop/git/IOS-Dr.Soldier/frontend/LocalDB_SQLite.db"
+        
+        sqlite3_open("\(fileURL2)",&self.database)
     }
     
     private func crateTable(statement : String) -> Bool{
@@ -95,9 +138,10 @@ class DataBaseAPI {
             {
                 //왼쪽부터 오른쪽으로 읽어드린다.
                 for i in 0 ... (ColumnNumber-1){
-                    let each_cell = sqlite3_column_int(queryStatement,Int32(i))
+                    let each_cell = sqlite3_column_text(queryStatement,Int32(i))
+                    //print( String(cString : each_cell! ))
                     //string으로 형변환
-                    each_row.append("\(each_cell)")
+                    each_row.append(String(cString : each_cell! ))
                 }
                 TotalResultTable.append(each_row)
                 each_row.removeAll()
