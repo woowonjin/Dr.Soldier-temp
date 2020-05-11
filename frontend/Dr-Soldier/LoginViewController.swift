@@ -72,7 +72,7 @@ class LoginViewController: UIViewController {
                                    return
                         }
                         //화면 전환 애니메이션을 설정합니다.
-
+                        main.modalPresentationStyle = .fullScreen
                         main.modalTransitionStyle = UIModalTransitionStyle.coverVertical
 
                         //인자값으로 다음 뷰 컨트롤러를 넣고 present 메소드를 호출합니다.
