@@ -35,7 +35,7 @@ class CommunityViewController: UIViewController, UITableViewDelegate, UITableVie
 //            print(response.value)
             let responseList = response.value as! Array<AnyObject>
             for (index, element) in responseList.enumerated(){
-                let obj = element["fields"] as! AnyObject
+                let obj = element["fields"] as AnyObject
                 print(obj)
                 let title = obj["title"] as! String
                 let description = obj["text"] as! String

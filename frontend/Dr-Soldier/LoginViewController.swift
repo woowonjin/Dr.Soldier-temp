@@ -86,7 +86,7 @@ class LoginViewController: UIViewController {
                 }
             }
             else{
-                print("Error login \(error)")
+                print("Error login \(String(describing: error))")
             }
         })
     }
