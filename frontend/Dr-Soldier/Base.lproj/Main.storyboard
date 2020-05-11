@@ -99,9 +99,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iby-rD-rkx">
-                                <rect key="frame" x="135" y="591" width="145" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iby-rD-rkx">
+                                <rect key="frame" x="165" y="433" width="84" height="30"/>
                                 <state key="normal" title="Kakao Login"/>
                                 <connections>
                                     <action selector="kakaoLoginOnClick:" destination="m0e-4L-Pid" eventType="touchUpInside" id="gz9-c3-yC8"/>
@@ -109,6 +108,10 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="iby-rD-rkx" firstAttribute="centerX" secondItem="U18-Sc-GiW" secondAttribute="centerX" id="PGe-0y-pYT"/>
+                            <constraint firstItem="iby-rD-rkx" firstAttribute="centerY" secondItem="U18-Sc-GiW" secondAttribute="centerY" id="sCo-vM-gZY"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="NAG-PS-bwl"/>
                     </view>
                 </viewController>

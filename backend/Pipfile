@@ -8,6 +8,7 @@ yapf = "*"
 
 [packages]
 django = "==2.2.5"
+django-seed = "*"
 
 [requires]
 python_version = "3.8"

@@ -30,17 +30,37 @@ class CommunityViewController: UIViewController, UITableViewDelegate, UITableVie
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let nextView = self.storyboard?.instantiateViewController(withIdentifier: "DocumentDetailViewController") as! DocumentDetailViewController
+        let document = docs[indexPath.row]
+        nextView.titleString = document.title
+        nextView.descriptionString = document.description
+        self.navigationController?.pushViewController(nextView, animated: true)
+        
+    }
+    
     func getDocs(){
+        self.docs.insert(Document(title: "헬로우 스위프트~", description: "킾고잉~ 코더스하이!", created: Date(), writer: "관리자", thumbsUp: 0, thumbsDown: 0, isDeleted: false), at: 0)
         AF.request("http://127.0.0.1:8000/documents").responseJSON { response in
-//            print(response.value)
-            let responseList = response.value as! Array<AnyObject>
-            for (index, element) in responseList.enumerated(){
-                let obj = element["fields"] as AnyObject
-                print(obj)
-                let title = obj["title"] as! String
-                let description = obj["text"] as! String
-                self.docs.insert(Document(title: title, description: description, created: Date(), writer: "leedh2004", thumbsUp: 30, thumbsDown: 10, isDeleted: false), at: index)
+            switch response.result{
+            case .success(let value):
+                let responseList = value as! Array<AnyObject>
+                for (index, element) in responseList.enumerated(){
+                    let obj = element["fields"] as! AnyObject
+                    let title = obj["title"] as! String
+                    let description = obj["text"] as! String
+                    self.docs.insert(Document(title: title, description: description, created: Date(), writer: "leedh2004", thumbsUp: 30, thumbsDown: 10, isDeleted: false), at: index)
+                }
+            case .failure(let error):
+                print("maybe server down")
             }
+//            let responseList = response.value as! Array<AnyObject>
+//            for (index, element) in responseList.enumerated(){
+//                let obj = element["fields"] as! AnyObject
+//                let title = obj["title"] as! String
+//                let description = obj["text"] as! String
+//                self.docs.insert(Document(title: title, description: description, created: Date(), writer: "leedh2004", thumbsUp: 30, thumbsDown: 10, isDeleted: false), at: index)
+//            }
             DispatchQueue.main.async {
                 self.mainTableView.reloadData()
             }
@@ -63,4 +83,5 @@ class CommunityViewController: UIViewController, UITableViewDelegate, UITableVie
 
 
 }
+
 
