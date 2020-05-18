@@ -30,7 +30,6 @@
         <!--Calendar-->
         <scene sceneID="Au7-fA-YVa">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="zXD-js-CO4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController id="CxP-sl-zwR" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Calendar" image="pencil.circle.fill" catalog="system" selectedImage="calendar" id="qcu-lK-uxe"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="9e9-IJ-zx3">
@@ -42,6 +41,7 @@
                         <segue destination="l6x-GR-5hL" kind="relationship" relationship="rootViewController" id="y6e-OH-ULE"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zXD-js-CO4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="109" y="-408"/>
         </scene>

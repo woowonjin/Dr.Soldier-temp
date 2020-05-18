@@ -33,12 +33,20 @@ class InfoViewController: UIViewController {
         
         //self.navigationItem.hidesBackButton = true;
         //self.navigationItem.leftBarButtonItem = nil;
+        
+        //for DB test - by JJ
+        /*
+        print("-----------------")
+        print(DB.database)
+        print(DB.query(statement: Quary.SelectStar(Tablename: "Todo"), ColumnNumber: 2))
+        print("-----------------")
+         */
         let navview = Variable_Functions.init()
         self.navigationItem.titleView = navview.navView
         
     }
     
-//        print(DB.query(statement: Quary.SelectStar(Tablename: "Todo"), ColumnNumber: 2))
+
         //let fileManager = FileManager.init()
         //print(fileManager.currentDirectoryPath)
         //let path = Bundle.main.resourcePath!
