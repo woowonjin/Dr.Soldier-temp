@@ -31,6 +31,7 @@
 		776E247E244F097F008CA6A9 /* FinanceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776E247D244F097F008CA6A9 /* FinanceViewController.swift */; };
 		776E2480244F09B6008CA6A9 /* GoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776E247F244F09B6008CA6A9 /* GoalViewController.swift */; };
 		776E2482244F09FA008CA6A9 /* BodyChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776E2481244F09FA008CA6A9 /* BodyChartViewController.swift */; };
+		77EC65FE2472E5FE00528C78 /* WriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EC65FD2472E5FE00528C78 /* WriteViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +63,7 @@
 		776E247D244F097F008CA6A9 /* FinanceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinanceViewController.swift; sourceTree = "<group>"; };
 		776E247F244F09B6008CA6A9 /* GoalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalViewController.swift; sourceTree = "<group>"; };
 		776E2481244F09FA008CA6A9 /* BodyChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyChartViewController.swift; sourceTree = "<group>"; };
+		77EC65FD2472E5FE00528C78 /* WriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteViewController.swift; sourceTree = "<group>"; };
 		925F1284403E25BEC0F9A8CA /* Pods-Dr-Soldier.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dr-Soldier.release.xcconfig"; path = "Target Support Files/Pods-Dr-Soldier/Pods-Dr-Soldier.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -113,6 +115,7 @@
 				776E2463244F04B8008CA6A9 /* SceneDelegate.swift */,
 				776E2465244F04B8008CA6A9 /* ViewController.swift */,
 				776E2467244F04B8008CA6A9 /* Main.storyboard */,
+				77EC65FD2472E5FE00528C78 /* WriteViewController.swift */,
 				77055B0224698F6900BE47A9 /* CommentCell.swift */,
 				776E246A244F04BA008CA6A9 /* Assets.xcassets */,
 				776E246C244F04BA008CA6A9 /* LaunchScreen.storyboard */,
@@ -260,6 +263,7 @@
 				775A7D532451F88A00B3081C /* DocumentCell.swift in Sources */,
 				77055B0524698F8B00BE47A9 /* Comment.swift in Sources */,
 				0D67F1BE245C0DD800244669 /* Database.swift in Sources */,
+				77EC65FE2472E5FE00528C78 /* WriteViewController.swift in Sources */,
 				776E2482244F09FA008CA6A9 /* BodyChartViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
