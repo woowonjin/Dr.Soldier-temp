@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0D67F1BE245C0DD800244669 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D67F1BD245C0DD800244669 /* Database.swift */; };
 		0DBB6E4C245169DB004E1BFD /* GlobalClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBB6E4B245169DB004E1BFD /* GlobalClass.swift */; };
+		0DEC22A62472798A00485871 /* LocalDB_SQLite.db in Resources */ = {isa = PBXBuildFile; fileRef = 0DEC22A52472798A00485871 /* LocalDB_SQLite.db */; };
 		11AA922F2463F86D00765FC4 /* KakaoOpenSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11AA922E2463F86D00765FC4 /* KakaoOpenSDK.framework */; };
 		11AA92322463FB8000765FC4 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11AA92312463FB8000765FC4 /* LoginViewController.swift */; };
 		591A08AB1308A48690F5F202 /* libPods-Dr-Soldier.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A07FDD3D21679BBBADA8218 /* libPods-Dr-Soldier.a */; };
@@ -37,6 +38,7 @@
 /* Begin PBXFileReference section */
 		0D67F1BD245C0DD800244669 /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		0DBB6E4B245169DB004E1BFD /* GlobalClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalClass.swift; sourceTree = "<group>"; };
+		0DEC22A52472798A00485871 /* LocalDB_SQLite.db */ = {isa = PBXFileReference; lastKnownFileType = file; name = LocalDB_SQLite.db; path = Database/LocalDB_SQLite.db; sourceTree = SOURCE_ROOT; };
 		11AA922E2463F86D00765FC4 /* KakaoOpenSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KakaoOpenSDK.framework; sourceTree = "<group>"; };
 		11AA92312463FB8000765FC4 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		11E52D5B2463FE3A0060531B /* Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 		776E2460244F04B8008CA6A9 /* Dr-Soldier */ = {
 			isa = PBXGroup;
 			children = (
+				0DEC22A52472798A00485871 /* LocalDB_SQLite.db */,
 				11E52D5B2463FE3A0060531B /* Bridging-Header.h */,
 				776E2461244F04B8008CA6A9 /* AppDelegate.swift */,
 				776E2463244F04B8008CA6A9 /* SceneDelegate.swift */,
@@ -210,6 +213,7 @@
 				776E246E244F04BA008CA6A9 /* LaunchScreen.storyboard in Resources */,
 				776E246B244F04BA008CA6A9 /* Assets.xcassets in Resources */,
 				776E2469244F04B8008CA6A9 /* Main.storyboard in Resources */,
+				0DEC22A62472798A00485871 /* LocalDB_SQLite.db in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

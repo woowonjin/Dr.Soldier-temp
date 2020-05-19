@@ -73,9 +73,8 @@ class DataBaseAPI {
         let fileURL1 = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) .appendingPathComponent("db.sqlite")
         print(fileURL1)
         */
-        let fileURL2 = "/Users/leejungjae/Desktop/git/IOS-Dr.Soldier/frontend/LocalDB_SQLite.db"
-        
-        sqlite3_open("\(fileURL2)",&self.database)
+        let fileURL2 = Bundle.main.url(forResource: "LocalDB_SQLite", withExtension: "db")?.absoluteString as! String
+        sqlite3_open(fileURL2,&self.database)
     }
     
     private func crateTable(statement : String) -> Bool{
