@@ -24,7 +24,7 @@ class CommunityViewController: UIViewController, UITableViewDelegate, UITableVie
         let document = docs[indexPath.row]
         cell.titleLabel.text = document.title
         cell.descriptionLabel.text = document.description
-        cell.informationLabel.text = "유저이름 | " + document.created
+        cell.informationLabel.text = document.writer + " | " + document.created
         cell.thumbsUpBtn.titleLabel?.text = String(document.thumbsUp)
         cell.thumbsDownBtn.titleLabel?.text = String(document.thumbsDown)
         return cell
@@ -60,6 +60,7 @@ class CommunityViewController: UIViewController, UITableViewDelegate, UITableVie
                     let description = responseList[index]["title"] as! String
                     let likes = responseList[index]["likes_number"] as! Int
                     let dislikes = responseList[index]["dislikes_number"] as! Int
+                    let writer = responseList[index]["host_name"] as! String
                     //let host = responseList[index]["host"] as! String
                     let created = responseList[index]["created"] as! String
                     let end = created.index(created.endIndex, offsetBy: -7)
@@ -90,7 +91,7 @@ class CommunityViewController: UIViewController, UITableViewDelegate, UITableVie
                         createdStr = "\(d)년 전"
                     }
                     print(createdStr)
-                    self.docs.insert(Document(title: title, description: description, created: createdStr, writer: "leedh2004", thumbsUp: likes, thumbsDown: dislikes, isDeleted: false), at: index)
+                    self.docs.insert(Document(title: title, description: description, created: createdStr, writer: writer, thumbsUp: likes, thumbsDown: dislikes, isDeleted: false), at: index)
                 }
             case .failure(let error):
                 print("maybe server down")
