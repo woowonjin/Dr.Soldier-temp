@@ -57,6 +57,14 @@ class DataBaseQuery {
     public func SelectStar(Tablename:String) ->String{
         return "SELECT * FROM " + Tablename + ";"
     }
+    
+    public func Delete(Tablename: String , Condition : String) -> String{
+        return "DELETE FROM " + Tablename + " WHERE " + Condition + ";"
+    }
+    
+    public func insert(Tablename: String , Values : String) -> String{
+        return "INSERT INTO " + Tablename + " VALUES " + "(" + Values + ")" + ";"
+    }
 }
 
 
@@ -93,7 +101,7 @@ class DataBaseAPI {
     }
     
     //insert
-    private func insert(statement : String) -> Bool {
+    public func insert(statement : String) -> Bool {
         var insertStatement : OpaquePointer? = nil
         defer { sqlite3_finalize(insertStatement) }
         guard sqlite3_prepare_v2(self.database,statement,EOF,&insertStatement,nil) == SQLITE_OK else{
@@ -109,11 +117,11 @@ class DataBaseAPI {
     }
 
     //delete
-    private func delete(statement : String) -> Bool {
+    public func delete(statement : String) -> Bool {
         var deleteStatement : OpaquePointer? = nil
         defer { sqlite3_finalize(deleteStatement) }
         guard sqlite3_prepare_v2(self.database,statement,EOF,&deleteStatement,nil) == SQLITE_OK else{
-            print("Fail to prepare insert to table")
+            print("Fail to prepare delete to table")
             return false
         }
         if sqlite3_step(deleteStatement) == SQLITE_DONE{
