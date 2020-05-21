@@ -114,6 +114,8 @@ class CommunityViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     @objc func refreshButtonClicked(){
         print("refresh button Clicked!")
+        docs.removeAll()
+        getDocs()
     }
     
     override func viewDidLoad() {
