@@ -44,6 +44,8 @@ PROJECT_APPS = [
     "dislikes.apps.DislikesConfig",
     "posts.apps.PostsConfig",
     "users.apps.UsersConfig",
+    "commentLikes.apps.CommentlikesConfig",
+    "commentDislikes.apps.CommentdislikesConfig",
 ]
 
 THIRD_PARTY_APPS = ["django_seed"]

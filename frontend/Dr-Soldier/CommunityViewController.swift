@@ -33,6 +33,7 @@ class CommunityViewController: UIViewController, UITableViewDelegate, UITableVie
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let nextView = self.storyboard?.instantiateViewController(withIdentifier: "DocumentDetailViewController") as! DocumentDetailViewController
         let document = docs[indexPath.row]
+        nextView.post_pk = document.pk
         nextView.titleString = document.title
         nextView.descriptionString = document.description
         self.navigationController?.pushViewController(nextView, animated: true)
@@ -40,14 +41,13 @@ class CommunityViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func getDocs(){
-        self.docs.insert(Document(title: "헬로우 스위프트~", description: "킾고잉~ 코더스하이!", created: "temp", writer: "관리자", thumbsUp: 0, thumbsDown: 0, isDeleted: false), at: 0)
+        //self.docs.insert(Document(title: "헬로우 스위프트~", description: "킾고잉~ 코더스하이!", created: "temp", writer: "관리자", thumbsUp: 0, thumbsDown: 0, isDeleted: false, pk: 1), at: 0)
         AF.request("http://127.0.0.1:8000/documents").responseJSON { response in
             switch response.result{
             case .success(let value):
                 print("DIE")
                 print(type(of: value))
                 let responseList = value as! Array<AnyObject>
-                print(responseList[0])
                 
                 let dateFormatter = DateFormatter()
                 let now = Date()
@@ -57,24 +57,22 @@ class CommunityViewController: UIViewController, UITableViewDelegate, UITableVie
                 for (index, element) in responseList.enumerated(){
                     //let obj = element["fields"] as! AnyObject
                     let title = responseList[index]["title"] as! String
-                    let description = responseList[index]["title"] as! String
+                    let description = responseList[index]["text"] as! String
                     let likes = responseList[index]["likes_number"] as! Int
                     let dislikes = responseList[index]["dislikes_number"] as! Int
                     let writer = responseList[index]["host_name"] as! String
                     //let host = responseList[index]["host"] as! String
                     let created = responseList[index]["created"] as! String
                     let end = created.index(created.endIndex, offsetBy: -7)
+                    let pk = responseList[index]["pk"] as! Int
                     let tmpstr = String(created[...end]) // Date 로 바꾸기 위해 잘라준다.
-                    print(title)
-                    print(description)
-                    print(likes)
-                    print(dislikes)
                     //print(host)
-                    
-                    let date = dateFormatter.date(from: tmpstr)
+                    let st = tmpstr.components(separatedBy: ".")
+                    let date = dateFormatter.date(from: st[0])
                     let intervalSecond = now.timeIntervalSince(date!)
+                    
                     let createdStr : String
-                    print(intervalSecond)
+                    
                     switch intervalSecond {
                     case 0...3600:
                         let m : Int = Int(intervalSecond / 60)
@@ -90,8 +88,8 @@ class CommunityViewController: UIViewController, UITableViewDelegate, UITableVie
                         let d : Int = Int(intervalSecond / (3600*24*365))
                         createdStr = "\(d)년 전"
                     }
-                    print(createdStr)
-                    self.docs.insert(Document(title: title, description: description, created: createdStr, writer: writer, thumbsUp: likes, thumbsDown: dislikes, isDeleted: false), at: index)
+                    
+                    self.docs.insert(Document(title: title, description: description, created: createdStr, writer: writer, thumbsUp: likes, thumbsDown: dislikes, isDeleted: false, pk: pk), at: index)
                 }
             case .failure(let error):
                 print("maybe server down")
@@ -108,7 +106,6 @@ class CommunityViewController: UIViewController, UITableViewDelegate, UITableVie
             }
            
         }
-        print("getDocs()!")
     }
     
     @objc func writeButtonClicked(){
