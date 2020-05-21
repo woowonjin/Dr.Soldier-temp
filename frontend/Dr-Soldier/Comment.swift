@@ -9,7 +9,7 @@
 import Foundation
 struct Comment {
     var description : String
-    var created : Date
+    var created : String
     var writer : String
     var thumbsUp : Int
     var thumbsDown : Int

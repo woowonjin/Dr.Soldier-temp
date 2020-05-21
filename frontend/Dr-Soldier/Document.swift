@@ -16,5 +16,6 @@ struct Document {
     var thumbsUp : Int
     var thumbsDown : Int
     var isDeleted : Bool
+    let pk: Int
 }
 

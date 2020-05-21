@@ -14,17 +14,29 @@ class WriteViewController: UIViewController {
     @IBOutlet weak var contentTextField: UITextField!
     @IBOutlet weak var titleTextField: UITextField!
     
+    let header: HTTPHeaders = [
+        "Content-Type" : "application/json",
+        "Charset" : "utf-8"
+    ]
+    
     @objc func writeButtonClicked(){
         print("write button Clicked!")
-        let params : [String:String] = ["title":titleTextField.text!, "content":contentTextField.text!]
+        let params : Parameters = ["title":titleTextField.text!, "content":contentTextField.text!]
         print(params)
-        AF.request("http://127.0.0.1:8000/documents", method: .post, parameters: params).responseJSON { response in
-                   switch response.result{
-                   case .success(let value):
-                    print("success")
-                   case .failure(let error):
-                    print("fail")
-            }
+        let url = "http://127.0.0.1:8000/posts/create/"
+//        AF.request("http://127.0.0.1:8000/posts/create/?title=\(params["title"])&text=\(params["content"])", method: .post, parameters: params).responseJSON { response in
+//                   switch response.result{
+//                   case .success(let value):
+//                    print("success")
+//                   case .failure(let error):
+//                    print("fail")
+//            }
+//        }
+        
+
+        let info = url + "?title=\(params["title"]!)&content=\(params["content"]!)"
+        AF.request(info.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "", method: .post, parameters: params, headers: header).responseJSON { response in
+                
         }
     }
     

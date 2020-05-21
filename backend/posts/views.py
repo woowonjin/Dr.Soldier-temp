@@ -1,10 +1,13 @@
 from django.shortcuts import render
 from django.core import serializers
+from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse, JsonResponse
 import json
 from django.db import models
-from django.db.models import Count
 from .models import Post
+from boards import models as board_models
+from users import models as user_models
+from datetime import datetime
 
 def documents(request):
     print("/documents")
@@ -17,14 +20,13 @@ def documents(request):
         posts_json = json.dumps(posts_full)
         return HttpResponse(posts_json, content_type="text/json-comment-filtered")
         
-    elif request.method == "POST":
-        print("POST")
-        print(request.POST["title"])
-        print(request.body)
-'''
-    return JsonResponse({
-        'message' : '안녕 파이썬 장고',
-        'items' : ['파이썬', '장고', 'AWS', 'Azure'],
-    }, json_dumps_params = {'ensure_ascii': True})
-'''
-    
+        
+@csrf_exempt
+def post_create(request):
+    title = request.GET.get("title")
+    text = request.GET.get("content")
+    user = user_models.User.objects.get(pk=1)
+    board = board_models.Board.objects.get(title="All")
+    post = Post.objects.create(title=title, text=text, host=user, board=board)
+    post.save()
+    return HttpResponse("ok")
