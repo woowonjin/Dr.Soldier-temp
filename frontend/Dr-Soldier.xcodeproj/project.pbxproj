@@ -12,7 +12,6 @@
 		0DEC22A62472798A00485871 /* LocalDB_SQLite.db in Resources */ = {isa = PBXBuildFile; fileRef = 0DEC22A52472798A00485871 /* LocalDB_SQLite.db */; };
 		11AA922F2463F86D00765FC4 /* KakaoOpenSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11AA922E2463F86D00765FC4 /* KakaoOpenSDK.framework */; };
 		11AA92322463FB8000765FC4 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11AA92312463FB8000765FC4 /* LoginViewController.swift */; };
-		591A08AB1308A48690F5F202 /* libPods-Dr-Soldier.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A07FDD3D21679BBBADA8218 /* libPods-Dr-Soldier.a */; };
 		77055AFF24698EF700BE47A9 /* DocumentDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77055AFE24698EF700BE47A9 /* DocumentDetailViewController.swift */; };
 		77055B0124698F0E00BE47A9 /* DocumentDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77055B0024698F0E00BE47A9 /* DocumentDetailCell.swift */; };
 		77055B0324698F6900BE47A9 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77055B0224698F6900BE47A9 /* CommentCell.swift */; };
@@ -33,6 +32,7 @@
 		776E2480244F09B6008CA6A9 /* GoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776E247F244F09B6008CA6A9 /* GoalViewController.swift */; };
 		776E2482244F09FA008CA6A9 /* BodyChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776E2481244F09FA008CA6A9 /* BodyChartViewController.swift */; };
 		77EC65FE2472E5FE00528C78 /* WriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EC65FD2472E5FE00528C78 /* WriteViewController.swift */; };
+		A40F5BCE7B7DF3142A61215C /* Pods_Dr_Soldier.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 550C293C25C4105FEF917CD6 /* Pods_Dr_Soldier.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,8 +42,8 @@
 		11AA922E2463F86D00765FC4 /* KakaoOpenSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KakaoOpenSDK.framework; sourceTree = "<group>"; };
 		11AA92312463FB8000765FC4 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		11E52D5B2463FE3A0060531B /* Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
-		3A07FDD3D21679BBBADA8218 /* libPods-Dr-Soldier.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Dr-Soldier.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		49570D258E2E19BB55963FD1 /* Pods-Dr-Soldier.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dr-Soldier.debug.xcconfig"; path = "Target Support Files/Pods-Dr-Soldier/Pods-Dr-Soldier.debug.xcconfig"; sourceTree = "<group>"; };
+		4BBCB7982411F6869DECBCA0 /* Pods-Dr-Soldier.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dr-Soldier.debug.xcconfig"; path = "Target Support Files/Pods-Dr-Soldier/Pods-Dr-Soldier.debug.xcconfig"; sourceTree = "<group>"; };
+		550C293C25C4105FEF917CD6 /* Pods_Dr_Soldier.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dr_Soldier.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		77055AFE24698EF700BE47A9 /* DocumentDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentDetailViewController.swift; sourceTree = "<group>"; };
 		77055B0024698F0E00BE47A9 /* DocumentDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentDetailCell.swift; sourceTree = "<group>"; };
 		77055B0224698F6900BE47A9 /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
@@ -66,7 +66,7 @@
 		776E247F244F09B6008CA6A9 /* GoalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalViewController.swift; sourceTree = "<group>"; };
 		776E2481244F09FA008CA6A9 /* BodyChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyChartViewController.swift; sourceTree = "<group>"; };
 		77EC65FD2472E5FE00528C78 /* WriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteViewController.swift; sourceTree = "<group>"; };
-		925F1284403E25BEC0F9A8CA /* Pods-Dr-Soldier.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dr-Soldier.release.xcconfig"; path = "Target Support Files/Pods-Dr-Soldier/Pods-Dr-Soldier.release.xcconfig"; sourceTree = "<group>"; };
+		CADB160E970F5015CE53391A /* Pods-Dr-Soldier.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dr-Soldier.release.xcconfig"; path = "Target Support Files/Pods-Dr-Soldier/Pods-Dr-Soldier.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,8 +74,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				591A08AB1308A48690F5F202 /* libPods-Dr-Soldier.a in Frameworks */,
 				11AA922F2463F86D00765FC4 /* KakaoOpenSDK.framework in Frameworks */,
+				A40F5BCE7B7DF3142A61215C /* Pods_Dr_Soldier.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,8 +85,8 @@
 		4DF1241A2F837E58272F4925 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				49570D258E2E19BB55963FD1 /* Pods-Dr-Soldier.debug.xcconfig */,
-				925F1284403E25BEC0F9A8CA /* Pods-Dr-Soldier.release.xcconfig */,
+				4BBCB7982411F6869DECBCA0 /* Pods-Dr-Soldier.debug.xcconfig */,
+				CADB160E970F5015CE53391A /* Pods-Dr-Soldier.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -146,7 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				11AA922E2463F86D00765FC4 /* KakaoOpenSDK.framework */,
-				3A07FDD3D21679BBBADA8218 /* libPods-Dr-Soldier.a */,
+				550C293C25C4105FEF917CD6 /* Pods_Dr_Soldier.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -158,10 +158,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 776E2472244F04BA008CA6A9 /* Build configuration list for PBXNativeTarget "Dr-Soldier" */;
 			buildPhases = (
-				8BD4EDC2E58C66D4D29F488C /* [CP] Check Pods Manifest.lock */,
+				8FC8AC68B31E9FD1369F90A5 /* [CP] Check Pods Manifest.lock */,
 				776E245A244F04B8008CA6A9 /* Sources */,
 				776E245B244F04B8008CA6A9 /* Frameworks */,
 				776E245C244F04B8008CA6A9 /* Resources */,
+				1B7D1059C147112008592635 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -220,7 +221,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		8BD4EDC2E58C66D4D29F488C /* [CP] Check Pods Manifest.lock */ = {
+		1B7D1059C147112008592635 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Dr-Soldier/Pods-Dr-Soldier-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Dr-Soldier/Pods-Dr-Soldier-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Dr-Soldier/Pods-Dr-Soldier-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8FC8AC68B31E9FD1369F90A5 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -410,7 +428,7 @@
 		};
 		776E2473244F04BA008CA6A9 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 49570D258E2E19BB55963FD1 /* Pods-Dr-Soldier.debug.xcconfig */;
+			baseConfigurationReference = 4BBCB7982411F6869DECBCA0 /* Pods-Dr-Soldier.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -435,7 +453,7 @@
 		};
 		776E2474244F04BA008CA6A9 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 925F1284403E25BEC0F9A8CA /* Pods-Dr-Soldier.release.xcconfig */;
+			baseConfigurationReference = CADB160E970F5015CE53391A /* Pods-Dr-Soldier.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -449,6 +467,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.dohyuninfo.Dr-Soldier";
 				PRODUCT_NAME = "$(TARGET_NAME)";
