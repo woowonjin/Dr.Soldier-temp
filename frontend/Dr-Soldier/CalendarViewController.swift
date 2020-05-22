@@ -11,7 +11,7 @@
 import UIKit
 import FSCalendar
 
-class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendarDelegate, UIGestureRecognizerDelegate{
+class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendarDelegate, FSCalendarDelegateAppearance {
     
     @IBOutlet weak var calendar: FSCalendar!
     
@@ -26,21 +26,13 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
         return formatter
     }()
     
-    fileprivate lazy var scopeGesture: UIPanGestureRecognizer = {
-        [unowned self] in
-        let panGesture = UIPanGestureRecognizer(target: self.calendar, action: #selector(self.calendar.handleScopeGesture(_:)))
-        panGesture.delegate = self
-        panGesture.minimumNumberOfTouches = 1
-        panGesture.maximumNumberOfTouches = 2
-        return panGesture
-    }()
     
     var fillDefaultColorsArray : Array<Array<String>> = []
     var fillDefaultColorsDictionary = [String : Int ]()
 
     
     let SegmentedBarData = ["🟩휴가","🟥훈련","🟨외출","🟦파견", "⬜️삭제"]
-    let SegmentedBarColor = [UIColor.green,UIColor.red,UIColor.yellow,UIColor.blue , UIColor.white]
+    let SegmentedBarColor = [UIColor.green,UIColor.red,UIColor.yellow,UIColor.blue , UIColor.clear]
     
     override func viewDidLoad() {
         
@@ -68,19 +60,16 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
         })
         print(fillDefaultColorsDictionary)
     
+        //self.calendar.deselect(self.calendar.today!)
         self.calendar.dataSource = self
         self.calendar.delegate = self
         self.calendar.register(FSCalendarCell.self, forCellReuseIdentifier: "CELL")
         self.calendar.allowsMultipleSelection = true
         self.calendar.swipeToChooseGesture.isEnabled = true
         self.calendar.appearance.caseOptions = [.headerUsesUpperCase,.weekdayUsesSingleUpperCase]
+        self.calendar.appearance.borderRadius = 0
+        self.calendar.appearance.borderRadius = 0
     
-    }
-    
-    func calendar(_ calendar: FSCalendar, cellFor date: Date, at position: FSCalendarMonthPosition) -> FSCalendarCell {
-        let cell = calendar.dequeueReusableCell(withIdentifier: "CELL", for: date, at: position)
-        cell.imageView.backgroundColor = UIColor.red
-        return cell
     }
     
     
@@ -101,28 +90,37 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
                 print("insert success at calander")
             }
         }
-    }
-         
-    // 스와이프를 통해서 다른 달(month)의 달력으로 넘어갈 때 발생하는 이벤트를 이 곳에서 처리할 수 있겠네요.
-    func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
-        print(calendar)
-    }
-
-    
-    //골랐을때 색싱 변경
-    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillSelectionColorFor date: Date) -> UIColor? {
-        return UIColor.white
+        fillDefaultColorsDictionary.updateValue(SegmentedControl.selectedSegmentIndex + 1 , forKey: date_string)
+        //print(fillDefaultColorsDictionary)
+        calendar.deselect(date)
+        calendar.reloadData()
     }
      
-    
     //기본색상
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillDefaultColorFor date: Date) -> UIColor? {
-        //return UIColor.red
+        //print("언제실행되는가?")
         let key = self.dateFormatter.string(from: date)
         if let colorindex = fillDefaultColorsDictionary[key] {
             return SegmentedBarColor[colorindex-1]
         }else{
-            return  appearance.borderSelectionColor
+            return  UIColor.clear
         }
     }
+    
+    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, borderDefaultColorFor date: Date) -> UIColor? {
+        
+        
+        let key = self.dateFormatter.string(from: date)
+        if let colorindex = fillDefaultColorsDictionary[key] {
+           return SegmentedBarColor[colorindex-1]
+       }else{
+           return  UIColor.clear
+       }
+    }
+    
+    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, titleDefaultColorFor date: Date) -> UIColor? {
+        return UIColor.black
+    }
+    
+    
 }
