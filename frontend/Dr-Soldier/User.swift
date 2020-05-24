@@ -8,6 +8,6 @@
 
 import Foundation
 
-class User{
-    var pk : Int = -1
+struct User{
+    var email: String
 }

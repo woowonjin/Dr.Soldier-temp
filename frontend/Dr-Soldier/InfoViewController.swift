@@ -9,7 +9,7 @@
 import UIKit
 
 class InfoViewController: UIViewController {
-
+    var user : User?
     let DB = DataBaseAPI.init()
     let Quary = DataBaseQuery.init()
     

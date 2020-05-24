@@ -23,9 +23,12 @@ def documents(request):
         
 @csrf_exempt
 def post_create(request):
+    print(request)
     title = request.GET.get("title")
     text = request.GET.get("content")
-    user = user_models.User.objects.get(username="dndnjswls918@naver.com")
+    user_name = request.GET.get("user")
+    print("!!!!!")
+    user = user_models.User.objects.get(username=user_name)
     board = board_models.Board.objects.get(title="All")
     post = Post.objects.create(title=title, text=text, host=user, board=board)
     post.save()

@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from . import models as user_models
 from django.contrib.auth import authenticate, login, logout
+from django.http import HttpResponse, JsonResponse
 
 @csrf_exempt
 def kakao_login(request):
@@ -9,7 +10,7 @@ def kakao_login(request):
     nickname = request.GET.get("nickname")
     try:
         user = user_models.User.objects.get(username=email)
-        return HttpResponse(f"pk: {user.pk}")
+        return
     except user_models.User.DoesNotExist:
         user = user_models.User.objects.create(
             username = email,
@@ -18,4 +19,5 @@ def kakao_login(request):
         )
         user.set_unusable_password()
         user.save()
-        return HttpResponse(f"pk: {user.pk}")
+        return
+        

@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 
 class CommunityViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
+    var user: User?
     @IBOutlet weak var mainTableView: UITableView!
     
     var docs : Array<Document> = []
@@ -128,6 +128,7 @@ class CommunityViewController: UIViewController, UITableViewDelegate, UITableVie
         // Do any additional setup after loading the view.
 //        self.navigationItem.hidesBackButton = true;
 //        self.navigationItem.leftBarButtonItem = nil;
+
         let navview = Variable_Functions.init()
         self.navigationItem.titleView = navview.navView
         getDocs()
