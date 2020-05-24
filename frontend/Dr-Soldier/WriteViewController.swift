@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 
 class WriteViewController: UIViewController {
-
+    
     @IBOutlet weak var contentTextField: UITextField!
     @IBOutlet weak var titleTextField: UITextField!
     
@@ -21,23 +21,17 @@ class WriteViewController: UIViewController {
     
     @objc func writeButtonClicked(){
         print("write button Clicked!")
-        let params : Parameters = ["title":titleTextField.text!, "content":contentTextField.text!]
-        print(params)
+        let user = UserDefaults.standard.dictionary(forKey: "user")
+
+        let params : Parameters = ["title":titleTextField.text!, "content":contentTextField.text!, "user":(user!["email"])! as! String]
         let url = "http://127.0.0.1:8000/posts/create/"
-//        AF.request("http://127.0.0.1:8000/posts/create/?title=\(params["title"])&text=\(params["content"])", method: .post, parameters: params).responseJSON { response in
-//                   switch response.result{
-//                   case .success(let value):
-//                    print("success")
-//                   case .failure(let error):
-//                    print("fail")
-//            }
-//        }
         
 
-        let info = url + "?title=\(params["title"]!)&content=\(params["content"]!)"
+        let info = url + "?title=\(params["title"]!)&content=\(params["content"]!)&user=\(params["user"]!)"
         AF.request(info.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "", method: .post, parameters: params, headers: header).responseJSON { response in
                 
         }
+        
     }
     
     override func viewDidLoad() {
