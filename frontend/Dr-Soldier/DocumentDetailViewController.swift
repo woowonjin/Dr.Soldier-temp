@@ -13,6 +13,9 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
     var titleString : String = ""
     var descriptionString : String = ""
     var post_pk = -1
+    var likes = 0;
+    var dislikes = 0;
+    var comments_number = 0;
     var comments : Array<Comment> = [
         Comment(description: "댓글", created: "방금", writer: "leedh2004", thumbsUp: 100, thumbsDown: 100, isDeleted: false),
 //        Comment(description: "댓글2", created: "방금", writer: "leedh2004", thumbsUp: 100, thumbsDown: 100, isDeleted: false),
@@ -58,7 +61,10 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
             let cell = commentTable.dequeueReusableCell(withIdentifier: "DocumentDetailCell", for: indexPath) as! DocumentDetailCell
             cell.titleLabel.text = titleString
             cell.descriptionLabel.text = descriptionString
-            
+        
+            cell.LikesButton.titleLabel?.text = String(likes)
+            cell.DislikesButton.titleLabel?.text = String(dislikes)
+            cell.CommentsButton.titleLabel?.text = String(comments_number)
             return cell
         }else{
             let cell = commentTable.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath) as! CommentCell

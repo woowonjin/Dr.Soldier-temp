@@ -28,7 +28,7 @@ class LoginViewController: UIViewController {
     func post(email:String, nickname:String){
         
         //let user = User(email: email, nickname: nickname)
-        let user : Parameters = [
+        let user_info : Parameters = [
             "email" : email,
             "nickname" : nickname
         ]
@@ -37,9 +37,10 @@ class LoginViewController: UIViewController {
         
         let info = Url + "?email=\(email)&nickname=\(nickname)"
         
-        AF.request(info.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "", method: .post, parameters: user, headers: header).responseJSON { response in
+        var pk = AF.request(info.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "", method: .post, parameters: user_info, headers: header).responseJSON { response in
                 
         }
+        print("pk : \(pk)")
     }
     //Info
     @IBAction func kakaoLoginOnClick(_ sender: Any) {

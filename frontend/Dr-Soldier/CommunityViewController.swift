@@ -27,6 +27,7 @@ class CommunityViewController: UIViewController, UITableViewDelegate, UITableVie
         cell.informationLabel.text = document.writer + " | " + document.created
         cell.thumbsUpBtn.titleLabel?.text = String(document.thumbsUp)
         cell.thumbsDownBtn.titleLabel?.text = String(document.thumbsDown)
+        cell.commentsBtn.titleLabel?.text = String(document.comments)
         return cell
     }
     
@@ -36,6 +37,9 @@ class CommunityViewController: UIViewController, UITableViewDelegate, UITableVie
         nextView.post_pk = document.pk
         nextView.titleString = document.title
         nextView.descriptionString = document.description
+        nextView.likes = document.thumbsUp
+        nextView.dislikes = document.thumbsDown
+        nextView.comments_number = document.comments
         self.navigationController?.pushViewController(nextView, animated: true)
         
     }
@@ -60,6 +64,7 @@ class CommunityViewController: UIViewController, UITableViewDelegate, UITableVie
                     let description = responseList[index]["text"] as! String
                     let likes = responseList[index]["likes_number"] as! Int
                     let dislikes = responseList[index]["dislikes_number"] as! Int
+                    let comments = responseList[index]["comments_number"] as! Int
                     let writer = responseList[index]["host_name"] as! String
                     //let host = responseList[index]["host"] as! String
                     let created = responseList[index]["created"] as! String
@@ -89,7 +94,7 @@ class CommunityViewController: UIViewController, UITableViewDelegate, UITableVie
                         createdStr = "\(d)년 전"
                     }
                     
-                    self.docs.insert(Document(title: title, description: description, created: createdStr, writer: writer, thumbsUp: likes, thumbsDown: dislikes, isDeleted: false, pk: pk), at: index)
+                    self.docs.insert(Document(title: title, description: description, created: createdStr, writer: writer, thumbsUp: likes, thumbsDown: dislikes, isDeleted: false, pk: pk, comments: comments), at: index)
                 }
             case .failure(let error):
                 print("maybe server down")
