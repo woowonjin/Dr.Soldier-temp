@@ -37,6 +37,8 @@ class WriteViewController: UIViewController {
 //>>>>>>> 6222f7cdb359bb1a2d20f6efa6f9979a98055b91
                 
         }
+        let nextView = self.storyboard?.instantiateViewController(withIdentifier: "Community") as! CommunityViewController
+        self.navigationController?.pushViewController(nextView, animated: true)
         
     }
     
