@@ -93,7 +93,7 @@ class DataBaseAPI {
     }
     
     //insert
-    private func insert(statement : String) -> Bool {
+    public func insert(statement : String) -> Bool {
         var insertStatement : OpaquePointer? = nil
         defer { sqlite3_finalize(insertStatement) }
         guard sqlite3_prepare_v2(self.database,statement,EOF,&insertStatement,nil) == SQLITE_OK else{
@@ -109,7 +109,7 @@ class DataBaseAPI {
     }
 
     //delete
-    private func delete(statement : String) -> Bool {
+    public func delete(statement : String) -> Bool {
         var deleteStatement : OpaquePointer? = nil
         defer { sqlite3_finalize(deleteStatement) }
         guard sqlite3_prepare_v2(self.database,statement,EOF,&deleteStatement,nil) == SQLITE_OK else{
@@ -122,6 +122,21 @@ class DataBaseAPI {
            print("Fail to delete")
        }
        return true
+    }
+    
+    public func update(statement: String) -> Bool {
+        var updateStatement : OpaquePointer? = nil
+         defer { sqlite3_finalize(updateStatement) }
+         guard sqlite3_prepare_v2(self.database,statement,EOF,&updateStatement,nil) == SQLITE_OK else{
+             print("Fail to prepare insert to table")
+             return false
+         }
+         if sqlite3_step(updateStatement) == SQLITE_DONE{
+            print("Success to delete")
+        }else{
+            print("Fail to delete")
+        }
+        return true
     }
     
     //select

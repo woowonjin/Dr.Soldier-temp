@@ -10,6 +10,7 @@ import UIKit
 import Alamofire
 
 class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITableViewDataSource {
+    @IBOutlet weak var commentTextField: UITextField!
     var titleString : String = ""
     var descriptionString : String = ""
     var post_pk = -1
@@ -20,6 +21,10 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
 //        Comment(description: "댓글4", created: "방금", writer: "leedh2004", thumbsUp: 100, thumbsDown: 100, isDeleted: false),
 //        Comment(description: "댓글5", created: "방금", writer: "leedh2004", thumbsUp: 100, thumbsDown: 100, isDeleted: false),
 //        Comment(description: "댓글6", created: "방금", writer: "leedh2004", thumbsUp: 100, thumbsDown: 100, isDeleted: false),
+    ]
+    let header: HTTPHeaders = [
+        "Content-Type" : "application/json",
+        "Charset" : "utf-8"
     ]
     
     //@IBOutlet weak var scrollView: UIScrollView!
@@ -84,4 +89,18 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
         commentTable.estimatedRowHeight = 100
         commentTable.rowHeight = UITableView.automaticDimension
     }
+    
+    @IBAction func submitButtonClicked(_ sender: Any) {
+        
+        let params : Parameters = [ "content":commentTextField.text!]
+        print(params)
+        let url = "http://127.0.0.1:8000/comments/create/"
+                
+        let info = url + "?content=\(params["content"]!)&pk=\(self.post_pk)"
+        AF.request(info.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "",
+            method: .post, parameters: params, headers: header).responseJSON { response in
+        }
+        
+    }
+    
 }

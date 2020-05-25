@@ -35,7 +35,8 @@ class WriteViewController: UIViewController {
         
 
         let info = url + "?title=\(params["title"]!)&content=\(params["content"]!)"
-        AF.request(info.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "", method: .post, parameters: params, headers: header).responseJSON { response in
+        AF.request(info.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "",
+                   method: .post, parameters: params, headers: header).responseJSON { response in
                 
         }
     }
