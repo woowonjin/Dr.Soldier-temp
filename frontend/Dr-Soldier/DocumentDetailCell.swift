@@ -15,4 +15,6 @@ class DocumentDetailCell : UITableViewCell{
     @IBOutlet weak var LikesButton: UIButton!
     @IBOutlet weak var DislikesButton: UIButton!
     @IBOutlet weak var CommentsButton: UIButton!
+    @IBOutlet weak var likeBtn: UIButton!
+    @IBOutlet weak var dislikeBtn: UIButton!
 }

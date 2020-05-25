@@ -27,10 +27,18 @@ class WriteViewController: UIViewController {
         let url = "http://127.0.0.1:8000/posts/create/"
         
 
+//<<<<<<< HEAD
+//        let info = url + "?title=\(params["title"]!)&content=\(params["content"]!)"
+//        AF.request(info.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "",
+//                   method: .post, parameters: params, headers: header).responseJSON { response in
+//=======
         let info = url + "?title=\(params["title"]!)&content=\(params["content"]!)&user=\(params["user"]!)"
         AF.request(info.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "", method: .post, parameters: params, headers: header).responseJSON { response in
+//>>>>>>> 6222f7cdb359bb1a2d20f6efa6f9979a98055b91
                 
         }
+        let nextView = self.storyboard?.instantiateViewController(withIdentifier: "Community") as! CommunityViewController
+        self.navigationController?.pushViewController(nextView, animated: true)
         
     }
     

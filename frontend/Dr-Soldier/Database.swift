@@ -132,6 +132,21 @@ class DataBaseAPI {
        return true
     }
     
+    public func update(statement: String) -> Bool {
+        var updateStatement : OpaquePointer? = nil
+         defer { sqlite3_finalize(updateStatement) }
+         guard sqlite3_prepare_v2(self.database,statement,EOF,&updateStatement,nil) == SQLITE_OK else{
+             print("Fail to prepare insert to table")
+             return false
+         }
+         if sqlite3_step(updateStatement) == SQLITE_DONE{
+            print("Success to delete")
+        }else{
+            print("Fail to delete")
+        }
+        return true
+    }
+    
     //select
     public func query(statement : String, ColumnNumber: Int) -> Array<Array<String>> {
         var queryStatement: OpaquePointer?

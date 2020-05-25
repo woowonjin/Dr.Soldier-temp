@@ -10,20 +10,28 @@ import UIKit
 import Alamofire
 
 class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITableViewDataSource {
-    var user: User?
+
+    @IBOutlet weak var commentTextField: UITextField!
+    //var user: User?
+
     var titleString : String = ""
     var descriptionString : String = ""
     var post_pk = -1
     var likes = 0;
     var dislikes = 0;
     var comments_number = 0;
+    var isLike = false
     var comments : Array<Comment> = [
-        Comment(description: "댓글", created: "방금", writer: "leedh2004", thumbsUp: 100, thumbsDown: 100, isDeleted: false),
+        Comment(description: "댓글", created: "방금", writer: "leedh2004", thumbsUp: 100, thumbsDown: 100, isDeleted: false, pk: -1),
 //        Comment(description: "댓글2", created: "방금", writer: "leedh2004", thumbsUp: 100, thumbsDown: 100, isDeleted: false),
 //        Comment(description: "댓글3", created: "방금", writer: "leedh2004", thumbsUp: 100, thumbsDown: 100, isDeleted: false),
 //        Comment(description: "댓글4", created: "방금", writer: "leedh2004", thumbsUp: 100, thumbsDown: 100, isDeleted: false),
 //        Comment(description: "댓글5", created: "방금", writer: "leedh2004", thumbsUp: 100, thumbsDown: 100, isDeleted: false),
 //        Comment(description: "댓글6", created: "방금", writer: "leedh2004", thumbsUp: 100, thumbsDown: 100, isDeleted: false),
+    ]
+    let header: HTTPHeaders = [
+        "Content-Type" : "application/json",
+        "Charset" : "utf-8"
     ]
     
     //@IBOutlet weak var scrollView: UIScrollView!
@@ -40,9 +48,11 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
                     let writer = responseList[index]["host_name"] as! String
                     let likes = responseList[index]["likes_number"] as! Int
                     let disLikes = responseList[index]["dislikes_number"] as! Int
-                    
-                    self.comments.insert(Comment(description: text, created: "방금", writer: writer, thumbsUp: likes, thumbsDown: disLikes, isDeleted: false), at: index+1)
+                    let pk = responseList[index]["pk"] as! Int
+                    self.comments.insert(Comment(description: text, created: "방금", writer: writer, thumbsUp: likes, thumbsDown: disLikes, isDeleted: false, pk: pk), at: index+1)
                 }
+//                self.likeRequest()
+                print("isLike : ", self.isLike)
                 DispatchQueue.main.async {
                     self.commentTable.reloadData()
                 }
@@ -65,14 +75,16 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
             cell.LikesButton.titleLabel?.text = String(likes)
             cell.DislikesButton.titleLabel?.text = String(dislikes)
             cell.CommentsButton.titleLabel?.text = String(comments_number)
+//            likeBtnChange(btn: cell.likeBtn)
+            print("cell")
             return cell
         }else{
             let cell = commentTable.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath) as! CommentCell
             let comment = comments[indexPath.row]
             cell.UserNameLabel.text = comment.writer
             cell.DescriptionLabel.text = comment.description
-//            cell.thumbsUpBtn.titleLabel?.text = String(comment.thumbsUp)
-//            cell.thumbsDownBtn.titleLabel?.text = String(comment.thumbsDown)
+            cell.thumbsUpBtn.titleLabel?.text = String(comment.thumbsUp)
+            cell.thumbsDownBtn.titleLabel?.text = String(comment.thumbsDown)
             return cell
         }
     }
@@ -80,9 +92,48 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
         return UITableView.automaticDimension
     }
     
-    @IBAction func likePost(_ sender: Any) {
+    func likeRequest(){
+        let user = UserDefaults.standard.dictionary(forKey: "user")
+        var like: Bool = false
+        AF.request("http://127.0.0.1:8000/alreadylikes/?pk=\(self.post_pk)&user=\((user!["email"])! as! String)").responseJSON { response in
+            switch response.result{
+            case .success(let value):
+                let rep = value as! AnyObject
+                self.isLike = rep["like"]! as! Bool
+                DispatchQueue.main.async {
+                    self.commentTable.reloadData()
+                }
+            case .failure(let value):
+                print("like request Error")
+            }
+        }
+
+    }
+//
+//    func likeBtnChange(btn: UIButton){
+//        print("islike???", isLike)
+//        if isLike{
+//            let img = UIImage(named: "heart.fill")
+//            btn.setBackgroundImage(img, for: .normal)
+//        }
+//        else{
+//            let img = UIImage(named: "heart")
+//            btn.setBackgroundImage(img, for: .normal)
+//        }
+//    }
+    
+    
+    @IBAction func likePost(_ sender: UIButton) {
         let user = UserDefaults.standard.dictionary(forKey: "user")
         AF.request("http://127.0.0.1:8000/likes/?pk=\(self.post_pk)&user=\((user!["email"])! as! String)").responseJSON { response in
+        }
+        if isLike{
+            print("Cancel Like")
+            isLike = false
+        }
+        else{
+            print("I like this post")
+            isLike = true
         }
         print("like btn clicked")
     }
@@ -93,13 +144,33 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
         }
         print("dislike btn clicked")
     }
+    
+//    @IBAction func dislikeComment(_ sender: Any) {
+//    }
+//    
+//    @IBAction func likeComment(_ sender: Any) {
+//    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         getComments()
-    
         commentTable.delegate = self
         commentTable.dataSource = self
         commentTable.estimatedRowHeight = 100
         commentTable.rowHeight = UITableView.automaticDimension
     }
+    
+    @IBAction func submitButtonClicked(_ sender: Any) {
+        
+        let params : Parameters = [ "content":commentTextField.text!]
+        print(params)
+        let url = "http://127.0.0.1:8000/comments/create/"
+                
+        let info = url + "?content=\(params["content"]!)&pk=\(self.post_pk)"
+        AF.request(info.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "",
+            method: .post, parameters: params, headers: header).responseJSON { response in
+        }
+        
+    }
+    
 }
