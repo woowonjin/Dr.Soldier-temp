@@ -31,6 +31,8 @@ class WriteViewController: UIViewController {
         AF.request(info.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "", method: .post, parameters: params, headers: header).responseJSON { response in
                 
         }
+        let nextView = self.storyboard?.instantiateViewController(withIdentifier: "Community") as! CommunityViewController
+        self.navigationController?.pushViewController(nextView, animated: true)
         
     }
     
