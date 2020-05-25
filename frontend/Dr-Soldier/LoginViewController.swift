@@ -28,7 +28,7 @@ class LoginViewController: UIViewController {
     func post(email:String, nickname:String){
         
         //let user = User(email: email, nickname: nickname)
-        let user : Parameters = [
+        let user_info : Parameters = [
             "email" : email,
             "nickname" : nickname
         ]
@@ -37,7 +37,7 @@ class LoginViewController: UIViewController {
         
         let info = Url + "?email=\(email)&nickname=\(nickname)"
         
-        AF.request(info.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "", method: .post, parameters: user, headers: header).responseJSON { response in
+        AF.request(info.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "", method: .post, parameters: user_info, headers: header).responseJSON { response in
                 
         }
     }
@@ -62,16 +62,19 @@ class LoginViewController: UIViewController {
                         guard let user = user,
                             let email = user.account?.email,
                             let nickName = user.nickname else { return }
-    
+                        let dict = ["email":email, "nickName":nickName]
+                        let userInfo = UserDefaults.standard
+                        userInfo.set(dict, forKey: "user")
                         self.post(email:email, nickname:nickName)
-                      
 //                      let mainVC = MainViewController()
 //                      mainVC.emailLabel.text = email
 //                      mainVC.nicnameLabel.text = nickname
                         guard let main = self.storyboard?.instantiateViewController(withIdentifier: "Main") else{
                                    return
                         }
+                        
                         //화면 전환 애니메이션을 설정합니다.
+                        
                         main.modalPresentationStyle = .fullScreen
                         main.modalTransitionStyle = UIModalTransitionStyle.coverVertical
 

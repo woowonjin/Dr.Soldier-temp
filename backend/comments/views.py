@@ -11,7 +11,7 @@ from django.views.decorators.csrf import csrf_exempt
 def comments(request):
     print("comments")
     pk = request.GET.get("pk")
-    comments = models.Comment.objects.filter(pk=pk).filter(is_deleted=False)
+    comments = models.Comment.objects.filter(post=pk).filter(is_deleted=False)
     comments_full = []
     for comment in comments:
         comments_full.append(comment.serializeCustom())

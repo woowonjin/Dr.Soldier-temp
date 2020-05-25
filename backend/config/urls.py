@@ -17,10 +17,14 @@ from django.contrib import admin
 from django.urls import path, include
 import posts.views
 import users.views
+import likes.views
+import dislikes.views
 from comments import views as comments_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('likes/', likes.views.likes),
+    path('dislikes/', dislikes.views.dislikes),
     path('documents/', posts.views.documents, name="documents"),
     path('posts/', include("posts.urls", namespace="posts")),
     path('comments/', include("comments.urls", namespace="comments")),

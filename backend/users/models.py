@@ -12,4 +12,8 @@ class User(AbstractUser):
     login_method = models.CharField(choices=LOGIN_CHOICES,
                                     max_length=15,
                                     default=LOGIN_KAKAO)
-    
+    def serializeCustom(self):
+        data = {
+            "pk": self.pk,
+        }
+        return data

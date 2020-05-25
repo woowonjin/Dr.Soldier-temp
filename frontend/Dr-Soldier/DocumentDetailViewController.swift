@@ -10,10 +10,16 @@ import UIKit
 import Alamofire
 
 class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITableViewDataSource {
+
     @IBOutlet weak var commentTextField: UITextField!
+    //var user: User?
+
     var titleString : String = ""
     var descriptionString : String = ""
     var post_pk = -1
+    var likes = 0;
+    var dislikes = 0;
+    var comments_number = 0;
     var comments : Array<Comment> = [
         Comment(description: "댓글", created: "방금", writer: "leedh2004", thumbsUp: 100, thumbsDown: 100, isDeleted: false),
 //        Comment(description: "댓글2", created: "방금", writer: "leedh2004", thumbsUp: 100, thumbsDown: 100, isDeleted: false),
@@ -43,7 +49,6 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
                     let disLikes = responseList[index]["dislikes_number"] as! Int
                     
                     self.comments.insert(Comment(description: text, created: "방금", writer: writer, thumbsUp: likes, thumbsDown: disLikes, isDeleted: false), at: index+1)
-                    print(self.comments[index+1])
                 }
                 DispatchQueue.main.async {
                     self.commentTable.reloadData()
@@ -63,7 +68,10 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
             let cell = commentTable.dequeueReusableCell(withIdentifier: "DocumentDetailCell", for: indexPath) as! DocumentDetailCell
             cell.titleLabel.text = titleString
             cell.descriptionLabel.text = descriptionString
-            
+        
+            cell.LikesButton.titleLabel?.text = String(likes)
+            cell.DislikesButton.titleLabel?.text = String(dislikes)
+            cell.CommentsButton.titleLabel?.text = String(comments_number)
             return cell
         }else{
             let cell = commentTable.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath) as! CommentCell
@@ -79,7 +87,19 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
         return UITableView.automaticDimension
     }
     
+    @IBAction func likePost(_ sender: Any) {
+        let user = UserDefaults.standard.dictionary(forKey: "user")
+        AF.request("http://127.0.0.1:8000/likes/?pk=\(self.post_pk)&user=\((user!["email"])! as! String)").responseJSON { response in
+        }
+        print("like btn clicked")
+    }
     
+    @IBAction func dislikePost(_ sender: Any) {
+        let user = UserDefaults.standard.dictionary(forKey: "user")
+        AF.request("http://127.0.0.1:8000/dislikes/?pk=\(self.post_pk)&user=\((user!["email"])! as! String)").responseJSON { response in
+        }
+        print("dislike btn clicked")
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         getComments()
