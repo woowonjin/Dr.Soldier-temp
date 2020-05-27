@@ -28,9 +28,9 @@ class CommunityViewController: UIViewController, UITableViewDelegate, UITableVie
         cell.titleLabel.text = document.title
         cell.descriptionLabel.text = document.description
         cell.informationLabel.text = document.writer + " | " + document.created
-        cell.thumbsUpBtn.titleLabel?.text = String(document.thumbsUp)
-        cell.thumbsDownBtn.titleLabel?.text = String(document.thumbsDown)
-        cell.commentsBtn.titleLabel?.text = String(document.comments)
+        cell.thumbsUpBtn.setTitle(String(document.thumbsUp), for: .normal)
+        cell.thumbsDownBtn.setTitle(String(document.thumbsDown), for: .normal)
+        cell.commentsBtn.setTitle(String(document.comments), for: .normal)
         return cell
     }
     
@@ -143,7 +143,7 @@ class CommunityViewController: UIViewController, UITableViewDelegate, UITableVie
         mainTableView.dataSource = self
         // 라이트 뷰 생성
         let rightView = UIView()
-        rightView.frame = CGRect(x: 0, y: 0, width: 80, height: 40)
+        rightView.frame = CGRect(x: 0, y: 0, width: 30, height: 40)
         // rItem이라는 UIBarButtonItem 객체 생성
         let rItem = UIBarButtonItem(customView: rightView)
         self.navigationItem.rightBarButtonItem = rItem
