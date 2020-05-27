@@ -33,3 +33,7 @@ def post_create(request):
     post = Post.objects.create(title=title, text=text, host=user, board=board)
     post.save()
     return HttpResponse("ok")
+
+def post_info(request):
+    pk = request.GET.get("pk")
+    post = Post.objects.get(pk=pk)

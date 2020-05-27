@@ -21,14 +21,12 @@ def comments(request):
 
 @csrf_exempt
 def comment_create(request):
-    print("START")
     text = request.GET.get("content")
-    user = user_models.User.objects.get(pk=1)
+    email = request.GET.get("user")
+    user = user_models.User.objects.get(username=email)
     board = board_models.Board.objects.get(title="All")
     pk = request.GET.get("pk")
-    print(pk)
     post = post_models.Post.objects.get(pk=pk)
     comment = Comment.objects.create(text=text, user=user, post=post)
     comment.save()
-    print("END")
     return HttpResponse("ok")

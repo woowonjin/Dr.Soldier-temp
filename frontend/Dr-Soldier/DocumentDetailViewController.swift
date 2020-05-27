@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 
 class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITableViewDataSource {
-
+     private var refreshControl = UIRefreshControl()
     @IBOutlet weak var commentTextField: UITextField!
     //var user: User?
 
@@ -22,12 +22,6 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
     var comments_number = 0;
     var isLike = false
     var comments : Array<Comment> = [
-        Comment(description: "댓글", created: "방금", writer: "leedh2004", thumbsUp: 100, thumbsDown: 100, isDeleted: false, pk: -1),
-//        Comment(description: "댓글2", created: "방금", writer: "leedh2004", thumbsUp: 100, thumbsDown: 100, isDeleted: false),
-//        Comment(description: "댓글3", created: "방금", writer: "leedh2004", thumbsUp: 100, thumbsDown: 100, isDeleted: false),
-//        Comment(description: "댓글4", created: "방금", writer: "leedh2004", thumbsUp: 100, thumbsDown: 100, isDeleted: false),
-//        Comment(description: "댓글5", created: "방금", writer: "leedh2004", thumbsUp: 100, thumbsDown: 100, isDeleted: false),
-//        Comment(description: "댓글6", created: "방금", writer: "leedh2004", thumbsUp: 100, thumbsDown: 100, isDeleted: false),
     ]
     let header: HTTPHeaders = [
         "Content-Type" : "application/json",
@@ -36,13 +30,24 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
     
     //@IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var commentTable: UITableView!
-
+    
+    func getInfo(){
+        AF.request("http://127.0.0.1:8000/post/info/?pk=\(self.post_pk)").responseJSON { response in
+            switch response.result{
+            case .success(let value):
+                print("!!")
+            case .failure(let error):
+                print("maybe server down")
+            }
+        }
+    }
+    
     func getComments(){
         AF.request("http://127.0.0.1:8000/comments/?pk=\(self.post_pk)").responseJSON { response in
             switch response.result{
             case .success(let value):
                 let responseList = value as! Array<AnyObject>
-            
+                self.comments.insert(Comment(description: "댓글", created: "방금", writer: "leedh2004", thumbsUp: 100, thumbsDown: 100, isDeleted: false, pk: -1), at: 0)
                 for (index, element) in responseList.enumerated(){
                     let text = responseList[index]["text"] as! String
                     let writer = responseList[index]["host_name"] as! String
@@ -52,7 +57,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
                     self.comments.insert(Comment(description: text, created: "방금", writer: writer, thumbsUp: likes, thumbsDown: disLikes, isDeleted: false, pk: pk), at: index+1)
                 }
 //                self.likeRequest()
-                print("isLike : ", self.isLike)
+                print("comments:", self.comments)
                 DispatchQueue.main.async {
                     self.commentTable.reloadData()
                 }
@@ -71,11 +76,19 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
             let cell = commentTable.dequeueReusableCell(withIdentifier: "DocumentDetailCell", for: indexPath) as! DocumentDetailCell
             cell.titleLabel.text = titleString
             cell.descriptionLabel.text = descriptionString
-        
+            print("table likes", likes)
             cell.LikesButton.titleLabel?.text = String(likes)
+            print("cell likes", cell.LikesButton.titleLabel?.text)
             cell.DislikesButton.titleLabel?.text = String(dislikes)
             cell.CommentsButton.titleLabel?.text = String(comments_number)
-//            likeBtnChange(btn: cell.likeBtn)
+            if self.isLike{
+                let img = UIImage(named: "heart.fill")
+                cell.likeBtn.setBackgroundImage(img, for: .normal)
+            }
+            else{
+                let img = UIImage(named: "heart")
+                cell.likeBtn.setBackgroundImage(img, for: .normal)
+            }
             print("cell")
             return cell
         }else{
@@ -94,33 +107,18 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
     
     func likeRequest(){
         let user = UserDefaults.standard.dictionary(forKey: "user")
-        var like: Bool = false
         AF.request("http://127.0.0.1:8000/alreadylikes/?pk=\(self.post_pk)&user=\((user!["email"])! as! String)").responseJSON { response in
             switch response.result{
             case .success(let value):
                 let rep = value as! AnyObject
                 self.isLike = rep["like"]! as! Bool
-                DispatchQueue.main.async {
-                    self.commentTable.reloadData()
-                }
             case .failure(let value):
                 print("like request Error")
             }
         }
 
     }
-//
-//    func likeBtnChange(btn: UIButton){
-//        print("islike???", isLike)
-//        if isLike{
-//            let img = UIImage(named: "heart.fill")
-//            btn.setBackgroundImage(img, for: .normal)
-//        }
-//        else{
-//            let img = UIImage(named: "heart")
-//            btn.setBackgroundImage(img, for: .normal)
-//        }
-//    }
+
     
     
     @IBAction func likePost(_ sender: UIButton) {
@@ -134,6 +132,10 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
         else{
             print("I like this post")
             isLike = true
+        }
+        let time = DispatchTime.now() + .milliseconds(500)
+        DispatchQueue.main.asyncAfter(deadline: time){
+            self.refreshComment()
         }
         print("like btn clicked")
     }
@@ -153,24 +155,42 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        commentTable.refreshControl = refreshControl
+        self.refreshControl.attributedTitle = NSAttributedString(string: "당겨서 새로고침")
+        refreshControl.addTarget(self, action: #selector(refreshComment), for: .valueChanged)
         getComments()
+        likeRequest()
         commentTable.delegate = self
         commentTable.dataSource = self
         commentTable.estimatedRowHeight = 100
         commentTable.rowHeight = UITableView.automaticDimension
+        //refreshComment()
+    }
+    
+    @objc func refreshComment(){
+        comments.removeAll()
+        getComments()
+        commentTable.reloadData()
+        self.refreshControl.endRefreshing()
     }
     
     @IBAction func submitButtonClicked(_ sender: Any) {
-        
+        let user = UserDefaults.standard.dictionary(forKey: "user")
         let params : Parameters = [ "content":commentTextField.text!]
         print(params)
         let url = "http://127.0.0.1:8000/comments/create/"
                 
-        let info = url + "?content=\(params["content"]!)&pk=\(self.post_pk)"
+        let info = url + "?content=\(params["content"]!)&pk=\(self.post_pk)&user=\((user!["email"])! as! String)"
         AF.request(info.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "",
-            method: .post, parameters: params, headers: header).responseJSON { response in
+                    method: .post, parameters: params, headers: header).responseJSON { response in
         }
-        
+        let time = DispatchTime.now() + .milliseconds(500)
+        DispatchQueue.main.asyncAfter(deadline: time){
+            self.refreshComment()
+        }
+//        DispatchQueue.main.async {
+//            self.commentTable.reloadData()
+//        }
     }
     
 }
