@@ -65,6 +65,10 @@ class DataBaseQuery {
     public func insert(Tablename: String , Values : String) -> String{
         return "INSERT INTO " + Tablename + " VALUES " + "(" + Values + ")" + ";"
     }
+    
+    public func update(Tablename: String, beforeValues : String, afterValues : String) -> String{
+        return "UPDATE " + Tablename + " SET " + afterValues + " WHERE " + beforeValues + ";"
+    }
 }
 
 
@@ -128,6 +132,22 @@ class DataBaseAPI {
            print("Success to delete")
        }else{
            print("Fail to delete")
+       }
+       return true
+    }
+    
+    //update
+    public func update(statement : String) -> Bool {
+        var deleteStatement : OpaquePointer? = nil
+        defer { sqlite3_finalize(deleteStatement) }
+        guard sqlite3_prepare_v2(self.database,statement,EOF,&deleteStatement,nil) == SQLITE_OK else{
+            print("Fail to prepare update to table")
+            return false
+        }
+        if sqlite3_step(deleteStatement) == SQLITE_DONE{
+           print("Success to update")
+       }else{
+           print("Fail to update")
        }
        return true
     }

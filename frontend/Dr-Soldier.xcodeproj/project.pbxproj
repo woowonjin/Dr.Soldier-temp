@@ -13,6 +13,7 @@
 		11AA922F2463F86D00765FC4 /* KakaoOpenSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11AA922E2463F86D00765FC4 /* KakaoOpenSDK.framework */; };
 		11AA92322463FB8000765FC4 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11AA92312463FB8000765FC4 /* LoginViewController.swift */; };
 		11FC2363247AB7110075450E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FC2362247AB7110075450E /* User.swift */; };
+		5E93140E530AFE8EB5BF4A86 /* Pods_Dr_Soldier.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B142CDD76A48E120D5A71F5 /* Pods_Dr_Soldier.framework */; };
 		77055AFF24698EF700BE47A9 /* DocumentDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77055AFE24698EF700BE47A9 /* DocumentDetailViewController.swift */; };
 		77055B0124698F0E00BE47A9 /* DocumentDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77055B0024698F0E00BE47A9 /* DocumentDetailCell.swift */; };
 		77055B0324698F6900BE47A9 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77055B0224698F6900BE47A9 /* CommentCell.swift */; };
@@ -33,7 +34,6 @@
 		776E2480244F09B6008CA6A9 /* GoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776E247F244F09B6008CA6A9 /* GoalViewController.swift */; };
 		776E2482244F09FA008CA6A9 /* BodyChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776E2481244F09FA008CA6A9 /* BodyChartViewController.swift */; };
 		77EC65FE2472E5FE00528C78 /* WriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EC65FD2472E5FE00528C78 /* WriteViewController.swift */; };
-		EC6A7EC0143469553B364FB2 /* Pods_Dr_Soldier.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA5EFB7911974D658BAC3A97 /* Pods_Dr_Soldier.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,8 +44,7 @@
 		11AA92312463FB8000765FC4 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		11E52D5B2463FE3A0060531B /* Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		11FC2362247AB7110075450E /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		46B4A1122F4D1525B4B5BDE9 /* Pods-Dr-Soldier.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dr-Soldier.release.xcconfig"; path = "Target Support Files/Pods-Dr-Soldier/Pods-Dr-Soldier.release.xcconfig"; sourceTree = "<group>"; };
-		535A568B26C5BE202A23B07E /* Pods-Dr-Soldier.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dr-Soldier.debug.xcconfig"; path = "Target Support Files/Pods-Dr-Soldier/Pods-Dr-Soldier.debug.xcconfig"; sourceTree = "<group>"; };
+		3B142CDD76A48E120D5A71F5 /* Pods_Dr_Soldier.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dr_Soldier.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		77055AFE24698EF700BE47A9 /* DocumentDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentDetailViewController.swift; sourceTree = "<group>"; };
 		77055B0024698F0E00BE47A9 /* DocumentDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentDetailCell.swift; sourceTree = "<group>"; };
 		77055B0224698F6900BE47A9 /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
@@ -68,7 +67,8 @@
 		776E247F244F09B6008CA6A9 /* GoalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalViewController.swift; sourceTree = "<group>"; };
 		776E2481244F09FA008CA6A9 /* BodyChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyChartViewController.swift; sourceTree = "<group>"; };
 		77EC65FD2472E5FE00528C78 /* WriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteViewController.swift; sourceTree = "<group>"; };
-		AA5EFB7911974D658BAC3A97 /* Pods_Dr_Soldier.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dr_Soldier.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		95F3DD1323FBDAA65BA84261 /* Pods-Dr-Soldier.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dr-Soldier.debug.xcconfig"; path = "Target Support Files/Pods-Dr-Soldier/Pods-Dr-Soldier.debug.xcconfig"; sourceTree = "<group>"; };
+		9C944D8BA9020FEF06D5998A /* Pods-Dr-Soldier.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dr-Soldier.release.xcconfig"; path = "Target Support Files/Pods-Dr-Soldier/Pods-Dr-Soldier.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,7 +77,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				11AA922F2463F86D00765FC4 /* KakaoOpenSDK.framework in Frameworks */,
-				EC6A7EC0143469553B364FB2 /* Pods_Dr_Soldier.framework in Frameworks */,
+				5E93140E530AFE8EB5BF4A86 /* Pods_Dr_Soldier.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -87,8 +87,8 @@
 		4DF1241A2F837E58272F4925 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				535A568B26C5BE202A23B07E /* Pods-Dr-Soldier.debug.xcconfig */,
-				46B4A1122F4D1525B4B5BDE9 /* Pods-Dr-Soldier.release.xcconfig */,
+				95F3DD1323FBDAA65BA84261 /* Pods-Dr-Soldier.debug.xcconfig */,
+				9C944D8BA9020FEF06D5998A /* Pods-Dr-Soldier.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -149,7 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				11AA922E2463F86D00765FC4 /* KakaoOpenSDK.framework */,
-				AA5EFB7911974D658BAC3A97 /* Pods_Dr_Soldier.framework */,
+				3B142CDD76A48E120D5A71F5 /* Pods_Dr_Soldier.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -161,11 +161,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 776E2472244F04BA008CA6A9 /* Build configuration list for PBXNativeTarget "Dr-Soldier" */;
 			buildPhases = (
-				9B2B059D6B5E1671FAE3E0ED /* [CP] Check Pods Manifest.lock */,
+				8ABE5A1D45F36BC142E4293A /* [CP] Check Pods Manifest.lock */,
 				776E245A244F04B8008CA6A9 /* Sources */,
 				776E245B244F04B8008CA6A9 /* Frameworks */,
 				776E245C244F04B8008CA6A9 /* Resources */,
-				A4B4E17858497A4AAD5BCF78 /* [CP] Embed Pods Frameworks */,
+				973E0DD0BEC5CC3607491AB9 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -224,7 +224,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		9B2B059D6B5E1671FAE3E0ED /* [CP] Check Pods Manifest.lock */ = {
+		8ABE5A1D45F36BC142E4293A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -246,7 +246,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A4B4E17858497A4AAD5BCF78 /* [CP] Embed Pods Frameworks */ = {
+		973E0DD0BEC5CC3607491AB9 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -432,7 +432,7 @@
 		};
 		776E2473244F04BA008CA6A9 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 535A568B26C5BE202A23B07E /* Pods-Dr-Soldier.debug.xcconfig */;
+			baseConfigurationReference = 95F3DD1323FBDAA65BA84261 /* Pods-Dr-Soldier.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Manual;
@@ -462,7 +462,7 @@
 		};
 		776E2474244F04BA008CA6A9 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 46B4A1122F4D1525B4B5BDE9 /* Pods-Dr-Soldier.release.xcconfig */;
+			baseConfigurationReference = 9C944D8BA9020FEF06D5998A /* Pods-Dr-Soldier.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Manual;
