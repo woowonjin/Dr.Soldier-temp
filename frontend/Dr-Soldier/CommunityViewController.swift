@@ -10,9 +10,12 @@ import UIKit
 import Alamofire
 
 class CommunityViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+
+    private var refreshControl = UIRefreshControl()
+
+    
     var user: User?
     @IBOutlet weak var mainTableView: UITableView!
-    
     var docs : Array<Document> = []
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -25,23 +28,23 @@ class CommunityViewController: UIViewController, UITableViewDelegate, UITableVie
         cell.titleLabel.text = document.title
         cell.descriptionLabel.text = document.description
         cell.informationLabel.text = document.writer + " | " + document.created
-        cell.thumbsUpBtn.titleLabel?.text = String(document.thumbsUp)
-        cell.thumbsDownBtn.titleLabel?.text = String(document.thumbsDown)
-        cell.commentsBtn.titleLabel?.text = String(document.comments)
+        cell.thumbsUpBtn.setTitle(String(document.thumbsUp), for: .normal)
+        cell.thumbsDownBtn.setTitle(String(document.thumbsDown), for: .normal)
+        cell.commentsBtn.setTitle(String(document.comments), for: .normal)
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let nextView = self.storyboard?.instantiateViewController(withIdentifier: "DocumentDetailViewController") as! DocumentDetailViewController
-        let document = docs[indexPath.row]
-        nextView.post_pk = document.pk
-        nextView.titleString = document.title
-        nextView.descriptionString = document.description
-        nextView.likes = document.thumbsUp
-        nextView.dislikes = document.thumbsDown
-        nextView.comments_number = document.comments
-        self.navigationController?.pushViewController(nextView, animated: true)
-        
+            let nextView = self.storyboard?.instantiateViewController(withIdentifier: "DocumentDetailViewController") as! DocumentDetailViewController
+            let document = docs[indexPath.row]
+            nextView.post_pk = document.pk
+            nextView.likes = document.thumbsUp
+            nextView.dislikes = document.thumbsDown
+            nextView.comments_number = document.comments
+            nextView.titleString = document.title
+            nextView.descriptionString = document.description
+            self.navigationController?.pushViewController(nextView, animated: true)
+//
     }
     
     func getDocs(){
@@ -49,7 +52,6 @@ class CommunityViewController: UIViewController, UITableViewDelegate, UITableVie
         AF.request("http://127.0.0.1:8000/documents").responseJSON { response in
             switch response.result{
             case .success(let value):
-                print("DIE")
                 print(type(of: value))
                 let responseList = value as! Array<AnyObject>
                 
@@ -95,6 +97,9 @@ class CommunityViewController: UIViewController, UITableViewDelegate, UITableVie
                     }
                     
                     self.docs.insert(Document(title: title, description: description, created: createdStr, writer: writer, thumbsUp: likes, thumbsDown: dislikes, isDeleted: false, pk: pk, comments: comments), at: index)
+                    DispatchQueue.main.async {
+                        self.mainTableView.reloadData()
+                    }
                 }
             case .failure(let error):
                 print("maybe server down")
@@ -106,9 +111,6 @@ class CommunityViewController: UIViewController, UITableViewDelegate, UITableVie
 //                let description = obj["text"] as! String
 //                self.docs.insert(Document(title: title, description: description, created: Date(), writer: "leedh2004", thumbsUp: 30, thumbsDown: 10, isDeleted: false), at: index)
 //            }
-            DispatchQueue.main.async {
-                self.mainTableView.reloadData()
-            }
            
         }
     }
@@ -117,10 +119,12 @@ class CommunityViewController: UIViewController, UITableViewDelegate, UITableVie
         let nextView = self.storyboard?.instantiateViewController(withIdentifier: "WriteViewController") as! WriteViewController
          self.navigationController?.pushViewController(nextView, animated: true)
     }
-    @objc func refreshButtonClicked(){
-        print("refresh button Clicked!")
+    
+    @objc func refresh(){
         docs.removeAll()
         getDocs()
+        mainTableView.reloadData()
+        self.refreshControl.endRefreshing()
     }
     
     override func viewDidLoad() {
@@ -128,7 +132,10 @@ class CommunityViewController: UIViewController, UITableViewDelegate, UITableVie
         // Do any additional setup after loading the view.
 //        self.navigationItem.hidesBackButton = true;
 //        self.navigationItem.leftBarButtonItem = nil;
-
+        //당겨서 새로고침
+        mainTableView.refreshControl = refreshControl
+        self.refreshControl.attributedTitle = NSAttributedString(string: "당겨서 새로고침")
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         let navview = Variable_Functions.init()
         self.navigationItem.titleView = navview.navView
         getDocs()
@@ -136,18 +143,10 @@ class CommunityViewController: UIViewController, UITableViewDelegate, UITableVie
         mainTableView.dataSource = self
         // 라이트 뷰 생성
         let rightView = UIView()
-        rightView.frame = CGRect(x: 0, y: 0, width: 80, height: 40)
+        rightView.frame = CGRect(x: 0, y: 0, width: 30, height: 40)
         // rItem이라는 UIBarButtonItem 객체 생성
         let rItem = UIBarButtonItem(customView: rightView)
         self.navigationItem.rightBarButtonItem = rItem
-        // 새로고침 버튼 생성
-        let refreshButton = UIButton(type:.system)
-        refreshButton.frame = CGRect(x:50, y:8, width: 30, height: 30)
-        refreshButton.setImage(UIImage(systemName: "arrow.clockwise"), for: .normal)
-        refreshButton.tintColor = .white
-        refreshButton.addTarget(self, action: #selector(refreshButtonClicked), for: .touchUpInside)
-        // 라이트 뷰에 버튼 추가
-        rightView.addSubview(refreshButton)
         // 글쓰기 버튼 생성
         let writeButton = UIButton(type:.system)
         writeButton.frame = CGRect(x:10, y:8, width: 30, height: 30)

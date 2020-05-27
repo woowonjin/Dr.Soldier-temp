@@ -20,13 +20,17 @@ import users.views
 import likes.views
 import dislikes.views
 from comments import views as comments_views
+from commentLikes import views as commentLikes_views
+from commentDislikes import views as commentDislikes_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('alreadylikes/', likes.views.already_likes),
+    path('alreadylikes/', posts.views.already_likes),
     path('likes/', likes.views.likes),
     path('dislikes/', dislikes.views.dislikes),
     path('documents/', posts.views.documents, name="documents"),
+    path('commentLikes/', commentLikes_views.like, name="commentLikes"),
+    path('commentDislikes/', commentDislikes_views.dislike, name="commentDislikes"),
     path('posts/', include("posts.urls", namespace="posts")),
     path('comments/', include("comments.urls", namespace="comments")),
     path('users/', include("users.urls", namespace="users")),

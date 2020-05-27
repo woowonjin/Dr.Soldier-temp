@@ -8,6 +8,9 @@ from .models import Post
 from boards import models as board_models
 from users import models as user_models
 from datetime import datetime
+from likes import models as like_models
+from dislikes import models as dislikes_models
+from posts import models as post_models
 
 def documents(request):
     print("/documents")
@@ -33,3 +36,50 @@ def post_create(request):
     post = Post.objects.create(title=title, text=text, host=user, board=board)
     post.save()
     return HttpResponse("ok")
+
+def already_likes(request):
+    post_pk = request.GET.get("pk")
+    email = request.GET.get("user")
+    user = user_models.User.objects.get(username=email)
+    post = post_models.Post.objects.get(pk=post_pk)
+    try:
+        like = like_models.Like.objects.get(user=user, post=post)
+        try:
+            dislike = dislikes_models.Dislike.objects.get(user=user, post=post)
+            response = {"like": True,
+                        "dislike": True,
+                        "likes_number": post.count_likes(),
+                        "dislikes_number": post.count_dislikes(),
+                        "comments_number": post.count_comments(),
+                        }
+            return JsonResponse(response, status=201)
+        except dislikes_models.Dislike.DoesNotExist:
+            response = {"like": True,
+                        "dislike": False,
+                        "likes_number": post.count_likes(),
+                        "dislikes_number": post.count_dislikes(),
+                        "comments_number": post.count_comments(),}
+            return JsonResponse(response, status=201)
+    except like_models.Like.DoesNotExist:
+        try:
+            dislike = dislikes_models.Dislike.objects.get(user=user, post=post)
+            response = {"like": False,
+                        "dislike": True,
+                        "likes_number": post.count_likes(),
+                        "dislikes_number": post.count_dislikes(),
+                        "comments_number": post.count_comments(),}
+            return JsonResponse(response, status=201)
+        except dislikes_models.Dislike.DoesNotExist:
+            response = {"like": False,
+                        "dislike": False,
+                        "likes_number": post.count_likes(),
+                        "dislikes_number": post.count_dislikes(),
+                        "comments_number": post.count_comments(),}
+            return JsonResponse(response, status=201)
+    # try:
+    #     check_like = like_models.Like.objects.get(user=user, post=post)
+    #     response = {"like": True}
+    #     return JsonResponse(response, status=201)
+    # except like_models.Like.DoesNotExist:
+    #     response = {"like": False}
+    #     return JsonResponse(response, status=201)
