@@ -14,19 +14,31 @@ class FitnessViewController: UIViewController {
     @IBOutlet weak var runLabel: UILabel!
     @IBOutlet weak var situpLabel: UILabel!
     @IBOutlet weak var situpSlider: UISlider!
+    @IBOutlet weak var pushupSlider: UISlider!
+    @IBOutlet weak var runSlider: UISlider!
+    
     let DB = DataBaseAPI.init()
     let Query = DataBaseQuery.init()
 
     override func viewDidLoad() {
-           super.viewDidLoad()
+        super.viewDidLoad()
            // Do any additional setup after loading the view.
-           let navview = Variable_Functions.init()
-           self.navigationItem.titleView = navview.navView
-           
-           print("-----------------")
-           print(DB.database)
-           print(DB.query(statement: Query.SelectStar(Tablename: "Fitness"), ColumnNumber: 4))
-           print("-----------------")
+        let navview = Variable_Functions.init()
+        self.navigationItem.titleView = navview.navView
+       
+        print("-----------------")
+        print(DB.database)
+        print(DB.query(statement: Query.SelectStar(Tablename: "Fitness"), ColumnNumber: 4))
+        print("-----------------")
+        
+        situpSlider.value = 40.0
+        pushupSlider.value = 40.0
+        runSlider.value = 40.0
+        
+        //초기값 설정
+        situpLabel.text = String(Int(situpSlider.value))
+        pushupLabel.text = String(Int(pushupSlider.value))
+        runLabel.text = String(Int(runSlider.value))
     
        }
     

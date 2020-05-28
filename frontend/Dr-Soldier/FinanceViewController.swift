@@ -15,8 +15,15 @@ class FinanceViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var Ratio: UITextView!
     @IBOutlet weak var SegmentBarControl: UISegmentedControl!
     @IBOutlet weak var Button: UIButton!
-    
     @IBOutlet weak var Label: UILabel!
+    
+    var Moneytmpstring : String = ""
+    var Monthtmpstring : String = ""
+    var Ratiotmpstring : String = ""
+    
+    var activeTextView = UITextView.init()
+    var num = 1
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -79,6 +86,44 @@ class FinanceViewController: UIViewController, UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         textView.textColor = UIColor.black
         textView.text = ""
+        self.activeTextView = textView
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+       // print(textView.accessibilityIdentifier!)
+        if textView == self.Money{
+            Moneytmpstring = Money.text
+            if let MoneyInt = Int64(Money.text!){
+                 Money.text =  makemoneyform(Money:MoneyInt) + "원"
+            }
+            if Moneytmpstring == ""{
+                Money.textColor = UIColor.gray
+                Money.text = "월적립액(원)"
+                Money.textAlignment = NSTextAlignment.center
+            }
+        }
+        if textView == self.Month{
+            Monthtmpstring = Month.text
+            if let MonthInt = Int64(Month.text!){
+                 Month.text =  makemoneyform(Money:MonthInt) + "개월"
+            }
+            if Monthtmpstring == ""{
+                Month.textColor = UIColor.gray
+                Month.text = "적금기간(개월)"
+                Month.textAlignment = NSTextAlignment.center
+            }
+        }
+        if textView == self.Ratio{
+            Ratiotmpstring = Ratio.text
+            if let RatioInt = Int64(Ratio.text!){
+                 Ratio.text =  makemoneyform(Money:RatioInt) + "%"
+            }
+            if Ratiotmpstring == ""{
+                Ratio.textColor = UIColor.gray
+                Ratio.text = "이율"
+                Ratio.textAlignment = NSTextAlignment.center
+            }
+        }
     }
     
     func initailize_textview(){
@@ -93,16 +138,16 @@ class FinanceViewController: UIViewController, UITextViewDelegate {
         Month.textAlignment = NSTextAlignment.center
     }
     
-    func calWerfare(money : Float64, ratio : Float64, Month:Float64) -> Int{
+    func calWerfare(money : Float64, ratio : Float64, Month:Float64) -> Int64{
         let monthratio = (ratio/100.0)*(1.0/12.0) + 1
         var total = 0.0
         for _ in 1...Int(Month) {
             total = (total + money) * monthratio
         }
-        return Int(total)
+        return Int64(total)
     }
     
-    func makemoneyform(Money : Int) -> String{
+    func makemoneyform(Money : Int64) -> String{
         var Moneystring = "\(Money)"
         let count = Moneystring.count
         var now = 0
@@ -121,19 +166,19 @@ class FinanceViewController: UIViewController, UITextViewDelegate {
     
     
     @IBAction func Calculate(_ sender: Any) {
-        let Moneytext = Money.text
-        let Ratiotext = Ratio.text
-        let Monthtext = Month.text
+        let Moneytext = Moneytmpstring
+        let Ratiotext = Ratiotmpstring
+        let Monthtext = Monthtmpstring
         initailize_textview()
-        if let Moneyfloat = Float64(Moneytext!) , let Ratiofloat = Float64(Ratiotext!) , let Monthfloat = Float64(Monthtext!){
-            var total : Int = 0
+        if let Moneyfloat = Float64(Moneytext) , let Ratiofloat = Float64(Ratiotext) , let Monthfloat = Float64(Monthtext){
+            var total : Int64 = 0
             if SegmentBarControl.selectedSegmentIndex == 0{
                total = calWerfare(money: Moneyfloat, ratio: Ratiofloat, Month: Monthfloat)
            }else{
-                total = Int(Monthfloat * Moneyfloat * (1.0 + Ratiofloat))
+                total = Int64(Monthfloat * Moneyfloat * (1.0 + Ratiofloat))
            }
             let totalstring = makemoneyform(Money: total)
-            let Moneystring = makemoneyform(Money: Int(Moneyfloat))
+            let Moneystring = makemoneyform(Money: Int64(Moneyfloat))
             
             Label.text = "매달 \(Moneystring)씩 \(Int(Monthfloat))개월 동안\n\(Ratiofloat)의 이율로 계산하였을 때\n만기시 \(totalstring)원을 받으실 수 있어요!"
             let attributedStr = NSMutableAttributedString(string: Label.text!)
