@@ -13,10 +13,11 @@ class DataBaseQuery {
     
     let CreateUserTable = """
     CREATE TABLE "User" (
+    "email"   TEXT NOT NULL,
     "name"    TEXT NOT NULL,
-    "grade"    INTEGER NOT NULL,
-    "start_date"    TEXT NOT NULL,
-    "end_date"    TEXT NOT NULL,
+    "grade"    INTEGER ,
+    "start_date"    TEXT ,
+    "end_date"    TEXT ,
     "image_url"    TEXT
     );
     """
@@ -75,21 +76,17 @@ class DataBaseQuery {
 class DataBaseAPI {
     
     var database : OpaquePointer? = nil
+    var Query : DataBaseQuery
     
     public init()
     {
-        /*
-        let fileURL = FileManager.default.currentDirectoryPath
-        print(fileURL)
-        
         let fileURL1 = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) .appendingPathComponent("db.sqlite")
-        print(fileURL1)
-        */
-        let fileURL2 = Bundle.main.url(forResource: "LocalDB_SQLite", withExtension: "db")?.absoluteString as! String
-        sqlite3_open(fileURL2,&self.database)
+        //let fileURL2 = Bundle.main.url(forResource: "LocalDB_SQLite", withExtension: "db")?.absoluteString as! String
+        sqlite3_open(fileURL1.path,&self.database)
+        Query = DataBaseQuery.init()
     }
     
-    private func crateTable(statement : String) -> Bool{
+    public func createTable(statement : String) -> Bool{
         var createStatement : OpaquePointer? = nil
         defer { sqlite3_finalize(createStatement) }
         guard sqlite3_prepare_v2(self.database,statement,EOF,&createStatement,nil) == SQLITE_OK else{
@@ -102,6 +99,17 @@ class DataBaseAPI {
             print("!! Fail, Contact table could not be created.")
         }
         return true
+    }
+    
+    public func CreateEveryTable(){
+        var tmp : Bool = true
+        tmp = self.createTable(statement: Query.CreateUserTable)
+        tmp = self.createTable(statement: Query.CreateTodoTable)
+        tmp = self.createTable(statement: Query.CreateCalenderTable)
+        tmp = self.createTable(statement: Query.CreateRecordTable)
+        tmp = self.createTable(statement: Query.CreateFitnessTable)
+        print(tmp)
+        print("모든 테이블 생성 성공!")
     }
     
     //insert
@@ -164,10 +172,11 @@ class DataBaseAPI {
             {
                 //왼쪽부터 오른쪽으로 읽어드린다.
                 for i in 0 ... (ColumnNumber-1){
-                    let each_cell = sqlite3_column_text(queryStatement,Int32(i))
+                    if let each_cell = sqlite3_column_text(queryStatement,Int32(i)){
+                         each_row.append(String(cString : each_cell ))
+                    }
                     //print( String(cString : each_cell! ))
                     //string으로 형변환
-                    each_row.append(String(cString : each_cell! ))
                 }
                 TotalResultTable.append(each_row)
                 each_row.removeAll()
