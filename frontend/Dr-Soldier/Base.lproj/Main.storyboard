@@ -579,7 +579,6 @@
                                                         <color key="thumbTintColor" red="0.204215914" green="0.72363251449999999" blue="0.47446399929999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                         <connections>
                                                             <action selector="PushupChanged:" destination="9th-fN-jJb" eventType="valueChanged" id="JxJ-lg-IAP"/>
-                                                            <action selector="SitupChanged:" destination="9th-fN-jJb" eventType="valueChanged" id="f5x-mb-SEt"/>
                                                         </connections>
                                                     </slider>
                                                 </subviews>
@@ -625,7 +624,6 @@
                                                         <color key="thumbTintColor" red="0.204215914" green="0.72363251449999999" blue="0.47446399929999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                         <connections>
                                                             <action selector="RunChanged:" destination="9th-fN-jJb" eventType="valueChanged" id="wsD-HD-JWu"/>
-                                                            <action selector="SitupChanged:" destination="9th-fN-jJb" eventType="valueChanged" id="BHS-AM-4Ri"/>
                                                         </connections>
                                                     </slider>
                                                 </subviews>
