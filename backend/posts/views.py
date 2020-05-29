@@ -26,11 +26,9 @@ def documents(request):
         
 @csrf_exempt
 def post_create(request):
-    print(request)
     title = request.GET.get("title")
     text = request.GET.get("content")
     user_name = request.GET.get("user")
-    print("!!!!!")
     user = user_models.User.objects.get(username=user_name)
     board = board_models.Board.objects.get(title="All")
     post = Post.objects.create(title=title, text=text, host=user, board=board)
@@ -83,3 +81,4 @@ def already_likes(request):
     # except like_models.Like.DoesNotExist:
     #     response = {"like": False}
     #     return JsonResponse(response, status=201)
+
