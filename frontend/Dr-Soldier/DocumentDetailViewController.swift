@@ -17,7 +17,10 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
     let dislike = UIButton(type:.system)
     let commentLike = UIButton(type:.system)
     let commentDislike = UIButton(type:.system)
-   
+    let DB = DataBaseAPI.init()
+    let Query = DataBaseQuery.init()
+    
+    var userEmail : String? // UserDefault -> Sqlite
     var titleString : String = ""
     var descriptionString : String = ""
     var post_pk = -1
@@ -182,8 +185,8 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
     }
     
     func likeRequest(){
-        let user = UserDefaults.standard.dictionary(forKey: "user")
-        AF.request("http://127.0.0.1:8000/alreadylikes/?pk=\(self.post_pk)&user=\((user!["email"])! as! String)").responseJSON { response in
+        let userEmail:String = self.userEmail!
+        AF.request("http://127.0.0.1:8000/alreadylikes/?pk=\(self.post_pk)&user=\(userEmail)").responseJSON { response in
             switch response.result{
             case .success(let value):
                 let rep = value as! AnyObject
@@ -199,8 +202,8 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
     }
     
     func commentLikeRequest(cell: CommentCell){
-        let user = UserDefaults.standard.dictionary(forKey: "user")
-        AF.request("http://127.0.0.1:8000/alreadyCommentLikes/?pk=\(cell.pk!)&user=\((user!["email"])! as! String)").responseJSON { response in
+        let userEmail:String = self.userEmail!
+        AF.request("http://127.0.0.1:8000/alreadyCommentLikes/?pk=\(cell.pk!)&user=\(userEmail)").responseJSON { response in
             switch response.result{
             case .success(let value):
                 let rep = value as! AnyObject
@@ -235,9 +238,10 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
     }
     
     @IBAction func likeComment(_ sender: UIButton){
-        let user = UserDefaults.standard.dictionary(forKey: "user")
+        let userEmail:String = self.userEmail!
+        // let user = UserDefaults.standard.dictionary(forKey: "user")
         let cell = comments[sender.tag]
-        AF.request("http://127.0.0.1:8000/commentLikes/?pk=\(cell.pk)&user=\((user!["email"])! as! String)").responseJSON { response in
+        AF.request("http://127.0.0.1:8000/commentLikes/?pk=\(cell.pk)&user=\(userEmail)").responseJSON { response in
         }
         let time = DispatchTime.now() + .milliseconds(500)
         DispatchQueue.main.asyncAfter(deadline: time){
@@ -247,9 +251,9 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
     }
     
     @IBAction func dislikeComment(_ sender: UIButton){
-        let user = UserDefaults.standard.dictionary(forKey: "user")
+        // let user = UserDefaults.standard.dictionary(forKey: "user")
         let cell = comments[sender.tag]
-        AF.request("http://127.0.0.1:8000/commentDislikes/?pk=\(cell.pk)&user=\((user!["email"])! as! String)").responseJSON { response in
+        AF.request("http://127.0.0.1:8000/commentDislikes/?pk=\(cell.pk)&user=\(userEmail)").responseJSON { response in
         }
         let time = DispatchTime.now() + .milliseconds(500)
         DispatchQueue.main.asyncAfter(deadline: time){
@@ -260,8 +264,8 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
     
     
     @IBAction func likePost(_ sender: UIButton) {
-        let user = UserDefaults.standard.dictionary(forKey: "user")
-        AF.request("http://127.0.0.1:8000/likes/?pk=\(self.post_pk)&user=\((user!["email"])! as! String)").responseJSON { response in
+        //let user = UserDefaults.standard.dictionary(forKey: "user")
+        AF.request("http://127.0.0.1:8000/likes/?pk=\(self.post_pk)&user=\(userEmail)").responseJSON { response in
         }
         let time = DispatchTime.now() + .milliseconds(500)
         DispatchQueue.main.asyncAfter(deadline: time){
@@ -278,8 +282,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
     }
     
     @IBAction func dislikePost(_ sender: Any) {
-        let user = UserDefaults.standard.dictionary(forKey: "user")
-        AF.request("http://127.0.0.1:8000/dislikes/?pk=\(self.post_pk)&user=\((user!["email"])! as! String)").responseJSON { response in
+        AF.request("http://127.0.0.1:8000/dislikes/?pk=\(self.post_pk)&user=\(userEmail)").responseJSON { response in
         }
         let time = DispatchTime.now() + .milliseconds(500)
         DispatchQueue.main.asyncAfter(deadline: time){
@@ -298,6 +301,9 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let result = self.DB.query(statement: self.Query.SelectStar(Tablename: "User") , ColumnNumber: 6)
+        self.userEmail = result[0][0]
+        print(userEmail)
         commentTable.refreshControl = refreshControl
         self.refreshControl.attributedTitle = NSAttributedString(string: "당겨서 새로고침")
         refreshControl.addTarget(self, action: #selector(refreshComment), for: .valueChanged)
@@ -318,12 +324,13 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
     }
     
     @IBAction func submitButtonClicked(_ sender: Any) {
-        let user = UserDefaults.standard.dictionary(forKey: "user")
+        //let user = UserDefaults.standard.dictionary(forKey: "user")
+        let userEmail:String = self.userEmail!
         let params : Parameters = [ "content":commentTextField.text!]
         print(params)
         let url = "http://127.0.0.1:8000/comments/create/"
                 
-        let info = url + "?content=\(params["content"]!)&pk=\(self.post_pk)&user=\((user!["email"])! as! String)"
+        let info = url + "?content=\(params["content"]!)&pk=\(self.post_pk)&user=\(userEmail)"
         AF.request(info.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "",
                     method: .post, parameters: params, headers: header).responseJSON { response in
         }

@@ -19,6 +19,11 @@ class InfoViewController: UIViewController, UIImagePickerControllerDelegate & UI
     let startDatePicker = UIDatePicker()
     let endDatePicker = UIDatePicker()
     
+    @IBOutlet weak var fitnessButton: UIButton!
+    @IBOutlet weak var FinanceButton: UIButton!
+    @IBOutlet weak var bodyButton: UIButton!
+    @IBOutlet weak var goalButton: UIButton!
+    
     @IBOutlet weak var percentLabel: UILabel!
     @IBOutlet weak var leftDays: UILabel!
     @IBOutlet weak var hadDays: UILabel!
@@ -132,6 +137,10 @@ class InfoViewController: UIViewController, UIImagePickerControllerDelegate & UI
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        goalButton.imageView?.contentMode = .scaleAspectFit
+        bodyButton.imageView?.contentMode = .scaleAspectFit
+        FinanceButton.imageView?.contentMode = .scaleAspectFit
+        fitnessButton.imageView?.contentMode = .scaleAspectFit
         imagePickerController.delegate = self
         let navview = Variable_Functions.init()
         self.navigationItem.titleView = navview.navView
