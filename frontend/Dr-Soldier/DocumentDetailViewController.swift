@@ -117,7 +117,6 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
             let cell = commentTable.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath) as! CommentCell
             let comment = comments[indexPath.row]
             cell.pk = comment.pk
-            commentLikeRequest(cell: cell)
             cell.UserNameLabel.text = comment.writer
             cell.DescriptionLabel.text = comment.description
             cell.thumbsUpBtn.setTitle(String(comment.thumbsUp), for: .normal)
@@ -126,38 +125,47 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
             let bounds: CGRect = UIScreen.main.bounds
 //            rightView.frame = CGRect(x: bounds.maxX-100, y: 0, width: 40, height: 20)
 //            cell.rightView = rightView
-            let like = UIButton(type:.system)
-            like.frame = CGRect(x:bounds.maxX-100, y:8, width: 20, height: 15)
-            if isLike{
-                like.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-            }
-            else{
-                like.setImage(UIImage(systemName: "heart"), for: .normal)
-            }
-            like.tintColor = .red
-            let dislike = UIButton(type:.system)
-            dislike.frame = CGRect(x:bounds.maxX-50, y:8, width: 20, height: 15)
-            if isDislike{
-                dislike.setImage(UIImage(systemName: "hand.thumbsdown.fill"), for: .normal)
-            }
-            else{
-                dislike.setImage(UIImage(systemName: "hand.thumbsdown"), for: .normal)
-            }
-            dislike.tintColor = .blue
-            cell.likeBtn = like
-            cell.dislikeBtn = dislike
-            if cell.isLike{
-                cell.likeBtn.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-            }
-            else{
-                cell.likeBtn.setImage(UIImage(systemName: "heart"), for: .normal)
-            }
-            if cell.isDislike{
-                cell.dislikeBtn.setImage(UIImage(systemName: "hand.thumbsdown.fill"), for: .normal)
-            }
-            else{
-                cell.dislikeBtn.setImage(UIImage(systemName: "hand.thumbsdown"), for: .normal)
-            }
+            commentLike.frame = CGRect(x:bounds.maxX-100, y:8, width: 20, height: 15)
+//            if isLike{
+//                like.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+//            }
+//            else{
+//                like.setImage(UIImage(systemName: "heart"), for: .normal)
+//            }
+            commentLike.tintColor = .red
+            commentDislike.frame = CGRect(x:bounds.maxX-50, y:8, width: 20, height: 15)
+//            if isDislike{
+//                dislike.setImage(UIImage(systemName: "hand.thumbsdown.fill"), for: .normal)
+//            }
+//            else{
+//                dislike.setImage(UIImage(systemName: "hand.thumbsdown"), for: .normal)
+//            }
+            commentDislike.tintColor = .blue
+//            cell.likeBtn = like
+//            cell.dislikeBtn = dislike
+            self.commentLikeRequest(cell: cell)
+//            if cell.isLike{
+//                print("cell.isLike is true")
+//                like.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+////                cell.likeBtn.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+//            }
+//            else{
+//                print("cell.isLike is false")
+//                like.setImage(UIImage(systemName: "heart"), for: .normal)
+////                cell.likeBtn.setImage(UIImage(systemName: "heart"), for: .normal)
+//            }
+//            if cell.isDislike{
+//                print("cell.isDislike is true")
+//                dislike.setImage(UIImage(systemName: "hand.thumbsdown.fill"), for: .normal)
+////                cell.dislikeBtn.setImage(UIImage(systemName: "hand.thumbsdown.fill"), for: .normal)
+//            }
+//            else{
+//                print("cell.isDislike is false")
+//                dislike.setImage(UIImage(systemName: "hand.thumbsdown"), for: .normal)
+////                cell.dislikeBtn.setImage(UIImage(systemName: "hand.thumbsdown"), for: .normal)
+//            }
+            cell.likeBtn = commentLike
+            cell.dislikeBtn = commentDislike
             cell.dislikeBtn.addTarget(self, action: #selector(dislikeComment), for: .touchUpInside)
             cell.likeBtn.tag = indexPath.row
             cell.dislikeBtn.tag = indexPath.row
@@ -201,7 +209,25 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
                 cell.likeBtn.setTitle(String(temp_like), for: .normal)
                 cell.dislikeBtn.setTitle(String(temp_dislike), for: .normal)
                 cell.isLike = rep["like"]! as! Bool
+                print("cell", cell.isLike)
                 cell.isDislike = rep["dislike"] as! Bool
+                print("cell", cell.isDislike)
+                if cell.isLike{
+//                    self.comments[cel l.likeBtn.tag].isLike = true
+                    self.commentLike.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+                }
+                else{
+//                    self.comments[cell.likeBtn.tag].isLike = false
+                    self.commentLike.setImage(UIImage(systemName: "heart"), for: .normal)
+                }
+                if cell.isDislike{
+//                    self.comments[cell.dislikeBtn.tag].isDislike = true
+                    self.commentDislike.setImage(UIImage(systemName: "hand.thumbsdown.fill"), for: .normal)
+                }
+                else{
+//                    self.comments[cell.dislikeBtn.tag].isDislike = false
+                    self.commentDislike.setImage(UIImage(systemName: "hand.thumbsdown"), for: .normal)
+                }
             case .failure(let value):
                 print("commentLike request Error")
             }
