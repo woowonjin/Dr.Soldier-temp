@@ -17,7 +17,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
     let dislike = UIButton(type:.system)
     let commentLike = UIButton(type:.system)
     let commentDislike = UIButton(type:.system)
-    
+   
     var titleString : String = ""
     var descriptionString : String = ""
     var post_pk = -1
