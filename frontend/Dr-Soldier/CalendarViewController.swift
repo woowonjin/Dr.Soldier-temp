@@ -41,8 +41,8 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
     var fillDefaultColorsDictionary = [String : Int ]()
 
     
-    let SegmentedBarData = ["🟩휴가","🟥훈련","🟨외출","🟦파견", "⬜️삭제"]
-    let SegmentedBarColor = [UIColor.init(rgb:0x5AC18E),UIColor.init(rgb: 0xff7373) , UIColor.init(rgb: 0xe8a87c) ,UIColor.init(rgb: 0x22A39F), UIColor.clear]
+    let SegmentedBarData = ["휴가","훈련","외출","파견", "삭제"]
+    let SegmentedBarColor = [UIColor.init(rgb:0x5AC18E),UIColor.init(rgb: 0xff7373) , UIColor.init(rgb: 0xe8a87c) ,UIColor.init(rgb: 0x22A39F), UIColor.white]
     
     override func viewDidLoad() {
         
@@ -61,6 +61,7 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
            SegmentedControl.insertSegment(withTitle: text, at: SegmentedControl.numberOfSegments, animated: false)
         })
         SegmentedControl.selectedSegmentIndex = 0
+        SegmentedControl.selectedSegmentTintColor = SegmentedBarColor[SegmentedControl.selectedSegmentIndex]
         
         
         //DB에서 불러오기
@@ -80,6 +81,11 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
       
     }
     
+    @IBAction func SegmentControlAction(_ sender: Any) {
+        self.SegmentedControl.selectedSegmentTintColor = SegmentedBarColor[SegmentedControl.selectedSegmentIndex]
+    }
+    
+    
     func calendar(_ calendar: FSCalendar, cellFor date: Date, at position: FSCalendarMonthPosition) -> FSCalendarCell {
         let cell = calendar.dequeueReusableCell(withIdentifier: "cell", for: date as Date, at: position)
         let key = self.dateFormatter.string(from: date)
@@ -91,6 +97,8 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
         if date == self.calendar.today!{
             cell.layer.borderColor = SegmentedBarColor[0].cgColor
             cell.layer.borderWidth = 1.0
+        }else{
+            cell.layer.borderColor = UIColor.white.cgColor
         }
         return cell
     }
