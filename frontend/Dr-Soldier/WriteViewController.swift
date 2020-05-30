@@ -35,11 +35,9 @@ class WriteViewController: UIViewController {
         let info = url + "?title=\(params["title"]!)&content=\(params["content"]!)&user=\(params["user"]!)"
         AF.request(info.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "", method: .post, parameters: params, headers: header).responseJSON { response in
 //>>>>>>> 6222f7cdb359bb1a2d20f6efa6f9979a98055b91
-                
         }
         let nextView = self.storyboard?.instantiateViewController(withIdentifier: "Community") as! CommunityViewController
-        self.navigationController?.pushViewController(nextView, animated: true)
-        
+        self.navigationController?.popViewController(animated: true)
     }
     
     override func viewDidLoad() {
