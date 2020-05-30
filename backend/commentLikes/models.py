@@ -12,3 +12,4 @@ class CommentLike(core_models.TimeStampedModel):
 
     def __str__(self):
         return f"{self.user} likes {self.comment}"
+
