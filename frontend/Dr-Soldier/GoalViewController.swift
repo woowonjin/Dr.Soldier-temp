@@ -10,6 +10,7 @@ import UIKit
 
 class GoalViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextViewDelegate {
     
+    @IBOutlet weak var successButton: UIButton!
     let DB = DataBaseAPI.init()
     let Quary = DataBaseQuery.init()
     var Data : Array<Array<String>> = []
@@ -38,7 +39,6 @@ class GoalViewController: UIViewController, UITableViewDataSource, UITableViewDe
         cell.Discription.text = Data[indexPath.row][0]
         cell.DiscriptionLocal = Data[indexPath.row][0]
         cell.Is_Success = Data[indexPath.row][1]
-        
         cell.Discription.numberOfLines = 0
         cell.Discription.lineBreakMode = NSLineBreakMode.byWordWrapping;
         cell.Discription.sizeToFit()
@@ -171,7 +171,6 @@ class ToDoListTableCell: UITableViewCell {
     @IBOutlet weak var Delete: UIButton!
     
     @IBAction func SuccessButtonTab(_ sender: Any) {
-        
         if Is_Success! == "0" {
             if DB.update(statement: Quary.update(Tablename: "Todo", beforeValues: "goal = '\(DiscriptionLocal!)'", afterValues: "completed = '1'")){
                 print("Success update success")
