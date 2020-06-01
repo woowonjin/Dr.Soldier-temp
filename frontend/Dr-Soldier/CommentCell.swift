@@ -22,6 +22,7 @@ class CommentCell : UITableViewCell{
     @IBOutlet weak var InformationLabel: UILabel!
     @IBOutlet weak var thumbsUpBtn: UIButton!
     @IBOutlet weak var thumbsDownBtn: UIButton!
+    
 //    @IBAction func likeClicked(_ sender: UIButton){
 //        print("!!!like!!!")
 //        vc.likeComment(cell: self)

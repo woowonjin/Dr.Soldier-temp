@@ -1213,55 +1213,57 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="784"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CommentCell" rowHeight="77" id="K1W-oJ-4Qe" customClass="CommentCell" customModule="Dr_Soldier" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="77"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CommentCell" id="K1W-oJ-4Qe" customClass="CommentCell" customModule="Dr_Soldier" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="104"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="K1W-oJ-4Qe" id="gZD-kg-Q9i">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="77"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="104"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="9D2-19-pD2">
-                                                    <rect key="frame" x="10" y="10" width="394" height="57"/>
+                                                    <rect key="frame" x="10" y="10" width="394" height="84"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rgi-uD-6GO">
-                                                            <rect key="frame" x="0.0" y="0.0" width="394" height="23"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="394" height="20.333333333333332"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IFb-hI-Ia7">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="394" height="23"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="394" height="20.333333333333332"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gmq-Sg-dW6">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="262.66666666666669" height="23"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="394" height="20.333333333333332"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
-                                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="unO-31-Idp">
-                                                                            <rect key="frame" x="262.66666666666669" y="0.0" width="65.666666666666686" height="23"/>
-                                                                            <state key="normal" title="0" image="hand.thumbsup" catalog="system">
-                                                                                <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                                            </state>
-                                                                        </button>
-                                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iGv-uq-Z5A">
-                                                                            <rect key="frame" x="328.33333333333331" y="0.0" width="65.666666666666686" height="23"/>
-                                                                            <state key="normal" title="0" image="hand.thumbsdown" catalog="system">
-                                                                                <color key="titleColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                                                <color key="titleShadowColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                                            </state>
-                                                                        </button>
                                                                     </subviews>
-                                                                    <constraints>
-                                                                        <constraint firstItem="gmq-Sg-dW6" firstAttribute="width" secondItem="unO-31-Idp" secondAttribute="width" multiplier="4" id="NiK-EJ-B2R"/>
-                                                                        <constraint firstItem="gmq-Sg-dW6" firstAttribute="width" secondItem="iGv-uq-Z5A" secondAttribute="width" multiplier="4" id="SlY-9k-cVg"/>
-                                                                    </constraints>
                                                                 </stackView>
                                                             </subviews>
                                                         </stackView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="17p-nY-G5L">
-                                                            <rect key="frame" x="0.0" y="33" width="394" height="24"/>
+                                                            <rect key="frame" x="0.0" y="30.333333333333336" width="394" height="20.333333333333336"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z5s-NP-cDO">
+                                                            <rect key="frame" x="0.0" y="60.666666666666679" width="62.666666666666664" height="23.333333333333336"/>
+                                                            <subviews>
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="unO-31-Idp">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="31.333333333333332" height="23.333333333333332"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                                    <state key="normal" title="0" image="hand.thumbsup" catalog="system">
+                                                                        <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                                    </state>
+                                                                </button>
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iGv-uq-Z5A">
+                                                                    <rect key="frame" x="31.333333333333336" y="0.0" width="31.333333333333336" height="23.333333333333332"/>
+                                                                    <state key="normal" title="0" image="hand.thumbsdown" catalog="system">
+                                                                        <color key="titleColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                                        <color key="titleShadowColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                                    </state>
+                                                                </button>
+                                                            </subviews>
+                                                        </stackView>
                                                     </subviews>
                                                     <constraints>
                                                         <constraint firstItem="Rgi-uD-6GO" firstAttribute="leading" secondItem="9D2-19-pD2" secondAttribute="leading" id="LjJ-Fj-V0Y"/>
@@ -1286,7 +1288,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="DocumentDetailCell" rowHeight="141" id="uO1-h8-bXA" customClass="DocumentDetailCell" customModule="Dr_Soldier" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="105" width="414" height="141"/>
+                                        <rect key="frame" x="0.0" y="132" width="414" height="141"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="uO1-h8-bXA" id="da8-LY-wPe">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="141"/>

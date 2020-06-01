@@ -15,8 +15,6 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
     //var user: User?
     let like = UIButton(type:.system)
     let dislike = UIButton(type:.system)
-    let commentLike = UIButton(type:.system)
-    let commentDislike = UIButton(type:.system)
     let DB = DataBaseAPI.init()
     let Query = DataBaseQuery.init()
     
@@ -128,6 +126,8 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
             let bounds: CGRect = UIScreen.main.bounds
 //            rightView.frame = CGRect(x: bounds.maxX-100, y: 0, width: 40, height: 20)
 //            cell.rightView = rightView
+            let commentLike = UIButton(type:.system)
+            let commentDislike = UIButton(type:.system)
             commentLike.frame = CGRect(x:bounds.maxX-100, y:8, width: 20, height: 15)
 //            if isLike{
 //                like.setImage(UIImage(systemName: "heart.fill"), for: .normal)
@@ -144,8 +144,9 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
 //                dislike.setImage(UIImage(systemName: "hand.thumbsdown"), for: .normal)
 //            }
             commentDislike.tintColor = .blue
-//            cell.likeBtn = like
-//            cell.dislikeBtn = dislike
+            cell.likeBtn = commentLike
+            cell.dislikeBtn = commentDislike
+
             self.commentLikeRequest(cell: cell)
 //            if cell.isLike{
 //                print("cell.isLike is true")
@@ -167,8 +168,6 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
 //                dislike.setImage(UIImage(systemName: "hand.thumbsdown"), for: .normal)
 ////                cell.dislikeBtn.setImage(UIImage(systemName: "hand.thumbsdown"), for: .normal)
 //            }
-            cell.likeBtn = commentLike
-            cell.dislikeBtn = commentDislike
             cell.dislikeBtn.addTarget(self, action: #selector(dislikeComment), for: .touchUpInside)
             cell.likeBtn.tag = indexPath.row
             cell.dislikeBtn.tag = indexPath.row
@@ -217,19 +216,23 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
                 print("cell", cell.isDislike)
                 if cell.isLike{
 //                    self.comments[cel l.likeBtn.tag].isLike = true
-                    self.commentLike.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+                    cell.likeBtn.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+//                    cell.likeBtn.isSelected = true
                 }
                 else{
 //                    self.comments[cell.likeBtn.tag].isLike = false
-                    self.commentLike.setImage(UIImage(systemName: "heart"), for: .normal)
+                    cell.likeBtn.setImage(UIImage(systemName: "heart"), for: .normal)
+//                    cell.likeBtn.isSelected = false
                 }
                 if cell.isDislike{
 //                    self.comments[cell.dislikeBtn.tag].isDislike = true
-                    self.commentDislike.setImage(UIImage(systemName: "hand.thumbsdown.fill"), for: .normal)
+                    cell.dislikeBtn.setImage(UIImage(systemName: "hand.thumbsdown.fill"), for: .normal)
+//                    cell.dislikeBtn.isSelected = true
                 }
                 else{
 //                    self.comments[cell.dislikeBtn.tag].isDislike = false
-                    self.commentDislike.setImage(UIImage(systemName: "hand.thumbsdown"), for: .normal)
+                    cell.dislikeBtn.setImage(UIImage(systemName: "hand.thumbsdown"), for: .normal)
+//                    cell.dislikeBtn.isSelected = false
                 }
             case .failure(let value):
                 print("commentLike request Error")
@@ -253,7 +256,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
     @IBAction func dislikeComment(_ sender: UIButton){
         // let user = UserDefaults.standard.dictionary(forKey: "user")
         let cell = comments[sender.tag]
-        AF.request("http://127.0.0.1:8000/commentDislikes/?pk=\(cell.pk)&user=\(userEmail)").responseJSON { response in
+        AF.request("http://127.0.0.1:8000/commentDislikes/?pk=\(cell.pk)&user=\(userEmail!)").responseJSON { response in
         }
         let time = DispatchTime.now() + .milliseconds(500)
         DispatchQueue.main.asyncAfter(deadline: time){
@@ -265,7 +268,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
     
     @IBAction func likePost(_ sender: UIButton) {
         //let user = UserDefaults.standard.dictionary(forKey: "user")
-        AF.request("http://127.0.0.1:8000/likes/?pk=\(self.post_pk)&user=\(userEmail)").responseJSON { response in
+        AF.request("http://127.0.0.1:8000/likes/?pk=\(self.post_pk)&user=\(userEmail!)").responseJSON { response in
         }
         let time = DispatchTime.now() + .milliseconds(500)
         DispatchQueue.main.asyncAfter(deadline: time){
@@ -282,7 +285,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
     }
     
     @IBAction func dislikePost(_ sender: Any) {
-        AF.request("http://127.0.0.1:8000/dislikes/?pk=\(self.post_pk)&user=\(userEmail)").responseJSON { response in
+        AF.request("http://127.0.0.1:8000/dislikes/?pk=\(self.post_pk)&user=\(userEmail!)").responseJSON { response in
         }
         let time = DispatchTime.now() + .milliseconds(500)
         DispatchQueue.main.asyncAfter(deadline: time){
