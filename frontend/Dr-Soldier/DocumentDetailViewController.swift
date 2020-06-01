@@ -269,6 +269,21 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
     @IBAction func likePost(_ sender: UIButton) {
         //let user = UserDefaults.standard.dictionary(forKey: "user")
         AF.request("http://127.0.0.1:8000/likes/?pk=\(self.post_pk)&user=\(userEmail!)").responseJSON { response in
+            switch response.result{
+            case .success(let value):
+                let rep = value as! AnyObject
+                let type = rep["result"] as! String
+                if(type == "create"){
+                    AF.request("http://127.0.0.1:8000/notification/?post_pk=\(self.post_pk)&user=\(self.userEmail!)&type=like").responseJSON { response in
+                    }
+                }
+                else if(type == "delete"){
+                    AF.request("http://127.0.0.1:8000/notification/?post_pk=\(self.post_pk)&user=\(self.userEmail!)&type=like_cancel").responseJSON { response in
+                    }
+                }
+            case .failure(let value):
+                print("something wrong")
+            }
         }
         let time = DispatchTime.now() + .milliseconds(500)
         DispatchQueue.main.asyncAfter(deadline: time){
@@ -286,6 +301,21 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
     
     @IBAction func dislikePost(_ sender: Any) {
         AF.request("http://127.0.0.1:8000/dislikes/?pk=\(self.post_pk)&user=\(userEmail!)").responseJSON { response in
+            switch response.result{
+            case .success(let value):
+                let rep = value as! AnyObject
+                let type = rep["result"] as! String
+                if(type == "create"){
+                    AF.request("http://127.0.0.1:8000/notification/?post_pk=\(self.post_pk)&user=\(self.userEmail!)&type=dislike").responseJSON { response in
+                    }
+                }
+                else if(type == "delete"){
+                    AF.request("http://127.0.0.1:8000/notification/?post_pk=\(self.post_pk)&user=\(self.userEmail!)&type=dislike_cancel").responseJSON { response in
+                    }
+                }
+            case .failure(let value):
+                print("something wrong")
+            }
         }
         let time = DispatchTime.now() + .milliseconds(500)
         DispatchQueue.main.asyncAfter(deadline: time){
@@ -306,7 +336,6 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
         super.viewDidLoad()
         let result = self.DB.query(statement: self.Query.SelectStar(Tablename: "User") , ColumnNumber: 6)
         self.userEmail = result[0][0]
-        print(userEmail)
         commentTable.refreshControl = refreshControl
         self.refreshControl.attributedTitle = NSAttributedString(string: "당겨서 새로고침")
         refreshControl.addTarget(self, action: #selector(refreshComment), for: .valueChanged)
@@ -340,6 +369,8 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
         let time = DispatchTime.now() + .milliseconds(500)
         DispatchQueue.main.asyncAfter(deadline: time){
             self.refreshComment()
+        }
+        AF.request("http://127.0.0.1:8000/notification/?post_pk=\(self.post_pk)&user=\(self.userEmail!)&type=comment").responseJSON { response in
         }
 //        DispatchQueue.main.async {
 //            self.commentTable.reloadData()

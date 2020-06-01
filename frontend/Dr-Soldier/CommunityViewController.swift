@@ -52,7 +52,6 @@ class CommunityViewController: UIViewController, UITableViewDelegate, UITableVie
         AF.request("http://127.0.0.1:8000/documents").responseJSON { response in
             switch response.result{
             case .success(let value):
-                print(type(of: value))
                 let responseList = value as! Array<AnyObject>
                 
                 let dateFormatter = DateFormatter()

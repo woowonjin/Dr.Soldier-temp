@@ -10,6 +10,9 @@
 		0D67F1BE245C0DD800244669 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D67F1BD245C0DD800244669 /* Database.swift */; };
 		0DBB6E4C245169DB004E1BFD /* GlobalClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBB6E4B245169DB004E1BFD /* GlobalClass.swift */; };
 		0DEC22A62472798A00485871 /* LocalDB_SQLite.db in Resources */ = {isa = PBXBuildFile; fileRef = 0DEC22A52472798A00485871 /* LocalDB_SQLite.db */; };
+		1161E917248549B800EB8DB4 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1161E916248549B800EB8DB4 /* NotificationViewController.swift */; };
+		1161E91924854A4100EB8DB4 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1161E91824854A4100EB8DB4 /* Notification.swift */; };
+		1161E91B24854C1300EB8DB4 /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1161E91A24854C1300EB8DB4 /* NotificationCell.swift */; };
 		11AA922F2463F86D00765FC4 /* KakaoOpenSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11AA922E2463F86D00765FC4 /* KakaoOpenSDK.framework */; };
 		11AA92322463FB8000765FC4 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11AA92312463FB8000765FC4 /* LoginViewController.swift */; };
 		11FC2363247AB7110075450E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FC2362247AB7110075450E /* User.swift */; };
@@ -40,6 +43,9 @@
 		0D67F1BD245C0DD800244669 /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		0DBB6E4B245169DB004E1BFD /* GlobalClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalClass.swift; sourceTree = "<group>"; };
 		0DEC22A52472798A00485871 /* LocalDB_SQLite.db */ = {isa = PBXFileReference; lastKnownFileType = file; name = LocalDB_SQLite.db; path = Database/LocalDB_SQLite.db; sourceTree = SOURCE_ROOT; };
+		1161E916248549B800EB8DB4 /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
+		1161E91824854A4100EB8DB4 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
+		1161E91A24854C1300EB8DB4 /* NotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 		11AA922E2463F86D00765FC4 /* KakaoOpenSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KakaoOpenSDK.framework; sourceTree = "<group>"; };
 		11AA92312463FB8000765FC4 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		11E52D5B2463FE3A0060531B /* Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
@@ -141,6 +147,9 @@
 				77055B0424698F8B00BE47A9 /* Comment.swift */,
 				77055B0024698F0E00BE47A9 /* DocumentDetailCell.swift */,
 				11FC2362247AB7110075450E /* User.swift */,
+				1161E916248549B800EB8DB4 /* NotificationViewController.swift */,
+				1161E91824854A4100EB8DB4 /* Notification.swift */,
+				1161E91A24854C1300EB8DB4 /* NotificationCell.swift */,
 			);
 			path = "Dr-Soldier";
 			sourceTree = "<group>";
@@ -273,6 +282,7 @@
 				776E2478244F08DC008CA6A9 /* CalendarViewController.swift in Sources */,
 				776E247E244F097F008CA6A9 /* FinanceViewController.swift in Sources */,
 				776E2466244F04B8008CA6A9 /* ViewController.swift in Sources */,
+				1161E91924854A4100EB8DB4 /* Notification.swift in Sources */,
 				77055B0124698F0E00BE47A9 /* DocumentDetailCell.swift in Sources */,
 				11AA92322463FB8000765FC4 /* LoginViewController.swift in Sources */,
 				77055B0324698F6900BE47A9 /* CommentCell.swift in Sources */,
@@ -282,8 +292,10 @@
 				776E2476244F08BD008CA6A9 /* InfoViewController.swift in Sources */,
 				0DBB6E4C245169DB004E1BFD /* GlobalClass.swift in Sources */,
 				776E2480244F09B6008CA6A9 /* GoalViewController.swift in Sources */,
+				1161E917248549B800EB8DB4 /* NotificationViewController.swift in Sources */,
 				775A7D512451F75200B3081C /* Document.swift in Sources */,
 				776E247C244F096D008CA6A9 /* FitnessViewController.swift in Sources */,
+				1161E91B24854C1300EB8DB4 /* NotificationCell.swift in Sources */,
 				776E2464244F04B8008CA6A9 /* SceneDelegate.swift in Sources */,
 				775A7D532451F88A00B3081C /* DocumentCell.swift in Sources */,
 				77055B0524698F8B00BE47A9 /* Comment.swift in Sources */,
