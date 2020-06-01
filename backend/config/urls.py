@@ -23,12 +23,15 @@ from comments import views as comments_views
 from commentLikes import views as commentLikes_views
 from commentDislikes import views as commentDislikes_views
 from comments import views as comments_views
+from notifications import views as noti_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('alreadylikes/', posts.views.already_likes),
     path('alreadyCommentLikes/', comments_views.already_comment_like),
     path('likes/', likes.views.likes),
+    path('notification/', noti_views.notification),
+    path('get-notifications/', noti_views.get_notifications),
     path('dislikes/', dislikes.views.dislikes),
     path('documents/', posts.views.documents, name="documents"),
     path('commentLikes/', commentLikes_views.like, name="commentLikes"),

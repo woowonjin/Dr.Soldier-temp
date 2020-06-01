@@ -21,11 +21,100 @@
                         <segue destination="foc-4d-kfe" kind="relationship" relationship="viewControllers" id="erO-ah-NKC"/>
                         <segue destination="CxP-sl-zwR" kind="relationship" relationship="viewControllers" id="B4p-wm-fkZ"/>
                         <segue destination="Uh5-Yg-dC8" kind="relationship" relationship="viewControllers" id="8Mw-Hq-rrG"/>
+                        <segue destination="opM-yw-1Zv" kind="relationship" relationship="viewControllers" id="sVh-jH-Vhf"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rhu-vr-z2Y" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="109" y="-1136"/>
+        </scene>
+        <!--Notification-->
+        <scene sceneID="idH-CF-49w">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ayu-Nk-JpX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tableViewController id="Ia5-QG-3oS" customClass="NotificationViewController" customModule="Dr_Soldier" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="wTy-1r-f6I">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="NotificationCell" rowHeight="76" id="kBA-ZE-PfD" customClass="NotificationCell" customModule="Dr_Soldier" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="414" height="76"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kBA-ZE-PfD" id="IEh-NL-Ds8">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="76"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="2fH-SD-aSL">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="76"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1" verticalHuggingPriority="1" image="soldier" translatesAutoresizingMaskIntoConstraints="NO" id="DAq-Ux-dYj">
+                                                    <rect key="frame" x="0.0" y="10" width="56" height="56"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="56" id="5ot-TQ-Fgg"/>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="56" id="pDt-8v-Gdh"/>
+                                                        <constraint firstAttribute="width" constant="56" id="tCD-Uh-Q08"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="j9t-3e-Ipa">
+                                                    <rect key="frame" x="60" y="7" width="354" height="62"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="title" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H2F-D4-olt">
+                                                            <rect key="frame" x="0.0" y="0.0" width="354" height="17"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="description" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rzl-eu-5zw">
+                                                            <rect key="frame" x="0.0" y="22" width="354" height="18"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NLz-0u-UH5">
+                                                            <rect key="frame" x="0.0" y="45" width="354" height="17"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="j9t-3e-Ipa" firstAttribute="leading" secondItem="DAq-Ux-dYj" secondAttribute="trailing" constant="4" id="KnI-4u-CwT"/>
+                                                <constraint firstItem="j9t-3e-Ipa" firstAttribute="leading" secondItem="DAq-Ux-dYj" secondAttribute="trailing" constant="4" id="cxF-A6-BOS"/>
+                                                <constraint firstItem="j9t-3e-Ipa" firstAttribute="leading" secondItem="DAq-Ux-dYj" secondAttribute="trailing" constant="4" id="dmT-vj-hQG"/>
+                                                <constraint firstItem="j9t-3e-Ipa" firstAttribute="leading" secondItem="DAq-Ux-dYj" secondAttribute="trailing" constant="4" id="l1d-2C-KZT"/>
+                                            </constraints>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="2fH-SD-aSL" secondAttribute="bottom" id="DJl-HU-Yl1"/>
+                                        <constraint firstItem="2fH-SD-aSL" firstAttribute="leading" secondItem="IEh-NL-Ds8" secondAttribute="leading" id="DKh-Ab-n5f"/>
+                                        <constraint firstItem="2fH-SD-aSL" firstAttribute="top" secondItem="IEh-NL-Ds8" secondAttribute="top" id="jec-5n-eRv"/>
+                                        <constraint firstAttribute="trailing" secondItem="2fH-SD-aSL" secondAttribute="trailing" id="wC4-db-lK4"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="createdLabel" destination="NLz-0u-UH5" id="IcF-4L-RFt"/>
+                                    <outlet property="descriptionLabel" destination="Rzl-eu-5zw" id="qWv-JT-uK2"/>
+                                    <outlet property="titleLabel" destination="H2F-D4-olt" id="e7r-Ez-r7x"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Ia5-QG-3oS" id="1Wi-RE-CQh"/>
+                            <outlet property="delegate" destination="Ia5-QG-3oS" id="IbQ-EB-ppK"/>
+                        </connections>
+                    </tableView>
+                    <tabBarItem key="tabBarItem" title="Notification" image="bell.circle.fill" catalog="system" selectedImage="bell.circle.fill" id="Z6V-g2-4dp"/>
+                    <navigationItem key="navigationItem" id="x8S-p5-sjf"/>
+                    <connections>
+                        <outlet property="NotiTable" destination="wTy-1r-f6I" id="PEc-f6-zNm"/>
+                    </connections>
+                </tableViewController>
+            </objects>
+            <point key="canvasLocation" x="5744.9275362318849" y="368.97321428571428"/>
         </scene>
         <!--Calendar-->
         <scene sceneID="Au7-fA-YVa">
@@ -1430,8 +1519,28 @@
             </objects>
             <point key="canvasLocation" x="4729" y="422"/>
         </scene>
+        <!--Notification-->
+        <scene sceneID="zv7-vE-VHe">
+            <objects>
+                <navigationController id="opM-yw-1Zv" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Notification" image="bell.fill" catalog="system" selectedImage="bell.circle.fill" id="ADc-zp-E9Z"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="uvX-fx-VvT">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.35294117650000001" green="0.75686274509999996" blue="0.5568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Ia5-QG-3oS" kind="relationship" relationship="rootViewController" id="gQW-dC-GQT"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UDx-1A-HVb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5746" y="-408"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="bell.circle.fill" catalog="system" width="128" height="121"/>
+        <image name="bell.fill" catalog="system" width="128" height="124"/>
         <image name="body" width="512" height="512"/>
         <image name="calendar" catalog="system" width="128" height="106"/>
         <image name="close" width="512" height="512"/>

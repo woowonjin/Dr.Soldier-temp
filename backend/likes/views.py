@@ -14,8 +14,10 @@ def likes(request):
     try:
         check_like = like_models.Like.objects.get(user=user, post=post)
         check_like.delete()
-        return HttpResponse("ok")
+        response = {"result" : "delete"}
+        return JsonResponse(response, status=201)
     except like_models.Like.DoesNotExist:
         like = like_models.Like.objects.create(user=user, post=post)
         like.save()
-        return HttpResponse("ok")
+        response = {"result" : "create"}
+        return JsonResponse(response, status=201)

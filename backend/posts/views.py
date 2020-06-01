@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse, JsonResponse
 import json
@@ -19,7 +18,6 @@ def documents(request):
         posts_full = []
         for post in posts:
             posts_full.append(post.serializeCustom())
-        # post_list = serializers.serialize('json', posts_full)
         posts_json = json.dumps(posts_full)
         return HttpResponse(posts_json, content_type="text/json-comment-filtered")
         

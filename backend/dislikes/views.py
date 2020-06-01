@@ -13,8 +13,10 @@ def dislikes(request):
     try:
         dislike_check = dislike_models.Dislike.objects.get(user=user, post=post)
         dislike_check.delete()
-        return HttpResponse("ok")
+        response = {"result" : "delete"}
+        return JsonResponse(response, status=201)
     except dislike_models.Dislike.DoesNotExist:
         dislike = dislike_models.Dislike.objects.create(user=user, post=post)
         dislike.save()
-        return HttpResponse("ok")
+        response = {"result" : "create"}
+        return JsonResponse(response, status=201)
