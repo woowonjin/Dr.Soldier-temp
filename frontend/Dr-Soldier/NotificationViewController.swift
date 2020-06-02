@@ -12,6 +12,7 @@ import Alamofire
 class NotificationViewController: UITableViewController{
     
     @IBOutlet var NotiTable: UITableView!
+    
     let refreshNoti = UIRefreshControl()
     var notis : Array<Notification> = []
     let DB = DataBaseAPI.init()
@@ -84,7 +85,7 @@ class NotificationViewController: UITableViewController{
                         createdStr = "\(d)년 전"
                     }
                     
-                    self.notis.insert(Notification(post_title : post_title, is_read : is_read, type : type, user_name : user_name, post_pk : post_pk, created : createdStr, likes: likes, dislikes: dislikes, comments: comments, description: description), at: index)
+                    self.notis.insert(Notification(pk : pk, post_title : post_title, is_read : is_read, type : type, user_name : user_name, post_pk : post_pk, created : createdStr, likes: likes, dislikes: dislikes, comments: comments, description: description), at: index)
                     DispatchQueue.main.async {
                         self.NotiTable.reloadData()
                     }
@@ -92,6 +93,12 @@ class NotificationViewController: UITableViewController{
             
             case .failure(let error):
                 print("getting Notifications failed")
+            }
+        }
+        var num = 0;
+        for noti in notis{
+            if(noti.is_read == false){
+                num += 1
             }
         }
     }
@@ -133,7 +140,12 @@ class NotificationViewController: UITableViewController{
             cell.descriptionLabel.text = "\(noti.user_name)님이 회원님의 댓글 싫어요를 취소했습니다."
         }
         cell.createdLabel.text = noti.created
-
+        if(noti.is_read == false){
+            cell.backgroundColor = UIColor(red:205/255, green: 255/255, blue: 0, alpha: 1)
+        }
+        else{
+            cell.backgroundColor = .white
+        }
         return cell
     }
     
@@ -147,6 +159,11 @@ class NotificationViewController: UITableViewController{
         nextView.titleString = noti.post_title
         nextView.descriptionString = noti.description
         self.navigationController?.pushViewController(nextView, animated: true)
+        if(noti.is_read == false){
+            AF.request("http://127.0.0.1:8000/read_notification/?noti_pk=\(noti.pk)").responseJSON { response in
+            }
+        }
+        self.refresh()
     }
 
     

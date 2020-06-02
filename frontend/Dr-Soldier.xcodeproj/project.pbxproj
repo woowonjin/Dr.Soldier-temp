@@ -13,6 +13,7 @@
 		1161E917248549B800EB8DB4 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1161E916248549B800EB8DB4 /* NotificationViewController.swift */; };
 		1161E91924854A4100EB8DB4 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1161E91824854A4100EB8DB4 /* Notification.swift */; };
 		1161E91B24854C1300EB8DB4 /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1161E91A24854C1300EB8DB4 /* NotificationCell.swift */; };
+		119AFE6C2486C29A002B36FA /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119AFE6B2486C29A002B36FA /* TabBarController.swift */; };
 		11AA922F2463F86D00765FC4 /* KakaoOpenSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11AA922E2463F86D00765FC4 /* KakaoOpenSDK.framework */; };
 		11AA92322463FB8000765FC4 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11AA92312463FB8000765FC4 /* LoginViewController.swift */; };
 		11FC2363247AB7110075450E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FC2362247AB7110075450E /* User.swift */; };
@@ -46,6 +47,7 @@
 		1161E916248549B800EB8DB4 /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
 		1161E91824854A4100EB8DB4 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		1161E91A24854C1300EB8DB4 /* NotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
+		119AFE6B2486C29A002B36FA /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		11AA922E2463F86D00765FC4 /* KakaoOpenSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KakaoOpenSDK.framework; sourceTree = "<group>"; };
 		11AA92312463FB8000765FC4 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		11E52D5B2463FE3A0060531B /* Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 				1161E916248549B800EB8DB4 /* NotificationViewController.swift */,
 				1161E91824854A4100EB8DB4 /* Notification.swift */,
 				1161E91A24854C1300EB8DB4 /* NotificationCell.swift */,
+				119AFE6B2486C29A002B36FA /* TabBarController.swift */,
 			);
 			path = "Dr-Soldier";
 			sourceTree = "<group>";
@@ -297,6 +300,7 @@
 				776E247C244F096D008CA6A9 /* FitnessViewController.swift in Sources */,
 				1161E91B24854C1300EB8DB4 /* NotificationCell.swift in Sources */,
 				776E2464244F04B8008CA6A9 /* SceneDelegate.swift in Sources */,
+				119AFE6C2486C29A002B36FA /* TabBarController.swift in Sources */,
 				775A7D532451F88A00B3081C /* DocumentCell.swift in Sources */,
 				77055B0524698F8B00BE47A9 /* Comment.swift in Sources */,
 				0D67F1BE245C0DD800244669 /* Database.swift in Sources */,

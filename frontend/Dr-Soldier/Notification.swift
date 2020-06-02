@@ -9,6 +9,7 @@
 import Foundation
 
 struct Notification{
+    var pk : Int
     var post_title : String
     var is_read : Bool
     var type : String
