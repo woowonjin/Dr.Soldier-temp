@@ -13,6 +13,9 @@ class WriteViewController: UIViewController {
     
     @IBOutlet weak var contentTextField: UITextField!
     @IBOutlet weak var titleTextField: UITextField!
+    let DB = DataBaseAPI.init()
+    let Query = DataBaseQuery.init()
+    var userEmail : String? // UserDefault -> Sqlite
     
     let header: HTTPHeaders = [
         "Content-Type" : "application/json",
@@ -21,9 +24,9 @@ class WriteViewController: UIViewController {
     
     @objc func writeButtonClicked(){
         print("write button Clicked!")
-        let user = UserDefaults.standard.dictionary(forKey: "user")
+        //let user = UserDefaults.standard.dictionary(forKey: "user")
 
-        let params : Parameters = ["title":titleTextField.text!, "content":contentTextField.text!, "user":(user!["email"])! as! String]
+        let params : Parameters = ["title":titleTextField.text!, "content":contentTextField.text!, "user":self.userEmail!]
         let url = "http://127.0.0.1:8000/posts/create/"
         
 
@@ -68,6 +71,8 @@ class WriteViewController: UIViewController {
         writeButton.tintColor = .white
         self.navigationItem.rightBarButtonItem = writeButton
         
+        let result = self.DB.query(statement: self.Query.SelectStar(Tablename: "User") , ColumnNumber: 6)
+        self.userEmail = result[0][0]
     }
 
 
