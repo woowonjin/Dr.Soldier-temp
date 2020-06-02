@@ -44,5 +44,6 @@ class Post(core_models.TimeStampedModel):
             "dislikes_number": self.count_dislikes(),
             "created":str(self.created),
             "updated":str(self.updated),
+            "comments_number": self.count_comments(),
         }
         return data

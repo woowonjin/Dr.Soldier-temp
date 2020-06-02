@@ -14,4 +14,7 @@ struct Comment {
     var thumbsUp : Int
     var thumbsDown : Int
     var isDeleted : Bool
+    var pk : Int
+//    var isLike : Bool
+//    var isDislike : Bool
 }

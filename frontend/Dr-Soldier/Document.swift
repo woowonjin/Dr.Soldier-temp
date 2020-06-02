@@ -17,5 +17,6 @@ struct Document {
     var thumbsDown : Int
     var isDeleted : Bool
     let pk: Int
+    var comments : Int
 }
 

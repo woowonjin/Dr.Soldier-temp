@@ -18,4 +18,5 @@ class DocumentCell : UITableViewCell{
     @IBOutlet weak var thumbsUpBtn: UIButton!
     
     @IBOutlet weak var thumbsDownBtn: UIButton!
+    @IBOutlet weak var commentsBtn: UIButton!
 }
