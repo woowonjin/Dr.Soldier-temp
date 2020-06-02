@@ -27,7 +27,19 @@ def notification(request):
     elif noti_type_temp == "comment":
         noti_type = noti_models.Notification.COMMENT
         noti = noti_models.Notification.objects.create(user=user, post=post, noti_type=noti_type)
-
+    elif noti_type_temp == "comment_like":
+        noti_type = noti_models.Notification.COMMENT_LIKE
+        noti = noti_models.Notification.objects.create(user=user, post=post, noti_type=noti_type)
+    elif noti_type_temp == "comment_like_cancel":
+        noti_type = noti_models.Notification.COMMENT_LIKE_CANCEL
+        noti = noti_models.Notification.objects.create(user=user, post=post, noti_type=noti_type)
+    elif noti_type_temp == "comment_dislike":
+        noti_type = noti_models.Notification.COMMENT_DISLIKE
+        noti = noti_models.Notification.objects.create(user=user, post=post, noti_type=noti_type)
+    elif noti_type_temp == "comment_dislike_cancel":
+        noti_type = noti_models.Notification.COMMENT_DISLIKE_CANCEL
+        noti = noti_models.Notification.objects.create(user=user, post=post, noti_type=noti_type)
+    
 def get_notifications(request):
     user_email = request.GET.get("user")
     user = user_models.User.objects.get(username=user_email)

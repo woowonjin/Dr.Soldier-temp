@@ -122,58 +122,21 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
             cell.DescriptionLabel.text = comment.description
             cell.thumbsUpBtn.setTitle(String(comment.thumbsUp), for: .normal)
             cell.thumbsDownBtn.setTitle(String(comment.thumbsDown), for: .normal)
-//            let rightView = UIView()
             let bounds: CGRect = UIScreen.main.bounds
-//            rightView.frame = CGRect(x: bounds.maxX-100, y: 0, width: 40, height: 20)
-//            cell.rightView = rightView
             let commentLike = UIButton(type:.system)
             let commentDislike = UIButton(type:.system)
             commentLike.frame = CGRect(x:bounds.maxX-100, y:8, width: 20, height: 15)
-//            if isLike{
-//                like.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-//            }
-//            else{
-//                like.setImage(UIImage(systemName: "heart"), for: .normal)
-//            }
             commentLike.tintColor = .red
             commentDislike.frame = CGRect(x:bounds.maxX-50, y:8, width: 20, height: 15)
-//            if isDislike{
-//                dislike.setImage(UIImage(systemName: "hand.thumbsdown.fill"), for: .normal)
-//            }
-//            else{
-//                dislike.setImage(UIImage(systemName: "hand.thumbsdown"), for: .normal)
-//            }
             commentDislike.tintColor = .blue
             cell.likeBtn = commentLike
             cell.dislikeBtn = commentDislike
 
             self.commentLikeRequest(cell: cell)
-//            if cell.isLike{
-//                print("cell.isLike is true")
-//                like.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-////                cell.likeBtn.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-//            }
-//            else{
-//                print("cell.isLike is false")
-//                like.setImage(UIImage(systemName: "heart"), for: .normal)
-////                cell.likeBtn.setImage(UIImage(systemName: "heart"), for: .normal)
-//            }
-//            if cell.isDislike{
-//                print("cell.isDislike is true")
-//                dislike.setImage(UIImage(systemName: "hand.thumbsdown.fill"), for: .normal)
-////                cell.dislikeBtn.setImage(UIImage(systemName: "hand.thumbsdown.fill"), for: .normal)
-//            }
-//            else{
-//                print("cell.isDislike is false")
-//                dislike.setImage(UIImage(systemName: "hand.thumbsdown"), for: .normal)
-////                cell.dislikeBtn.setImage(UIImage(systemName: "hand.thumbsdown"), for: .normal)
-//            }
             cell.dislikeBtn.addTarget(self, action: #selector(dislikeComment), for: .touchUpInside)
             cell.likeBtn.tag = indexPath.row
             cell.dislikeBtn.tag = indexPath.row
             cell.likeBtn.addTarget(self, action: #selector(likeComment), for: .touchUpInside)
-//            cell.rightView.addSubview(cell.likeBtn)
-//            cell.rightView.addSubview(cell.dislikeBtn)
             cell.addSubview(cell.likeBtn)
             cell.addSubview(cell.dislikeBtn)
             return cell
@@ -245,6 +208,21 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
         // let user = UserDefaults.standard.dictionary(forKey: "user")
         let cell = comments[sender.tag]
         AF.request("http://127.0.0.1:8000/commentLikes/?pk=\(cell.pk)&user=\(userEmail)").responseJSON { response in
+            switch response.result{
+            case .success(let value):
+                let rep = value as! AnyObject
+                let type = rep["result"] as! String
+                if(type == "create"){
+                    AF.request("http://127.0.0.1:8000/notification/?post_pk=\(self.post_pk)&user=\(self.userEmail!)&type=comment_like").responseJSON { response in
+                    }
+                }
+                else if(type == "delete"){
+                    AF.request("http://127.0.0.1:8000/notification/?post_pk=\(self.post_pk)&user=\(self.userEmail!)&type=comment_like_cancel").responseJSON { response in
+                    }
+                }
+            case .failure(let value):
+                print("something wrong")
+            }
         }
         let time = DispatchTime.now() + .milliseconds(500)
         DispatchQueue.main.asyncAfter(deadline: time){
@@ -257,6 +235,21 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
         // let user = UserDefaults.standard.dictionary(forKey: "user")
         let cell = comments[sender.tag]
         AF.request("http://127.0.0.1:8000/commentDislikes/?pk=\(cell.pk)&user=\(userEmail!)").responseJSON { response in
+            switch response.result{
+            case .success(let value):
+                let rep = value as! AnyObject
+                let type = rep["result"] as! String
+                if(type == "create"){
+                    AF.request("http://127.0.0.1:8000/notification/?post_pk=\(self.post_pk)&user=\(self.userEmail!)&type=comment_dislike").responseJSON { response in
+                    }
+                }
+                else if(type == "delete"){
+                    AF.request("http://127.0.0.1:8000/notification/?post_pk=\(self.post_pk)&user=\(self.userEmail!)&type=comment_dislike_cancel").responseJSON { response in
+                    }
+                }
+            case .failure(let value):
+                print("something wrong")
+            }
         }
         let time = DispatchTime.now() + .milliseconds(500)
         DispatchQueue.main.asyncAfter(deadline: time){

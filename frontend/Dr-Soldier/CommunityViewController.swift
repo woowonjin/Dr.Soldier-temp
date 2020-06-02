@@ -44,7 +44,6 @@ class CommunityViewController: UIViewController, UITableViewDelegate, UITableVie
             nextView.titleString = document.title
             nextView.descriptionString = document.description
             self.navigationController?.pushViewController(nextView, animated: true)
-//
     }
     
     func getDocs(){

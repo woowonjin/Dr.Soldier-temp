@@ -48,9 +48,14 @@ class NotificationViewController: UITableViewController{
                 
                 for (index, element) in responseList.enumerated(){
                     //let obj = element["fields"] as! AnyObject
+                    let post_pk = responseList[index]["post_pk"] as! Int
                     let is_read = responseList[index]["is_read"] as! Bool
                     let pk = responseList[index]["pk"] as! Int
                     let post_title = responseList[index]["post_title"] as! String
+                    let description = responseList[index]["post_description"] as! String
+                    let likes = responseList[index]["post_likes"] as! Int
+                    let dislikes = responseList[index]["post_dislikes"] as! Int
+                    let comments = responseList[index]["post_comments"] as! Int
                     let type = responseList[index]["type"] as! String
                     let user_name = responseList[index]["user_name"] as! String
                     let created = responseList[index]["created"] as! String
@@ -79,7 +84,7 @@ class NotificationViewController: UITableViewController{
                         createdStr = "\(d)년 전"
                     }
                     
-                    self.notis.insert(Notification(post_title : post_title, is_read : is_read, type : type, user_name : user_name, post_pk : pk, created : createdStr), at: index)
+                    self.notis.insert(Notification(post_title : post_title, is_read : is_read, type : type, user_name : user_name, post_pk : post_pk, created : createdStr, likes: likes, dislikes: dislikes, comments: comments, description: description), at: index)
                     DispatchQueue.main.async {
                         self.NotiTable.reloadData()
                     }
@@ -115,12 +120,34 @@ class NotificationViewController: UITableViewController{
         else if noti.type == "댓글"{
             cell.descriptionLabel.text = "\(noti.user_name)님이 회원님의 게시물에 댓글을 달았습니다."
         }
+        else if noti.type == "댓글좋아요"{
+            cell.descriptionLabel.text = "\(noti.user_name)님이 회원님의 댓글을 좋아합니다."
+        }
+        else if noti.type == "댓글좋아요취소"{
+            cell.descriptionLabel.text = "\(noti.user_name)님이 회원님의 댓글 좋아요를 취소했습니다."
+        }
+        else if noti.type == "댓글싫어요"{
+            cell.descriptionLabel.text = "\(noti.user_name)님이 회원님의 댓글을 싫어합니다."
+        }
+        else if noti.type == "댓글싫어요취소"{
+            cell.descriptionLabel.text = "\(noti.user_name)님이 회원님의 댓글 싫어요를 취소했습니다."
+        }
         cell.createdLabel.text = noti.created
-
 
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let nextView = self.storyboard?.instantiateViewController(withIdentifier: "DocumentDetailViewController") as! DocumentDetailViewController
+        let noti = notis[indexPath.row]
+        nextView.post_pk = noti.post_pk
+        nextView.likes = noti.likes
+        nextView.dislikes = noti.dislikes
+        nextView.comments_number = noti.comments
+        nextView.titleString = noti.post_title
+        nextView.descriptionString = noti.description
+        self.navigationController?.pushViewController(nextView, animated: true)
+    }
 
     
 }
