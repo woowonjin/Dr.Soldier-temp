@@ -15,4 +15,8 @@ struct Notification{
     var user_name : String
     var post_pk : Int
     var created : String
+    var likes : Int
+    var dislikes : Int
+    var comments : Int
+    var description : String
 }
