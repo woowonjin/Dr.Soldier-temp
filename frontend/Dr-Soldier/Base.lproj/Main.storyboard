@@ -10,7 +10,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="UMF-Dg-Tpc">
             <objects>
-                <tabBarController storyboardIdentifier="Main" id="lt6-9M-R9o" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="Main" id="lt6-9M-R9o" customClass="TabBarController" customModule="Dr_Soldier" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="LBw-ay-CZ0">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -18,6 +18,7 @@
                         <color key="selectedImageTintColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBar>
                     <connections>
+                        <outlet property="myTabBar" destination="LBw-ay-CZ0" id="kXN-2E-6jW"/>
                         <segue destination="foc-4d-kfe" kind="relationship" relationship="viewControllers" id="erO-ah-NKC"/>
                         <segue destination="CxP-sl-zwR" kind="relationship" relationship="viewControllers" id="B4p-wm-fkZ"/>
                         <segue destination="Uh5-Yg-dC8" kind="relationship" relationship="viewControllers" id="8Mw-Hq-rrG"/>
@@ -31,7 +32,6 @@
         <!--Notification-->
         <scene sceneID="idH-CF-49w">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ayu-Nk-JpX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <tableViewController id="Ia5-QG-3oS" customClass="NotificationViewController" customModule="Dr_Soldier" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="wTy-1r-f6I">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -113,6 +113,7 @@
                         <outlet property="NotiTable" destination="wTy-1r-f6I" id="PEc-f6-zNm"/>
                     </connections>
                 </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ayu-Nk-JpX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5744.9275362318849" y="368.97321428571428"/>
         </scene>
@@ -1523,7 +1524,7 @@
         <scene sceneID="zv7-vE-VHe">
             <objects>
                 <navigationController id="opM-yw-1Zv" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Notification" image="bell.fill" catalog="system" selectedImage="bell.circle.fill" id="ADc-zp-E9Z"/>
+                    <tabBarItem key="tabBarItem" title="Notification" image="bell.fill" catalog="system" selectedImage="bell.circle.fill" id="ADc-zp-E9Z" customClass="NotificationItem" customModule="Dr_Soldier" customModuleProvider="target"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="uvX-fx-VvT">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>

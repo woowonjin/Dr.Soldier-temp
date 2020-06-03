@@ -49,3 +49,17 @@ def get_notifications(request):
         noti_full.append(noti.serializeCustom())
     noti_json = json.dumps(noti_full)
     return HttpResponse(noti_json, content_type="text/json-comment-filtered")
+
+def noti_read(request):
+    noti_pk = request.GET.get("noti_pk")
+    noti = noti_models.Notification.objects.get(pk=noti_pk)
+    noti.is_read = True
+    noti.save()
+    return HttpResponse("ok")
+
+def get_notifications_num(request):
+    user_email = request.GET.get("user")
+    user = user_models.User.objects.get(username=user_email)
+    notis_num = noti_models.Notification.objects.filter(user=user).filter(is_read=False).count()
+    response = {"unread" : f"{notis_num}"}
+    return JsonResponse(response, status=201)
