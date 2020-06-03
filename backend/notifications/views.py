@@ -43,9 +43,23 @@ def notification(request):
 def get_notifications(request):
     user_email = request.GET.get("user")
     user = user_models.User.objects.get(username=user_email)
-    notifications = noti_models.Notification.objects.filter(user=user).order_by("-created")
+    notifications = noti_models.Notification.objects.filter(post__host=user).order_by("-created")
     noti_full = []
     for noti in notifications:
         noti_full.append(noti.serializeCustom())
     noti_json = json.dumps(noti_full)
     return HttpResponse(noti_json, content_type="text/json-comment-filtered")
+
+def noti_read(request):
+    noti_pk = request.GET.get("noti_pk")
+    noti = noti_models.Notification.objects.get(pk=noti_pk)
+    noti.is_read = True
+    noti.save()
+    return HttpResponse("ok")
+
+def get_notifications_num(request):
+    user_email = request.GET.get("user")
+    user = user_models.User.objects.get(username=user_email)
+    notis_num = noti_models.Notification.objects.filter(post__host=user).filter(is_read=False).count()
+    response = {"unread" : f"{notis_num}"}
+    return JsonResponse(response, status=201)
