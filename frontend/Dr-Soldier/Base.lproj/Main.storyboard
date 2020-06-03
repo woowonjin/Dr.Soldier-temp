@@ -278,18 +278,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iby-rD-rkx">
-                                <rect key="frame" x="165" y="433" width="84" height="30"/>
-                                <state key="normal" title="Kakao Login"/>
-                                <connections>
-                                    <action selector="kakaoLoginOnClick:" destination="m0e-4L-Pid" eventType="touchUpInside" id="gz9-c3-yC8"/>
-                                </connections>
-                            </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="doctor4" translatesAutoresizingMaskIntoConstraints="NO" id="GeQ-XL-Cjh">
+                                <rect key="frame" x="20" y="94" width="374" height="718"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="iby-rD-rkx" firstAttribute="centerX" secondItem="U18-Sc-GiW" secondAttribute="centerX" id="PGe-0y-pYT"/>
-                            <constraint firstItem="iby-rD-rkx" firstAttribute="centerY" secondItem="U18-Sc-GiW" secondAttribute="centerY" id="sCo-vM-gZY"/>
+                            <constraint firstItem="GeQ-XL-Cjh" firstAttribute="leading" secondItem="NAG-PS-bwl" secondAttribute="leading" constant="20" id="6TW-sI-963"/>
+                            <constraint firstItem="NAG-PS-bwl" firstAttribute="trailing" secondItem="GeQ-XL-Cjh" secondAttribute="trailing" constant="20" id="9Z1-5u-8ot"/>
+                            <constraint firstItem="GeQ-XL-Cjh" firstAttribute="top" secondItem="NAG-PS-bwl" secondAttribute="top" constant="50" id="r0s-AT-oeY"/>
+                            <constraint firstItem="NAG-PS-bwl" firstAttribute="bottom" secondItem="GeQ-XL-Cjh" secondAttribute="bottom" constant="50" id="sid-Ip-gVg"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="NAG-PS-bwl"/>
                     </view>
