@@ -139,6 +139,7 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
         }
         fillDefaultColorsDictionary.updateValue(SegmentedControl.selectedSegmentIndex + 1 , forKey: date_string)
         self.calendar.cell(for: date, at: monthPosition)?.backgroundColor = SegmentedBarColor[SegmentedControl.selectedSegmentIndex]
+        print(fillDefaultColorsArray)
         updateLabel()
     }
     
