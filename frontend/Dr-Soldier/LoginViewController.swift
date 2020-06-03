@@ -21,6 +21,7 @@ class LoginViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         // Do any additional setup after loading the view.
+        
         let result = self.DB.query(statement: self.Query.SelectStar(Tablename: "User") , ColumnNumber: 6)
         print(result)
         if result.count != 0 {
@@ -33,6 +34,7 @@ class LoginViewController: UIViewController {
             //인자값으로 다음 뷰 컨트롤러를 넣고 present 메소드를 호출합니다.
             self.present(main, animated: true)
         }
+ 
     }
     
     let Url = "http://127.0.0.1:8000/users/kakaologin/"
