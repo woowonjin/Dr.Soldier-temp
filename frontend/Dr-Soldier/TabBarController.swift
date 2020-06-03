@@ -21,7 +21,6 @@ class TabBarController: UITabBarController {
         AF.request("http://127.0.0.1:8000/get-notifications-num/?user=\(userEmail!)").responseJSON { response in
             switch response.result{
             case .success(let value):
-                print(value)
                 let rep = value as! AnyObject
                 let number = rep["unread"] as! String
                 for item in self.myTabBar.items!{
