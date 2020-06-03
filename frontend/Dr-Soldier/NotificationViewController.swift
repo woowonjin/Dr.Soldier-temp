@@ -163,7 +163,7 @@ class NotificationViewController: UITableViewController{
             AF.request("http://127.0.0.1:8000/read_notification/?noti_pk=\(noti.pk)").responseJSON { response in
             }
         }
-        self.refresh()
+//        self.refresh()
     }
 
     
