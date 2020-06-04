@@ -10,6 +10,7 @@
 
 import UIKit
 import FSCalendar
+import Alamofire
 
 class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendarDelegate, FSCalendarDelegateAppearance {
     
@@ -18,9 +19,9 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
     
     @IBOutlet weak var Label: UILabel!
     
-    
+    var userEmail : String? // UserDefault -> Sqlite
     let DB = DataBaseAPI.init()
-    let Quary = DataBaseQuery.init()
+    let Query = DataBaseQuery.init()
     
     fileprivate lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -53,8 +54,8 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
         self.navigationItem.leftBarButtonItem = nil;
         let navview = Variable_Functions.init()
         self.navigationItem.titleView = navview.navView
-    
-       
+        let result = self.DB.query(statement: self.Query.SelectStar(Tablename: "User") , ColumnNumber: 6)
+        self.userEmail = result[0][0]
         //세그먼트바 세팅
         SegmentedControl.removeAllSegments()
         let _ = SegmentedBarData.map({ text in
@@ -65,7 +66,7 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
         
         
         //DB에서 불러오기
-        fillDefaultColorsArray = DB.query(statement: Quary.SelectStar(Tablename: "Calendar"), ColumnNumber: 2)
+        fillDefaultColorsArray = DB.query(statement: Query.SelectStar(Tablename: "Calendar"), ColumnNumber: 2)
         let _ = fillDefaultColorsArray.map({ each in
             fillDefaultColorsDictionary.updateValue(Int(each[1])! , forKey: each[0])
         })
@@ -106,18 +107,20 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
     //날짜가 선택되어있을때
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         let date_string = self.dateFormatter.string(from: date)
+        AF.request("http://127.0.0.1:8000/create-vacation/?user=\(self.userEmail!)&date=\(date_string)&type=\(self.SegmentedControl.selectedSegmentIndex+1)").responseJSON { response in
+        }
         self.calendar.currentPage = date
         //삭제
         if self.SegmentedControl.selectedSegmentIndex == 4 && fillDefaultColorsDictionary[date_string] != nil {
-            if (DB.delete(statement: Quary.Delete(Tablename: "Calendar", Condition: "marked_date = " + "'\(date_string)'"))){
+            if (DB.delete(statement: Query.Delete(Tablename: "Calendar", Condition: "marked_date = " + "'\(date_string)'"))){
                 print("delete success at calander")
             }
         }else{
             //기존 존재한다면 삭제하고 삽입한다.
-            if (DB.delete(statement: Quary.Delete(Tablename: "Calendar", Condition: "marked_date = " + "'\(date_string)'"))){
+            if (DB.delete(statement: Query.Delete(Tablename: "Calendar", Condition: "marked_date = " + "'\(date_string)'"))){
                 print("delete success at calander before insert")
             }
-            if (DB.insert(statement: Quary.insert(Tablename: "Calendar", Values: " '\(date_string)', \(SegmentedControl.selectedSegmentIndex + 1)" ))){
+            if (DB.insert(statement: Query.insert(Tablename: "Calendar", Values: " '\(date_string)', \(SegmentedControl.selectedSegmentIndex + 1)" ))){
                 print("insert success at calander")
             }
         }
