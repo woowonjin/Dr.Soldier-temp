@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse, JsonResponse
 import json
+from django.core.paginator import Paginator
 from django.db import models
 from .models import Post
 from boards import models as board_models
@@ -12,14 +13,16 @@ from dislikes import models as dislikes_models
 from posts import models as post_models
 
 def documents(request):
-    print("/documents")
-    if request.method == "GET":
-        posts = Post.objects.filter(is_deleted=False).order_by("-created")
-        posts_full = []
-        for post in posts:
-            posts_full.append(post.serializeCustom())
-        posts_json = json.dumps(posts_full)
-        return HttpResponse(posts_json, content_type="text/json-comment-filtered")
+    posts = Post.objects.filter(is_deleted=False).order_by("-created")
+    paginator = Paginator(posts, 20)
+    page = request.GET.get("page")
+
+    page_posts = paginator.page(int(page))
+    posts_full = []
+    for post in page_posts:
+        posts_full.append(post.serializeCustom())
+    posts_json = json.dumps(posts_full)
+    return HttpResponse(posts_json, content_type="text/json-comment-filtered")
         
         
 @csrf_exempt
