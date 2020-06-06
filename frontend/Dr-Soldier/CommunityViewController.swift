@@ -9,17 +9,30 @@
 import UIKit
 import Alamofire
 
-class CommunityViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class CommunityViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
+    
 
     private var refreshControl = UIRefreshControl()
-
+    var page = 1
     
     var user: User?
     @IBOutlet weak var mainTableView: UITableView!
     var docs : Array<Document> = []
     
+    
+//    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+//        print("prefetch : \(indexPaths)")
+//    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return docs.count
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if(indexPath.row == self.page*20-6){
+            self.page += 1
+            getDocs()
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -48,7 +61,8 @@ class CommunityViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func getDocs(){
         //self.docs.insert(Document(title: "헬로우 스위프트~", description: "킾고잉~ 코더스하이!", created: "temp", writer: "관리자", thumbsUp: 0, thumbsDown: 0, isDeleted: false, pk: 1), at: 0)
-        AF.request("http://127.0.0.1:8000/documents").responseJSON { response in
+        print("GET Docs")
+        AF.request("http://127.0.0.1:8000/documents/?page=\(page)").responseJSON { response in
             switch response.result{
             case .success(let value):
                 let responseList = value as! Array<AnyObject>
@@ -94,7 +108,7 @@ class CommunityViewController: UIViewController, UITableViewDelegate, UITableVie
                         createdStr = "\(d)년 전"
                     }
                     
-                    self.docs.insert(Document(title: title, description: description, created: createdStr, writer: writer, thumbsUp: likes, thumbsDown: dislikes, isDeleted: false, pk: pk, comments: comments), at: index)
+                    self.docs.insert(Document(title: title, description: description, created: createdStr, writer: writer, thumbsUp: likes, thumbsDown: dislikes, isDeleted: false, pk: pk, comments: comments), at: index+(self.page-1)*20)
                     DispatchQueue.main.async {
                         self.mainTableView.reloadData()
                     }
@@ -120,10 +134,12 @@ class CommunityViewController: UIViewController, UITableViewDelegate, UITableVie
     
     @objc func refresh(){
         docs.removeAll()
+        self.page = 1
         getDocs()
         mainTableView.reloadData()
         self.refreshControl.endRefreshing()
     }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
