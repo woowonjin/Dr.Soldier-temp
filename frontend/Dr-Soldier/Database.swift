@@ -42,9 +42,13 @@ class DataBaseQuery {
         "checked_date"    TEXT NOT NULL,
         "pushup"    INTEGER,
         "situp"    INTEGER,
-        "run"    TEXT
+        "runMinute"    INTEGER,
+        "runSecond"    INTEGER,
+        "pk"           INTEGER
     );
     """
+    
+    
     
     let CreateCalenderTable = """
     CREATE TABLE "Calendar" (
@@ -53,6 +57,11 @@ class DataBaseQuery {
     );
     """
     
+    let CreateLevelTable = """
+    CREATE TABLE "Level" (
+    "level" INTEGER NOT NULL DEFAULT 0
+    );
+    """
     
     
     public func SelectStar(Tablename:String) ->String{
@@ -108,6 +117,7 @@ class DataBaseAPI {
         tmp = self.createTable(statement: Query.CreateCalenderTable)
         tmp = self.createTable(statement: Query.CreateRecordTable)
         tmp = self.createTable(statement: Query.CreateFitnessTable)
+        tmp = self.createTable(statement: Query.CreateLevelTable)
         print(tmp)
         print("모든 테이블 생성 성공!")
     }

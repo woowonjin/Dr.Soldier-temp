@@ -24,6 +24,7 @@ from commentLikes import views as commentLikes_views
 from commentDislikes import views as commentDislikes_views
 from comments import views as comments_views
 from notifications import views as noti_views
+from vacations import views as vacation_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -36,6 +37,7 @@ urlpatterns = [
     path('get-notifications-num/', noti_views.get_notifications_num),
     path('dislikes/', dislikes.views.dislikes),
     path('documents/', posts.views.documents, name="documents"),
+    path('create-vacation/', vacation_views.vacation_create, name="vacation_create"),
     path('commentLikes/', commentLikes_views.like, name="commentLikes"),
     path('commentDislikes/', commentDislikes_views.dislike, name="commentDislikes"),
     path('posts/', include("posts.urls", namespace="posts")),
