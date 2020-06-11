@@ -18,9 +18,12 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
     
     @IBOutlet weak var Label: UILabel!
     
+    @IBOutlet weak var Searchtextview: UITextView!
+    @IBOutlet weak var SerchButton: UIButton!
     
     let DB = DataBaseAPI.init()
     let Quary = DataBaseQuery.init()
+    var MyEmail : String = ""
     
     fileprivate lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -47,6 +50,7 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        self.view.backgroundColor = UIColor.systemGray5
         
         //네비게이션바 세팅
         self.navigationItem.hidesBackButton = true;
@@ -62,6 +66,13 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
         })
         SegmentedControl.selectedSegmentIndex = 0
         SegmentedControl.selectedSegmentTintColor = SegmentedBarColor[SegmentedControl.selectedSegmentIndex]
+        
+        //textview 세팅
+        let result = self.DB.query(statement: self.Quary.SelectStar(Tablename: "User") , ColumnNumber: 6)
+        print(result)
+        self.MyEmail = result[0][0]
+        Searchtextview.text = self.MyEmail
+        print(self.MyEmail)
         
         
         //DB에서 불러오기
@@ -205,6 +216,11 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
                        value: UIFont.boldSystemFont(ofSize: 22), range: (Label.text! as NSString).range(of: "외출"))
         Label.attributedText = attributedStr
     }
+    
+    @IBAction func SerchButtonTab(_ sender: Any) {
+        
+    }
+    
 }
 
 extension UIColor {
