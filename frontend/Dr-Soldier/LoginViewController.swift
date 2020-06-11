@@ -34,6 +34,9 @@ class LoginViewController: UIViewController {
             //인자값으로 다음 뷰 컨트롤러를 넣고 present 메소드를 호출합니다.
             self.present(main, animated: true)
         }
+        else{
+            kakaoLogin()
+        }
  
     }
     
@@ -61,7 +64,7 @@ class LoginViewController: UIViewController {
         }
     }
     //Info
-    @IBAction func kakaoLoginOnClick(_ sender: Any) {
+    func kakaoLogin() {
         guard let session = KOSession.shared() else{
             return
         }

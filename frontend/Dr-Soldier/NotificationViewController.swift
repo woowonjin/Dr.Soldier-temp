@@ -21,6 +21,7 @@ class NotificationViewController: UITableViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         let result = self.DB.query(statement: self.Query.SelectStar(Tablename: "User") , ColumnNumber: 6)
         NotiTable.refreshControl = refreshNoti
         self.refreshNoti.attributedTitle = NSAttributedString(string: "당겨서 새로고침")
@@ -163,7 +164,7 @@ class NotificationViewController: UITableViewController{
             AF.request("http://127.0.0.1:8000/read_notification/?noti_pk=\(noti.pk)").responseJSON { response in
             }
         }
-        self.refresh()
+//        self.refresh()
     }
 
     

@@ -15,25 +15,18 @@ class GoalViewController: UIViewController, UITableViewDataSource, UITableViewDe
     let Quary = DataBaseQuery.init()
     var Data : Array<Array<String>> = []
     let SegmentedBarColor = [UIColor.init(rgb:0x5AC18E),UIColor.init(rgb: 0xff7373) , UIColor.init(rgb: 0xe8a87c) ,UIColor.init(rgb: 0x22A39F), UIColor.clear]
-    
-
     @IBOutlet weak var Table: UITableView!
     @IBOutlet weak var TextView: UITextView!
     @IBOutlet weak var Label: UILabel!
-    
-    
     @IBAction func SuccessButtonTap(_ sender: Any) {
         update()
     }
-    
     @IBAction func DeleteButtonTap(_ sender: Any) {
         update()
     }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return Data.count
     }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = Table.dequeueReusableCell(withIdentifier: "ToDoListTableCell", for: indexPath) as! ToDoListTableCell
         cell.Discription.text = Data[indexPath.row][0]
