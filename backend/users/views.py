@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from . import models as user_models
+from django.contrib.auth import authenticate, login, logout
+from django.http import HttpResponse, JsonResponse
 
 @csrf_exempt
 def kakao_login(request):
@@ -17,4 +19,5 @@ def kakao_login(request):
         )
         user.set_unusable_password()
         user.save()
-    return
+        return
+        

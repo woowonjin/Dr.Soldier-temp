@@ -17,8 +17,31 @@ from django.contrib import admin
 from django.urls import path, include
 import posts.views
 import users.views
+import likes.views
+import dislikes.views
+from comments import views as comments_views
+from commentLikes import views as commentLikes_views
+from commentDislikes import views as commentDislikes_views
+from comments import views as comments_views
+from notifications import views as noti_views
+from vacations import views as vacation_views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('alreadylikes/', posts.views.already_likes),
+    path('alreadyCommentLikes/', comments_views.already_comment_like),
+    path('likes/', likes.views.likes),
+    path('notification/', noti_views.notification),
+    path('read_notification/', noti_views.noti_read),
+    path('get-notifications/', noti_views.get_notifications),
+    path('get-notifications-num/', noti_views.get_notifications_num),
+    path('dislikes/', dislikes.views.dislikes),
     path('documents/', posts.views.documents, name="documents"),
+    path('create-vacation/', vacation_views.vacation_create, name="vacation_create"),
+    path('get-vacations/', vacation_views.get_vacation, name="get_vacation"),
+    path('commentLikes/', commentLikes_views.like, name="commentLikes"),
+    path('commentDislikes/', commentDislikes_views.dislike, name="commentDislikes"),
+    path('posts/', include("posts.urls", namespace="posts")),
+    path('comments/', include("comments.urls", namespace="comments")),
     path('users/', include("users.urls", namespace="users")),
 ]
