@@ -1,3 +1,4 @@
 ${PODS_ROOT}/Target Support Files/Pods-Dr-Soldier/Pods-Dr-Soldier-frameworks.sh
 ${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework
+${BUILT_PRODUCTS_DIR}/Charts/Charts.framework
 ${BUILT_PRODUCTS_DIR}/FSCalendar/FSCalendar.framework

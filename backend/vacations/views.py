@@ -61,10 +61,14 @@ def vacation_create(request):
 
 def get_vacation(request):
     user_email = request.GET.get("user")
-    user = user_models.User.objects.get(username=user_email)
-    vacations = vacation_models.Vacation.objects.all()
-    vacations_full = []
-    for vacation in vacations:
-        vacations_full.append(vacation.serializeCustom())
-    vacation_json = json.dumps(vacations_full)
-    return HttpResponse(vacation_json, content_type="text/json-comment-filtered")
+    try:
+        user = user_models.User.objects.get(username=user_email)
+        vacations = vacation_models.Vacation.objects.all().filter(user=user)
+        vacations_full = []
+        for vacation in vacations:
+            vacations_full.append(vacation.serializeCustom())
+        vacation_json = json.dumps(vacations_full)
+        return HttpResponse(vacation_json, content_type="text/json-comment-filtered")
+    except user_models.User.DoesNotExist:
+        response = {"result" : "fail"}
+        return JsonResponse(response, status=201)
