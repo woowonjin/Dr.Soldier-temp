@@ -90,8 +90,10 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
         self.calendar.dataSource = self
         self.calendar.delegate = self
         Label.numberOfLines = 2
-        updateLabel()
     }
+    
+    
+    
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text == "\n" {
@@ -180,7 +182,6 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
          */
         //self.calendar.cell(for: date, at: monthPosition)?.backgroundColor = SegmentedBarColor[SegmentedControl.selectedSegmentIndex]
         updateData()
-        updateLabel()
     }
     
     func daysBetween(start: Date, end: Date) -> Int {
@@ -189,6 +190,8 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
     
     func updateData(){
         //본인의 데이터 일때
+        var flag : Bool = true
+        
         if self.Searchtextview.text == self.userEmail {
             fillDefaultColorsArray.removeAll()
             fillDefaultColorsDictionary.removeAll()
@@ -202,12 +205,26 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
             fillDefaultColorsArray.removeAll()
             fillDefaultColorsDictionary.removeAll()
             // 이제 여기서 형이 원격에서 데이터 불러서 저 어레이랑 데이터를 넣어줘야해
+            flag = false
             
         }
+        updateLabel(flag: flag)
         self.calendar.reloadData()
     }
     
-    func updateLabel(){
+    func updateLabel(flag : Bool){
+        if flag == false{
+            self.Searchtextview.text = self.userEmail
+            Label.text = "유저 정보가 없습니다"
+            Label.font = UIFont.systemFont(ofSize: 15)
+            let attributedStr = NSMutableAttributedString(string: Label.text!)
+            attributedStr.addAttribute(.foregroundColor, value: SegmentedBarColor[0] , range: (Label.text! as NSString).range(of: "유저"))
+            attributedStr.addAttribute(NSAttributedString.Key.init(kCTFontAttributeName as String),
+                    value: UIFont.boldSystemFont(ofSize: 22), range: (Label.text! as NSString).range(of: "유저"))
+            Label.attributedText = attributedStr
+            return
+        }
+        
         var 휴가 : Int = 99999
         var 외출 : Int = 99999
         let formatter = DateFormatter()
