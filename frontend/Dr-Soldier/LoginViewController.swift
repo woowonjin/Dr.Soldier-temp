@@ -12,11 +12,33 @@ import Alamofire
 
 class LoginViewController: UIViewController {
 
-    override func viewDidLoad() {
-           super.viewDidLoad()
-           // Do any additional setup after loading the view.
+    let DB = DataBaseAPI.init()
+    let Query = DataBaseQuery.init()
     
-       }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        // Do any additional setup after loading the view.
+        
+        let result = self.DB.query(statement: self.Query.SelectStar(Tablename: "User") , ColumnNumber: 6)
+        print(result)
+        if result.count != 0 {
+        guard let main = self.storyboard?.instantiateViewController(withIdentifier: "Main") else{
+                return
+            }
+            //화면 전환 애니메이션을 설정합니다.
+            main.modalPresentationStyle = .fullScreen
+            main.modalTransitionStyle = UIModalTransitionStyle.coverVertical
+            //인자값으로 다음 뷰 컨트롤러를 넣고 present 메소드를 호출합니다.
+            self.present(main, animated: true)
+        }
+        else{
+            kakaoLogin()
+        }
+ 
+    }
     
     let Url = "http://127.0.0.1:8000/users/kakaologin/"
 
@@ -28,7 +50,7 @@ class LoginViewController: UIViewController {
     func post(email:String, nickname:String){
         
         //let user = User(email: email, nickname: nickname)
-        let user : Parameters = [
+        let user_info : Parameters = [
             "email" : email,
             "nickname" : nickname
         ]
@@ -37,48 +59,52 @@ class LoginViewController: UIViewController {
         
         let info = Url + "?email=\(email)&nickname=\(nickname)"
         
-        AF.request(info.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "", method: .post, parameters: user, headers: header).responseJSON { response in
+        AF.request(info.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "", method: .post, parameters: user_info, headers: header).responseJSON { response in
                 
         }
     }
     //Info
-    @IBAction func kakaoLoginOnClick(_ sender: Any) {
+    func kakaoLogin() {
         guard let session = KOSession.shared() else{
             return
         }
         if session.isOpen(){
             session.close()
         }
-        
         session.open(completionHandler: {(error) in
-            if error == nil {
-                print("no Error")
-                
-                if session.isOpen(){
-                    KOSessionTask.userMeTask(completion: { (error, user) in
-                        if error != nil{
-                            return
-                        }
-                        guard let user = user,
-                            let email = user.account?.email,
-                            let nickName = user.nickname else { return }
-    
-                        self.post(email:email, nickname:nickName)
-                      
-//                      let mainVC = MainViewController()
-//                      mainVC.emailLabel.text = email
-//                      mainVC.nicnameLabel.text = nickname
-                        guard let main = self.storyboard?.instantiateViewController(withIdentifier: "Main") else{
-                                   return
-                        }
-                        //화면 전환 애니메이션을 설정합니다.
-                        main.modalPresentationStyle = .fullScreen
-                        main.modalTransitionStyle = UIModalTransitionStyle.coverVertical
+        if error == nil {
+            print("no Error")
+            if session.isOpen(){
+                KOSessionTask.userMeTask(completion: { (error, user) in
+                if error != nil{
+                    return
+                }
+                    guard let user = user,
+                    let email = user.account?.email,
+                    let nickName = user.nickname else { return }
+                    
+                   
+                    
+                    //가장 처음으로 앱을 켰을때
+                    self.DB.insert(statement: "DROP TABLE User;")
+                    self.DB.CreateEveryTable()
+                    self.DB.insert(statement: self.Query.insert(Tablename: "User", Values: "'\(email)', '\(nickName)','','','','' "))
+                    
+                    
+                    self.post(email:email, nickname:nickName)
+                    guard let main = self.storyboard?.instantiateViewController(withIdentifier: "Main") else{
+                               return
+                    }
+                    
+                    //화면 전환 애니메이션을 설정합니다.
+                    
+                    main.modalPresentationStyle = .fullScreen
+                    main.modalTransitionStyle = UIModalTransitionStyle.coverVertical
 
-                        //인자값으로 다음 뷰 컨트롤러를 넣고 present 메소드를 호출합니다.
-                        self.present(main, animated: true)
-                      
-                    })
+                    //인자값으로 다음 뷰 컨트롤러를 넣고 present 메소드를 호출합니다.
+                    self.present(main, animated: true)
+                  
+                })
                     
                 }
                 else {

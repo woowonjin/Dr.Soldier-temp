@@ -9,14 +9,30 @@
 import UIKit
 import Alamofire
 
-class CommunityViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class CommunityViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
     
+
+    private var refreshControl = UIRefreshControl()
+    var page = 1
+    
+    var user: User?
     @IBOutlet weak var mainTableView: UITableView!
-    
     var docs : Array<Document> = []
+    
+    
+//    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+//        print("prefetch : \(indexPaths)")
+//    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return docs.count
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if(indexPath.row == self.page*20-6){
+            self.page += 1
+            getDocs()
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -24,30 +40,32 @@ class CommunityViewController: UIViewController, UITableViewDelegate, UITableVie
         let document = docs[indexPath.row]
         cell.titleLabel.text = document.title
         cell.descriptionLabel.text = document.description
-        cell.informationLabel.text = "유저이름 | " + document.created
-        cell.thumbsUpBtn.titleLabel?.text = String(document.thumbsUp)
-        cell.thumbsDownBtn.titleLabel?.text = String(document.thumbsDown)
+        cell.informationLabel.text = document.writer + " | " + document.created
+        cell.thumbsUpBtn.setTitle(String(document.thumbsUp), for: .normal)
+        cell.thumbsDownBtn.setTitle(String(document.thumbsDown), for: .normal)
+        cell.commentsBtn.setTitle(String(document.comments), for: .normal)
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let nextView = self.storyboard?.instantiateViewController(withIdentifier: "DocumentDetailViewController") as! DocumentDetailViewController
-        let document = docs[indexPath.row]
-        nextView.titleString = document.title
-        nextView.descriptionString = document.description
-        self.navigationController?.pushViewController(nextView, animated: true)
-        
+            let nextView = self.storyboard?.instantiateViewController(withIdentifier: "DocumentDetailViewController") as! DocumentDetailViewController
+            let document = docs[indexPath.row]
+            nextView.post_pk = document.pk
+            nextView.likes = document.thumbsUp
+            nextView.dislikes = document.thumbsDown
+            nextView.comments_number = document.comments
+            nextView.titleString = document.title
+            nextView.descriptionString = document.description
+            self.navigationController?.pushViewController(nextView, animated: true)
     }
     
     func getDocs(){
-        self.docs.insert(Document(title: "헬로우 스위프트~", description: "킾고잉~ 코더스하이!", created: "temp", writer: "관리자", thumbsUp: 0, thumbsDown: 0, isDeleted: false), at: 0)
-        AF.request("http://127.0.0.1:8000/documents").responseJSON { response in
+        //self.docs.insert(Document(title: "헬로우 스위프트~", description: "킾고잉~ 코더스하이!", created: "temp", writer: "관리자", thumbsUp: 0, thumbsDown: 0, isDeleted: false, pk: 1), at: 0)
+        print("GET Docs")
+        AF.request("http://127.0.0.1:8000/documents/?page=\(page)").responseJSON { response in
             switch response.result{
             case .success(let value):
-                print("DIE")
-                print(type(of: value))
                 let responseList = value as! Array<AnyObject>
-                print(responseList[0])
                 
                 let dateFormatter = DateFormatter()
                 let now = Date()
@@ -57,23 +75,23 @@ class CommunityViewController: UIViewController, UITableViewDelegate, UITableVie
                 for (index, element) in responseList.enumerated(){
                     //let obj = element["fields"] as! AnyObject
                     let title = responseList[index]["title"] as! String
-                    let description = responseList[index]["title"] as! String
+                    let description = responseList[index]["text"] as! String
                     let likes = responseList[index]["likes_number"] as! Int
                     let dislikes = responseList[index]["dislikes_number"] as! Int
+                    let comments = responseList[index]["comments_number"] as! Int
+                    let writer = responseList[index]["host_name"] as! String
                     //let host = responseList[index]["host"] as! String
                     let created = responseList[index]["created"] as! String
                     let end = created.index(created.endIndex, offsetBy: -7)
+                    let pk = responseList[index]["pk"] as! Int
                     let tmpstr = String(created[...end]) // Date 로 바꾸기 위해 잘라준다.
-                    print(title)
-                    print(description)
-                    print(likes)
-                    print(dislikes)
                     //print(host)
-                    
-                    let date = dateFormatter.date(from: tmpstr)
+                    let st = tmpstr.components(separatedBy: ".")
+                    let date = dateFormatter.date(from: st[0])
                     let intervalSecond = now.timeIntervalSince(date!)
+                    
                     let createdStr : String
-                    print(intervalSecond)
+                    
                     switch intervalSecond {
                     case 0...3600:
                         let m : Int = Int(intervalSecond / 60)
@@ -89,8 +107,11 @@ class CommunityViewController: UIViewController, UITableViewDelegate, UITableVie
                         let d : Int = Int(intervalSecond / (3600*24*365))
                         createdStr = "\(d)년 전"
                     }
-                    print(createdStr)
-                    self.docs.insert(Document(title: title, description: description, created: createdStr, writer: "leedh2004", thumbsUp: likes, thumbsDown: dislikes, isDeleted: false), at: index)
+                    
+                    self.docs.insert(Document(title: title, description: description, created: createdStr, writer: writer, thumbsUp: likes, thumbsDown: dislikes, isDeleted: false, pk: pk, comments: comments), at: index+(self.page-1)*20)
+                    DispatchQueue.main.async {
+                        self.mainTableView.reloadData()
+                    }
                 }
             case .failure(let error):
                 print("maybe server down")
@@ -102,27 +123,33 @@ class CommunityViewController: UIViewController, UITableViewDelegate, UITableVie
 //                let description = obj["text"] as! String
 //                self.docs.insert(Document(title: title, description: description, created: Date(), writer: "leedh2004", thumbsUp: 30, thumbsDown: 10, isDeleted: false), at: index)
 //            }
-            DispatchQueue.main.async {
-                self.mainTableView.reloadData()
-            }
            
         }
-        print("getDocs()!")
     }
     
     @objc func writeButtonClicked(){
         let nextView = self.storyboard?.instantiateViewController(withIdentifier: "WriteViewController") as! WriteViewController
          self.navigationController?.pushViewController(nextView, animated: true)
     }
-    @objc func refreshButtonClicked(){
-        print("refresh button Clicked!")
+    
+    @objc func refresh(){
+        docs.removeAll()
+        self.page = 1
+        getDocs()
+        mainTableView.reloadData()
+        self.refreshControl.endRefreshing()
     }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
 //        self.navigationItem.hidesBackButton = true;
 //        self.navigationItem.leftBarButtonItem = nil;
+        //당겨서 새로고침
+        mainTableView.refreshControl = refreshControl
+        self.refreshControl.attributedTitle = NSAttributedString(string: "당겨서 새로고침")
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         let navview = Variable_Functions.init()
         self.navigationItem.titleView = navview.navView
         getDocs()
@@ -130,18 +157,10 @@ class CommunityViewController: UIViewController, UITableViewDelegate, UITableVie
         mainTableView.dataSource = self
         // 라이트 뷰 생성
         let rightView = UIView()
-        rightView.frame = CGRect(x: 0, y: 0, width: 80, height: 40)
+        rightView.frame = CGRect(x: 0, y: 0, width: 30, height: 40)
         // rItem이라는 UIBarButtonItem 객체 생성
         let rItem = UIBarButtonItem(customView: rightView)
         self.navigationItem.rightBarButtonItem = rItem
-        // 새로고침 버튼 생성
-        let refreshButton = UIButton(type:.system)
-        refreshButton.frame = CGRect(x:50, y:8, width: 30, height: 30)
-        refreshButton.setImage(UIImage(systemName: "arrow.clockwise"), for: .normal)
-        refreshButton.tintColor = .white
-        refreshButton.addTarget(self, action: #selector(refreshButtonClicked), for: .touchUpInside)
-        // 라이트 뷰에 버튼 추가
-        rightView.addSubview(refreshButton)
         // 글쓰기 버튼 생성
         let writeButton = UIButton(type:.system)
         writeButton.frame = CGRect(x:10, y:8, width: 30, height: 30)

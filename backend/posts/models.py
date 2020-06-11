@@ -32,16 +32,18 @@ class Post(core_models.TimeStampedModel):
     count_dislikes.short_description = "Dislikes"
 
     def serializeCustom(self):
-        data = { 
+        data = {
             "pk": self.pk,
             "title": self.title,
             "text": self.text,
             "host": self.host.pk,
+            "host_name": self.host.nickname,
             "board": self.board.pk,
             "is_deleted": self.is_deleted,
             "likes_number": self.count_likes(),
             "dislikes_number": self.count_dislikes(),
             "created":str(self.created),
             "updated":str(self.updated),
+            "comments_number": self.count_comments(),
         }
         return data
