@@ -12,7 +12,7 @@ import UIKit
 import FSCalendar
 import Alamofire
 
-class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendarDelegate, FSCalendarDelegateAppearance {
+class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendarDelegate, FSCalendarDelegateAppearance, UITextViewDelegate {
     
     @IBOutlet weak var calendar: FSCalendar!
     @IBOutlet weak var SegmentedControl: UISegmentedControl!
@@ -24,7 +24,8 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
     
     let DB = DataBaseAPI.init()
     let Quary = DataBaseQuery.init()
-    var MyEmail : String = ""
+    var userEmail : String = ""
+    var activeTextView = UITextView.init()
 
     
     fileprivate lazy var dateFormatter: DateFormatter = {
@@ -38,8 +39,6 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
         formatter.dateFormat = "yyyyMMdd"
         return formatter
     }()
-    
-    
     
     
     var fillDefaultColorsArray : Array<Array<String>> = []
@@ -59,8 +58,7 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
         self.navigationItem.leftBarButtonItem = nil;
         let navview = Variable_Functions.init()
         self.navigationItem.titleView = navview.navView
-        let result = self.DB.query(statement: self.Query.SelectStar(Tablename: "User") , ColumnNumber: 6)
-        self.userEmail = result[0][0]
+    
         //세그먼트바 세팅
         SegmentedControl.removeAllSegments()
         let _ = SegmentedBarData.map({ text in
@@ -71,17 +69,19 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
         
         //textview 세팅
         let result = self.DB.query(statement: self.Quary.SelectStar(Tablename: "User") , ColumnNumber: 6)
-        print(result)
-        self.MyEmail = result[0][0]
-        Searchtextview.text = self.MyEmail
-        print(self.MyEmail)
+        //print(result)
+        self.userEmail = result[0][0]
+        Searchtextview.text = self.userEmail
+        Searchtextview.textColor = UIColor.gray
+        Searchtextview.textAlignment = NSTextAlignment.center
+        Searchtextview.font = UIFont.boldSystemFont(ofSize: 15)
+        Searchtextview.delegate = self
+        //print(self.userEmail)
         
         
         //DB에서 불러오기
-        fillDefaultColorsArray = DB.query(statement: Query.SelectStar(Tablename: "Calendar"), ColumnNumber: 2)
-        let _ = fillDefaultColorsArray.map({ each in
-            fillDefaultColorsDictionary.updateValue(Int(each[1])! , forKey: each[0])
-        })
+        updateData()
+        
         self.calendar.appearance.borderRadius = 0
         self.calendar.appearance.todayColor = UIColor.clear
         self.calendar.appearance.todaySelectionColor = UIColor.clear
@@ -91,8 +91,22 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
         self.calendar.delegate = self
         Label.numberOfLines = 2
         updateLabel()
-      
     }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            textView.resignFirstResponder()
+            return false
+        }
+        return true
+    }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+           textView.textColor = UIColor.black
+           textView.text = ""
+           self.activeTextView = textView
+    }
+
     
     @IBAction func SegmentControlAction(_ sender: Any) {
         self.SegmentedControl.selectedSegmentTintColor = SegmentedBarColor[SegmentedControl.selectedSegmentIndex]
@@ -110,36 +124,46 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
         if date == self.calendar.today!{
             cell.layer.borderColor = SegmentedBarColor[0].cgColor
             cell.layer.borderWidth = 1.0
+        }else if let bolderindex = fillDefaultColorsDictionary[key] {
+            cell.layer.borderColor = SegmentedBarColor[bolderindex-1].cgColor
         }else{
-            cell.layer.borderColor = UIColor.white.cgColor
+             cell.layer.borderColor = UIColor.clear.cgColor
         }
         return cell
     }
     
     //날짜가 선택되어있을때
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        let date_string = self.dateFormatter.string(from: date)
-        AF.request("http://127.0.0.1:8000/create-vacation/?user=\(self.userEmail!)&date=\(date_string)&type=\(self.SegmentedControl.selectedSegmentIndex+1)").responseJSON { response in
+        self.calendar.deselect(date)
+        //본인의 캘린더가 아니면, 바로 return하여 탈출한다.
+        if userEmail != Searchtextview.text {
+            return
         }
+        
+        let date_string = self.dateFormatter.string(from: date)
+        
+        //서버에 데이터 전송 - 형 이거 서버 꺼져있거나 네트워크 꺼져잇어서 실패했을 때 주석처리해줘
+        AF.request("http://127.0.0.1:8000/create-vacation/?user=\(self.userEmail)&date=\(date_string)&type=\(self.SegmentedControl.selectedSegmentIndex+1)").responseJSON { response in
+        }
+        
         self.calendar.currentPage = date
-        //삭제
+        
+        
+        //내 로컬디비에 반영
         if self.SegmentedControl.selectedSegmentIndex == 4 && fillDefaultColorsDictionary[date_string] != nil {
-            if (DB.delete(statement: Query.Delete(Tablename: "Calendar", Condition: "marked_date = " + "'\(date_string)'"))){
+            if (DB.delete(statement: Quary.Delete(Tablename: "Calendar", Condition: "marked_date = " + "'\(date_string)'"))){
                 print("delete success at calander")
             }
         }else{
             //기존 존재한다면 삭제하고 삽입한다.
-            if (DB.delete(statement: Query.Delete(Tablename: "Calendar", Condition: "marked_date = " + "'\(date_string)'"))){
+            if (DB.delete(statement: Quary.Delete(Tablename: "Calendar", Condition: "marked_date = " + "'\(date_string)'"))){
                 print("delete success at calander before insert")
             }
-            if (DB.insert(statement: Query.insert(Tablename: "Calendar", Values: " '\(date_string)', \(SegmentedControl.selectedSegmentIndex + 1)" ))){
+            if (DB.insert(statement: Quary.insert(Tablename: "Calendar", Values: " '\(date_string)', \(SegmentedControl.selectedSegmentIndex + 1)" ))){
                 print("insert success at calander")
             }
         }
-        self.calendar.deselect(date)
-        
-       
-        
+        /*
         if self.SegmentedControl.selectedSegmentIndex == 4{
             fillDefaultColorsArray = fillDefaultColorsArray.filter { (arr) -> Bool in
                 if arr[0] == date_string{
@@ -153,7 +177,9 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
             fillDefaultColorsArray.append([date_string, "\(SegmentedControl.selectedSegmentIndex + 1)"])
         }
         fillDefaultColorsDictionary.updateValue(SegmentedControl.selectedSegmentIndex + 1 , forKey: date_string)
-        self.calendar.cell(for: date, at: monthPosition)?.backgroundColor = SegmentedBarColor[SegmentedControl.selectedSegmentIndex]
+         */
+        //self.calendar.cell(for: date, at: monthPosition)?.backgroundColor = SegmentedBarColor[SegmentedControl.selectedSegmentIndex]
+        updateData()
         updateLabel()
     }
     
@@ -161,6 +187,25 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
         return Calendar.current.dateComponents([.day], from: start, to: end).day!
     }
     
+    func updateData(){
+        //본인의 데이터 일때
+        if self.Searchtextview.text == self.userEmail {
+            fillDefaultColorsArray.removeAll()
+            fillDefaultColorsDictionary.removeAll()
+            fillDefaultColorsArray = DB.query(statement: Quary.SelectStar(Tablename: "Calendar"), ColumnNumber: 2)
+            let _ = fillDefaultColorsArray.map({ each in
+                fillDefaultColorsDictionary.updateValue(Int(each[1])! , forKey: each[0])
+            })
+        }
+        //다른사람의 데이터일 때
+        else{
+            fillDefaultColorsArray.removeAll()
+            fillDefaultColorsDictionary.removeAll()
+            // 이제 여기서 형이 원격에서 데이터 불러서 저 어레이랑 데이터를 넣어줘야해
+            
+        }
+        self.calendar.reloadData()
+    }
     
     func updateLabel(){
         var 휴가 : Int = 99999
@@ -222,7 +267,10 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
     }
     
     @IBAction func SerchButtonTab(_ sender: Any) {
-        
+        if self.Searchtextview.text == ""{
+            self.Searchtextview.text = self.userEmail
+        }
+        updateData()
     }
     
 }
