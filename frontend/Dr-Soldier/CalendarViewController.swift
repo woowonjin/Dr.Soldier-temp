@@ -21,6 +21,7 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
     
     @IBOutlet weak var Searchtextview: UITextView!
     @IBOutlet weak var SerchButton: UIButton!
+    @IBOutlet weak var MyCalendarButton: UIButton!
     
     let DB = DataBaseAPI.init()
     let Quary = DataBaseQuery.init()
@@ -79,6 +80,10 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
         //print(self.userEmail)
         
         
+        //Button 세팅
+        self.SerchButton.backgroundColor = SegmentedBarColor[0]
+        self.MyCalendarButton.backgroundColor = SegmentedBarColor[0]
+        
         //DB에서 불러오기
         updateData()
         
@@ -118,6 +123,7 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
     func calendar(_ calendar: FSCalendar, cellFor date: Date, at position: FSCalendarMonthPosition) -> FSCalendarCell {
         let cell = calendar.dequeueReusableCell(withIdentifier: "cell", for: date as Date, at: position)
         let key = self.dateFormatter.string(from: date)
+        //print(key)
         if let colorindex = fillDefaultColorsDictionary[key] {
             cell.backgroundColor = SegmentedBarColor[colorindex-1]
         }else{
@@ -149,7 +155,6 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
         }
         
         self.calendar.currentPage = date
-        
         
         //내 로컬디비에 반영
         if self.SegmentedControl.selectedSegmentIndex == 4 && fillDefaultColorsDictionary[date_string] != nil {
@@ -190,7 +195,7 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
     
     func updateData(){
         //본인의 데이터 일때
-        var flag : Bool = true
+        var ErrorFlag : Bool = true
         
         if self.Searchtextview.text == self.userEmail {
             fillDefaultColorsArray.removeAll()
@@ -199,30 +204,86 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
             let _ = fillDefaultColorsArray.map({ each in
                 fillDefaultColorsDictionary.updateValue(Int(each[1])! , forKey: each[0])
             })
+            self.updateLabel(flag: ErrorFlag)
+            self.calendar.reloadData()
         }
         //다른사람의 데이터일 때
         else{
             fillDefaultColorsArray.removeAll()
             fillDefaultColorsDictionary.removeAll()
             // 이제 여기서 형이 원격에서 데이터 불러서 저 어레이랑 데이터를 넣어줘야해
-            flag = false
-            
+            ErrorFlag = true
+            AF.request("http://127.0.0.1:8000/get-vacations/?user=\(self.Searchtextview.text!)").responseJSON { response in
+                switch response.result{
+                case .success(let value):
+                    
+                    let ErrorCheck = value as AnyObject
+                    //유저데이터가 없는 경우
+                    if (ErrorCheck["result"]) != nil{
+                        ErrorFlag = false
+                        self.updateLabel(flag: ErrorFlag)
+                        return
+                    }else{
+                        //유저데이터가 있는 경우
+                        let responseList = value as! Array<AnyObject>
+                        for (index, _ ) in responseList.enumerated(){
+                           //_ = responseList[index]["user"] as! String
+                            let date = responseList[index]["date"] as! String
+                            let type = responseList[index]["type"] as! String
+                            print(date)
+                            self.fillDefaultColorsArray.insert([date, type], at: index)
+                        }
+                        let _ = self.fillDefaultColorsArray.map({ each in
+                            self.fillDefaultColorsDictionary.updateValue(Int(each[1])! , forKey: each[0])
+                        })
+                        if self.fillDefaultColorsArray.count == 0{
+                            ErrorFlag = false
+                        }
+                        print(self.fillDefaultColorsArray)
+                        self.updateLabel(flag: ErrorFlag)
+                        self.calendar.reloadData()
+                    }
+                case .failure( _):
+                        print("maybe server down")
+                        ErrorFlag = false
+                    
+                }
+            }
         }
-        updateLabel(flag: flag)
-        self.calendar.reloadData()
+        /*
+        let monthpostion = self.calendar.monthPosition(for: self.calendar.visibleCells()[0])
+        for date in self.fillDefaultColorsArray {
+            let Date = dateFormatter.date(from: date[0])
+            self.calendar.cell(for: Date!, at: monthpostion)?.backgroundColor = SegmentedBarColor[SegmentedControl.selectedSegmentIndex]
+        }
+         */
+        //print(ErrorFlag)
     }
     
     func updateLabel(flag : Bool){
         if flag == false{
             self.Searchtextview.text = self.userEmail
-            Label.text = "유저 정보가 없습니다"
+            fillDefaultColorsArray.removeAll()
+            fillDefaultColorsDictionary.removeAll()
+            fillDefaultColorsArray = DB.query(statement: Quary.SelectStar(Tablename: "Calendar"), ColumnNumber: 2)
+            let _ = fillDefaultColorsArray.map({ each in
+               fillDefaultColorsDictionary.updateValue(Int(each[1])! , forKey: each[0])
+            })
+            self.calendar.reloadData()
+            Label.text = "네트워크가 불안정하거나,\n유저 정보가 없습니다"
             Label.font = UIFont.systemFont(ofSize: 15)
             let attributedStr = NSMutableAttributedString(string: Label.text!)
-            attributedStr.addAttribute(.foregroundColor, value: SegmentedBarColor[0] , range: (Label.text! as NSString).range(of: "유저"))
+            attributedStr.addAttribute(.foregroundColor, value: SegmentedBarColor[0] , range: (Label.text! as NSString).range(of: "네트워크"))
+            attributedStr.addAttribute(NSAttributedString.Key.init(kCTFontAttributeName as String),
+                    value: UIFont.boldSystemFont(ofSize: 22), range: (Label.text! as NSString).range(of: "네트워크"))
+            attributedStr.addAttribute(.foregroundColor, value: SegmentedBarColor[3] , range: (Label.text! as NSString).range(of: "유저"))
             attributedStr.addAttribute(NSAttributedString.Key.init(kCTFontAttributeName as String),
                     value: UIFont.boldSystemFont(ofSize: 22), range: (Label.text! as NSString).range(of: "유저"))
             Label.attributedText = attributedStr
             return
+        }
+        if self.Searchtextview.text != self.userEmail{
+            Label.text = "\(self.Searchtextview.text!)님의 \n 일정입니다. 본인의 휴가를 확인하고 싶으시면 \n 이메일 입력 혹은 입력창을 비운뒤, 기록을 눌러주세요."
         }
         
         var 휴가 : Int = 99999
@@ -287,6 +348,11 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
         if self.Searchtextview.text == ""{
             self.Searchtextview.text = self.userEmail
         }
+        updateData()
+    }
+    
+    @IBAction func MyCalendarButtonTab(_ sender: Any) {
+        self.Searchtextview.text = self.userEmail
         updateData()
     }
     

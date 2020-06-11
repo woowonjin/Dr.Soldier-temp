@@ -38,6 +38,7 @@ urlpatterns = [
     path('dislikes/', dislikes.views.dislikes),
     path('documents/', posts.views.documents, name="documents"),
     path('create-vacation/', vacation_views.vacation_create, name="vacation_create"),
+    path('get-vacations/', vacation_views.get_vacation, name="get_vacation"),
     path('commentLikes/', commentLikes_views.like, name="commentLikes"),
     path('commentDislikes/', commentDislikes_views.dislike, name="commentDislikes"),
     path('posts/', include("posts.urls", namespace="posts")),
