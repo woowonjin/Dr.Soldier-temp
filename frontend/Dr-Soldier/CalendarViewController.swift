@@ -202,7 +202,22 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
             fillDefaultColorsArray.removeAll()
             fillDefaultColorsDictionary.removeAll()
             // 이제 여기서 형이 원격에서 데이터 불러서 저 어레이랑 데이터를 넣어줘야해
-            
+            AF.request("http://127.0.0.1:8000/get-vacations/?user=\(self.Searchtextview.text!)").responseJSON { response in
+                switch response.result{
+                case .success(let value):
+                    let responseList = value as! Array<AnyObject>
+                        for (index, element) in responseList.enumerated(){
+                            let user = responseList[index]["user"] as! String
+                            let date = responseList[index]["date"] as! String
+                            let type = responseList[index]["type"] as! String
+                            print(date)
+                            self.fillDefaultColorsArray.insert([date, type], at: index)
+                        }
+                    print(self.fillDefaultColorsArray)
+                    case .failure(let error):
+                        print("maybe server down")
+                    }
+            }
         }
         self.calendar.reloadData()
     }
