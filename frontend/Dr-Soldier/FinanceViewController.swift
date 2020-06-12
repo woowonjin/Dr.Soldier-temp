@@ -77,6 +77,9 @@ class FinanceViewController: UIViewController, UITextViewDelegate {
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text == "\n" {
+            if textView == self.Ratio{
+                
+            }
             textView.resignFirstResponder()
             return false
         }
@@ -101,6 +104,7 @@ class FinanceViewController: UIViewController, UITextViewDelegate {
                 Money.text = "월적립액(원)"
                 Money.textAlignment = NSTextAlignment.center
             }
+            self.Month.becomeFirstResponder()
         }
         if textView == self.Month{
             Monthtmpstring = Month.text
@@ -112,6 +116,7 @@ class FinanceViewController: UIViewController, UITextViewDelegate {
                 Month.text = "적금기간(개월)"
                 Month.textAlignment = NSTextAlignment.center
             }
+            self.Ratio.becomeFirstResponder()
         }
         if textView == self.Ratio{
             Ratiotmpstring = Ratio.text
@@ -123,6 +128,7 @@ class FinanceViewController: UIViewController, UITextViewDelegate {
                 Ratio.text = "이율"
                 Ratio.textAlignment = NSTextAlignment.center
             }
+            CalculateFunction()
         }
     }
     
@@ -164,8 +170,7 @@ class FinanceViewController: UIViewController, UITextViewDelegate {
         return Moneystring
     }
     
-    
-    @IBAction func Calculate(_ sender: Any) {
+    func CalculateFunction(){
         let Moneytext = Moneytmpstring
         let Ratiotext = Ratiotmpstring
         let Monthtext = Monthtmpstring
@@ -206,11 +211,14 @@ class FinanceViewController: UIViewController, UITextViewDelegate {
             attributedStr.addAttribute(NSAttributedString.Key.init(kCTFontAttributeName as String),value: UIFont.boldSystemFont(ofSize: 22), range: (Label.text! as NSString).range(of: "숫자"))
             Label.attributedText = attributedStr
         }
-        
-        
-    
-            
     }
     
+    
+    @IBAction func Calculate(_ sender: Any) {
+        CalculateFunction()
+        self.Money.resignFirstResponder()
+        self.Month.resignFirstResponder()
+        self.Ratio.resignFirstResponder()
+    }
 }
 
