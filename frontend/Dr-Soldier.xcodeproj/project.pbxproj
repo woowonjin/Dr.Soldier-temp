@@ -16,7 +16,7 @@
 		11AA922F2463F86D00765FC4 /* KakaoOpenSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11AA922E2463F86D00765FC4 /* KakaoOpenSDK.framework */; };
 		11AA92322463FB8000765FC4 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11AA92312463FB8000765FC4 /* LoginViewController.swift */; };
 		11FC2363247AB7110075450E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FC2362247AB7110075450E /* User.swift */; };
-		5E93140E530AFE8EB5BF4A86 /* Pods_Dr_Soldier.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B142CDD76A48E120D5A71F5 /* Pods_Dr_Soldier.framework */; };
+		375CC2CF660AC3CEE23E2EAA /* Pods_Dr_Soldier.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 688FD874499D10F456594268 /* Pods_Dr_Soldier.framework */; };
 		77055AFF24698EF700BE47A9 /* DocumentDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77055AFE24698EF700BE47A9 /* DocumentDetailViewController.swift */; };
 		77055B0124698F0E00BE47A9 /* DocumentDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77055B0024698F0E00BE47A9 /* DocumentDetailCell.swift */; };
 		77055B0324698F6900BE47A9 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77055B0224698F6900BE47A9 /* CommentCell.swift */; };
@@ -41,6 +41,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		09BED608389332CFC0A5D536 /* Pods-Dr-Soldier.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dr-Soldier.debug.xcconfig"; path = "Target Support Files/Pods-Dr-Soldier/Pods-Dr-Soldier.debug.xcconfig"; sourceTree = "<group>"; };
 		0D67F1BD245C0DD800244669 /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		0DBB6E4B245169DB004E1BFD /* GlobalClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalClass.swift; sourceTree = "<group>"; };
 		1161E916248549B800EB8DB4 /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
@@ -51,7 +52,7 @@
 		11AA92312463FB8000765FC4 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		11E52D5B2463FE3A0060531B /* Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		11FC2362247AB7110075450E /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		3B142CDD76A48E120D5A71F5 /* Pods_Dr_Soldier.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dr_Soldier.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		688FD874499D10F456594268 /* Pods_Dr_Soldier.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dr_Soldier.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		77055AFE24698EF700BE47A9 /* DocumentDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentDetailViewController.swift; sourceTree = "<group>"; };
 		77055B0024698F0E00BE47A9 /* DocumentDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentDetailCell.swift; sourceTree = "<group>"; };
 		77055B0224698F6900BE47A9 /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
@@ -75,8 +76,7 @@
 		776E2481244F09FA008CA6A9 /* BodyChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyChartViewController.swift; sourceTree = "<group>"; };
 		779D100D2487940200CBFDB1 /* FitnessTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessTableViewController.swift; sourceTree = "<group>"; };
 		77EC65FD2472E5FE00528C78 /* WriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteViewController.swift; sourceTree = "<group>"; };
-		95F3DD1323FBDAA65BA84261 /* Pods-Dr-Soldier.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dr-Soldier.debug.xcconfig"; path = "Target Support Files/Pods-Dr-Soldier/Pods-Dr-Soldier.debug.xcconfig"; sourceTree = "<group>"; };
-		9C944D8BA9020FEF06D5998A /* Pods-Dr-Soldier.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dr-Soldier.release.xcconfig"; path = "Target Support Files/Pods-Dr-Soldier/Pods-Dr-Soldier.release.xcconfig"; sourceTree = "<group>"; };
+		D7B9A623C682E8D97142519B /* Pods-Dr-Soldier.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dr-Soldier.release.xcconfig"; path = "Target Support Files/Pods-Dr-Soldier/Pods-Dr-Soldier.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,7 +85,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				11AA922F2463F86D00765FC4 /* KakaoOpenSDK.framework in Frameworks */,
-				5E93140E530AFE8EB5BF4A86 /* Pods_Dr_Soldier.framework in Frameworks */,
+				375CC2CF660AC3CEE23E2EAA /* Pods_Dr_Soldier.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,8 +95,8 @@
 		4DF1241A2F837E58272F4925 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				95F3DD1323FBDAA65BA84261 /* Pods-Dr-Soldier.debug.xcconfig */,
-				9C944D8BA9020FEF06D5998A /* Pods-Dr-Soldier.release.xcconfig */,
+				09BED608389332CFC0A5D536 /* Pods-Dr-Soldier.debug.xcconfig */,
+				D7B9A623C682E8D97142519B /* Pods-Dr-Soldier.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -161,7 +161,7 @@
 			isa = PBXGroup;
 			children = (
 				11AA922E2463F86D00765FC4 /* KakaoOpenSDK.framework */,
-				3B142CDD76A48E120D5A71F5 /* Pods_Dr_Soldier.framework */,
+				688FD874499D10F456594268 /* Pods_Dr_Soldier.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -173,11 +173,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 776E2472244F04BA008CA6A9 /* Build configuration list for PBXNativeTarget "Dr-Soldier" */;
 			buildPhases = (
-				8ABE5A1D45F36BC142E4293A /* [CP] Check Pods Manifest.lock */,
+				4DA31B935A64FE1189BC07BB /* [CP] Check Pods Manifest.lock */,
 				776E245A244F04B8008CA6A9 /* Sources */,
 				776E245B244F04B8008CA6A9 /* Frameworks */,
 				776E245C244F04B8008CA6A9 /* Resources */,
-				973E0DD0BEC5CC3607491AB9 /* [CP] Embed Pods Frameworks */,
+				5F5CE91AAC179989AB08E74C /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -235,7 +235,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		8ABE5A1D45F36BC142E4293A /* [CP] Check Pods Manifest.lock */ = {
+		4DA31B935A64FE1189BC07BB /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -257,7 +257,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		973E0DD0BEC5CC3607491AB9 /* [CP] Embed Pods Frameworks */ = {
+		5F5CE91AAC179989AB08E74C /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -448,7 +448,7 @@
 		};
 		776E2473244F04BA008CA6A9 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 95F3DD1323FBDAA65BA84261 /* Pods-Dr-Soldier.debug.xcconfig */;
+			baseConfigurationReference = 09BED608389332CFC0A5D536 /* Pods-Dr-Soldier.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Manual;
@@ -478,7 +478,7 @@
 		};
 		776E2474244F04BA008CA6A9 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9C944D8BA9020FEF06D5998A /* Pods-Dr-Soldier.release.xcconfig */;
+			baseConfigurationReference = D7B9A623C682E8D97142519B /* Pods-Dr-Soldier.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Manual;
