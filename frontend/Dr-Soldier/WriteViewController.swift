@@ -10,22 +10,37 @@ import UIKit
 import Alamofire
 
 class WriteViewController: UIViewController {
-
+    
     @IBOutlet weak var contentTextField: UITextField!
     @IBOutlet weak var titleTextField: UITextField!
+    let DB = DataBaseAPI.init()
+    let Query = DataBaseQuery.init()
+    var userEmail : String? // UserDefault -> Sqlite
+    
+    let header: HTTPHeaders = [
+        "Content-Type" : "application/json",
+        "Charset" : "utf-8"
+    ]
     
     @objc func writeButtonClicked(){
         print("write button Clicked!")
-        let params : [String:String] = ["title":titleTextField.text!, "content":contentTextField.text!]
-        print(params)
-        AF.request("http://127.0.0.1:8000/documents", method: .post, parameters: params).responseJSON { response in
-                   switch response.result{
-                   case .success(let value):
-                    print("success")
-                   case .failure(let error):
-                    print("fail")
-            }
+        //let user = UserDefaults.standard.dictionary(forKey: "user")
+
+        let params : Parameters = ["title":titleTextField.text!, "content":contentTextField.text!, "user":self.userEmail!]
+        let url = "http://127.0.0.1:8000/posts/create/"
+        
+
+//<<<<<<< HEAD
+//        let info = url + "?title=\(params["title"]!)&content=\(params["content"]!)"
+//        AF.request(info.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "",
+//                   method: .post, parameters: params, headers: header).responseJSON { response in
+//=======
+        let info = url + "?title=\(params["title"]!)&content=\(params["content"]!)&user=\(params["user"]!)"
+        AF.request(info.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "", method: .post, parameters: params, headers: header).responseJSON { response in
+//>>>>>>> 6222f7cdb359bb1a2d20f6efa6f9979a98055b91
         }
+        let nextView = self.storyboard?.instantiateViewController(withIdentifier: "Community") as! CommunityViewController
+        self.navigationController?.popViewController(animated: true)
     }
     
     override func viewDidLoad() {
@@ -56,6 +71,8 @@ class WriteViewController: UIViewController {
         writeButton.tintColor = .white
         self.navigationItem.rightBarButtonItem = writeButton
         
+        let result = self.DB.query(statement: self.Query.SelectStar(Tablename: "User") , ColumnNumber: 6)
+        self.userEmail = result[0][0]
     }
 
 

@@ -9,7 +9,6 @@
 import UIKit
 
 class DocumentCell : UITableViewCell{
-    
     @IBOutlet weak var titleLabel: UILabel!
     
     @IBOutlet weak var descriptionLabel: UILabel!
@@ -19,4 +18,5 @@ class DocumentCell : UITableViewCell{
     @IBOutlet weak var thumbsUpBtn: UIButton!
     
     @IBOutlet weak var thumbsDownBtn: UIButton!
+    @IBOutlet weak var commentsBtn: UIButton!
 }

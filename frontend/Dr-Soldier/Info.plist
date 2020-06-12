@@ -2,22 +2,19 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>LSApplicationQueriesSchemes</key>
-    <array>
-        <!-- 공통 -->
-        <string>kakao네이티브앱키</string>
-
-        <!-- 간편로그인 -->
-        <string>kakaokompassauth</string>
-        <string>storykompassauth</string>
-
-        <!-- 카카오톡링크 -->
-        <string>kakaolink</string>
-        <string>kakaotalk-5.9.7</string>
-
-        <!-- 카카오스토리링크 -->
-        <string>storylink</string>
-    </array>
+	<key>NSCameraUsageDescription</key>
+	<string></string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string></string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>kakao네이티브앱키</string>
+		<string>kakaokompassauth</string>
+		<string>storykompassauth</string>
+		<string>kakaolink</string>
+		<string>kakaotalk-5.9.7</string>
+		<string>storylink</string>
+	</array>
 	<key>KAKAO_APP_KEY</key>
 	<string>8d59067c3d2858ff875b7370a1e2d36c</string>
 	<key>CFBundleDevelopmentRegion</key>
