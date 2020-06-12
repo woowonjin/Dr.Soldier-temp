@@ -131,17 +131,19 @@ class BodyChartViewController: UIViewController,ChartViewDelegate,UITextViewDele
                 Height.textColor = UIColor.gray
                 Height.text = "키"
             }
+            self.NowWeight.becomeFirstResponder()
         }
         else if textView == NowWeight{
             NowWeightTmpString = NowWeight.text
             if let NowWeightFloat = Float(NowWeight.text!){
                 NowWeight.text = " \(first_suso_cut(number: NowWeightFloat)) kg"
-          }
-          if NowWeightTmpString == ""{
-              NowWeight.textColor = UIColor.gray
-              NowWeight.text = "몸무게"
-          }
-        }
+            }
+            if NowWeightTmpString == ""{
+                NowWeight.textColor = UIColor.gray
+                NowWeight.text = "몸무게"
+            }
+            RecordButtonTapFuntion()
+         }
     }
     
     func initialize_textview(){
@@ -313,26 +315,30 @@ class BodyChartViewController: UIViewController,ChartViewDelegate,UITextViewDele
         update_label()
     }
     
+    func RecordButtonTapFuntion(){
+         initialize_textview()
+         if let Weightfloat = Float(NowWeightTmpString) , let Heightfloat = Float(HeightTmpString){
+            
+            //오늘날짜
+            let today = Date()
+            let format = DateFormatter()
+            format.dateFormat = "yyyy-MM-dd"
+            let today_string = format.string(from: today)
+            let value = "'\(today_string)' , '\(first_suso_cut(number: Heightfloat) )', '\(first_suso_cut(number: Weightfloat))'"
+            
+            //디비입력
+            if DB.insert(statement: Query.insert(Tablename: "Record", Values: value)){
+                 update_data()
+                 self.Table.reloadData()
+                 setChartData(xValsArr: self.Index, yValsArr: self.Weights)
+            }
+        }else{
+             self.Label.text = "잘못된 입력입니다. 다시 입력하여 주세요."
+        }
+    }
+    
     @IBAction func RecordButtonTaped(_ sender: Any) {
-        initialize_textview()
-        if let Weightfloat = Float(NowWeightTmpString) , let Heightfloat = Float(HeightTmpString){
-           
-           //오늘날짜
-           let today = Date()
-           let format = DateFormatter()
-           format.dateFormat = "yyyy-MM-dd"
-           let today_string = format.string(from: today)
-           let value = "'\(today_string)' , '\(first_suso_cut(number: Heightfloat) )', '\(first_suso_cut(number: Weightfloat))'"
-           
-           //디비입력
-           if DB.insert(statement: Query.insert(Tablename: "Record", Values: value)){
-                update_data()
-                self.Table.reloadData()
-                setChartData(xValsArr: self.Index, yValsArr: self.Weights)
-           }
-       }else{
-            self.Label.text = "잘못된 입력입니다. 다시 입력하여 주세요."
-       }
+       RecordButtonTapFuntion()
     }
     
     @IBAction func Delete(_ sender: Any) {

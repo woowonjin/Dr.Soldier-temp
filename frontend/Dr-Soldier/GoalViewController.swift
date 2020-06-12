@@ -19,9 +19,11 @@ class GoalViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet weak var TextView: UITextView!
     @IBOutlet weak var Label: UILabel!
     @IBAction func SuccessButtonTap(_ sender: Any) {
+        self.TextView.resignFirstResponder()
         update()
     }
     @IBAction func DeleteButtonTap(_ sender: Any) {
+        self.TextView.resignFirstResponder()
         update()
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -67,13 +69,12 @@ class GoalViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func Button_Tap_f(){
-        if TextView.text == "" {
-            return
-        }
-        if DB.insert(statement: Quary.insert(Tablename: "Todo", Values: "'\(TextView.text!)','0'" )){
-            print("Todolist insert success")
-        }else{
-            print("Todolist insert fail")
+        if TextView.text != "" && TextView.text != "목표를 추가하세요 ✎"{
+            if DB.insert(statement: Quary.insert(Tablename: "Todo", Values: "'\(TextView.text!)','0'" )){
+                print("Todolist insert success")
+            }else{
+                print("Todolist insert fail")
+            }
         }
         update()
     }
@@ -81,6 +82,7 @@ class GoalViewController: UIViewController, UITableViewDataSource, UITableViewDe
     //입력버튼
     @IBAction func Button_Tap(_ sender: Any) {
         Button_Tap_f()
+        self.TextView.resignFirstResponder()
     }
     
     //바로 삭제 가능
@@ -96,7 +98,7 @@ class GoalViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func textViewDidBeginEditing(_ textView: UITextView) {
         textView.textColor = UIColor.black
         textView.text = ""
-        textView.textAlignment = NSTextAlignment.left
+        textView.textAlignment = NSTextAlignment.center
     }
 
     
@@ -147,8 +149,8 @@ class GoalViewController: UIViewController, UITableViewDataSource, UITableViewDe
         attributedStr.addAttribute(NSAttributedString.Key.init(kCTFontAttributeName as String),value: UIFont.boldSystemFont(ofSize: 22), range: (Label.text! as NSString).range(of: "\(Data.count)"))
         attributedStr.addAttribute(NSAttributedString.Key.init(kCTFontAttributeName as String),value: UIFont.boldSystemFont(ofSize: 22), range: (Label.text! as NSString).range(of: "\(complete)"))
         Label.attributedText = attributedStr
-        
     }
+    
 }
 
 class ToDoListTableCell: UITableViewCell {

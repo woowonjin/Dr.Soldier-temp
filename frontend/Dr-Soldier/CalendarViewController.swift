@@ -103,6 +103,10 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text == "\n" {
             textView.resignFirstResponder()
+            if self.Searchtextview.text == ""{
+                self.Searchtextview.text = self.userEmail
+            }
+            updateData()
             return false
         }
         return true
@@ -348,6 +352,7 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
     }
     
     @IBAction func SerchButtonTab(_ sender: Any) {
+        self.Searchtextview.resignFirstResponder()
         if self.Searchtextview.text == ""{
             self.Searchtextview.text = self.userEmail
         }
@@ -355,6 +360,7 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
     }
     
     @IBAction func MyCalendarButtonTab(_ sender: Any) {
+        self.Searchtextview.resignFirstResponder()
         self.Searchtextview.text = self.userEmail
         updateData()
     }
