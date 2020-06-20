@@ -6,8 +6,8 @@ class User(AbstractUser):
     """Custom User Models"""
 
     LOGIN_KAKAO = "KaKao"
-    LOGIN_EMAIL = "Email"
-    LOGIN_CHOICES = ((LOGIN_KAKAO, "KaKao"), (LOGIN_EMAIL, "Email"))
+    LOGIN_APPLE = "Apple"
+    LOGIN_CHOICES = ((LOGIN_KAKAO, "KaKao"), (LOGIN_APPLE, "Apple"))
     nickname = models.CharField(max_length=15)
     login_method = models.CharField(choices=LOGIN_CHOICES,
                                     max_length=15,
