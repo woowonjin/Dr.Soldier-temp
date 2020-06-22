@@ -68,10 +68,6 @@ class FitnessViewController: UIViewController,  UIPickerViewDelegate , UIPickerV
         
         self.navigationItem.titleView = navview.navView
 
-        print("-----------------")
-        print(DB.database)
-        print(DB.query(statement: Query.SelectStar(Tablename: "Fitness"), ColumnNumber: 6))
-        print("-----------------")
 
         situpSlider.value = 40.0
         pushupSlider.value = 40.0
@@ -111,7 +107,7 @@ class FitnessViewController: UIViewController,  UIPickerViewDelegate , UIPickerV
         runMinuteTextField.text = String(totalSeconds/60)
         runSecondTextField.text = String(totalSeconds%60)
         if DB.query(statement: "SELECT * FROM Level", ColumnNumber: 1).count == 0 {
-            DB.insert(statement: "INSERT INTO Level (Level) VALUES( '\(0)' )")
+            let _ = DB.insert(statement: "INSERT INTO Level (Level) VALUES( '\(0)' )")
         }else{
             level = Int(DB.query(statement: "SELECT * FROM Level", ColumnNumber: 1)[0][0]) ?? 0
             if(level == 1){
@@ -208,8 +204,8 @@ class FitnessViewController: UIViewController,  UIPickerViewDelegate , UIPickerV
         print(DB.query(statement: "SELECT * FROM Fitness", ColumnNumber: 6))
         print("---------")
 
-        DB.insert(statement: "INSERT INTO Fitness (checked_date, pushup, situp, runMinute, runSecond, pk) VALUES( '\(dateString)','\(pushup)', '\(situp)', '\(runMinute)', '\(runSecond)', '\(pk)')")
-        DB.update(statement: "UPDATE Level SET level = '\(level)' WHERE level >= 0 ")
+        let _ = DB.insert(statement: "INSERT INTO Fitness (checked_date, pushup, situp, runMinute, runSecond, pk) VALUES( '\(dateString)','\(pushup)', '\(situp)', '\(runMinute)', '\(runSecond)', '\(pk)')")
+        let _ = DB.update(statement: "UPDATE Level SET level = '\(level)' WHERE level >= 0 ")
 
     }
     func runSliderValueUpdate(){
@@ -271,8 +267,20 @@ class FitnessViewController: UIViewController,  UIPickerViewDelegate , UIPickerV
         //라벨 바꾸기
         if(flag){
             resultLabel.text = "목표를 이루셨군요 축하드려요!!"
+            let attributedStr = NSMutableAttributedString(string: resultLabel.text!)
+            attributedStr.addAttribute(.foregroundColor, value:UIColor.init(rgb:0x5AC18E) , range: (resultLabel.text! as NSString).range(of: "축하"))
+            attributedStr.addAttribute(.foregroundColor, value:UIColor.init(rgb:0xe8a87c) , range: (resultLabel.text! as NSString).range(of: "목표"))
+            attributedStr.addAttribute(NSAttributedString.Key.init(kCTFontAttributeName as String),value: UIFont.boldSystemFont(ofSize: 22), range: (resultLabel.text! as NSString).range(of: "축하"))
+            attributedStr.addAttribute(NSAttributedString.Key.init(kCTFontAttributeName as String),value: UIFont.boldSystemFont(ofSize: 22), range: (resultLabel.text! as NSString).range(of: "목표"))
+            resultLabel.attributedText = attributedStr
         }else{
-            resultLabel.text = "목표가 얼마남지 않았어요! 조금만 더 힘을 냅시다!!"
+            resultLabel.text = "목표가 얼마남지 않았어요!\n조금만 더 힘을 냅시다!!"
+            let attributedStr = NSMutableAttributedString(string: resultLabel.text!)
+            attributedStr.addAttribute(.foregroundColor, value:UIColor.init(rgb:0x5AC18E) , range: (resultLabel.text! as NSString).range(of: "힘"))
+            attributedStr.addAttribute(.foregroundColor, value:UIColor.init(rgb:0xe8a87c) , range: (resultLabel.text! as NSString).range(of: "목표"))
+            attributedStr.addAttribute(NSAttributedString.Key.init(kCTFontAttributeName as String),value: UIFont.boldSystemFont(ofSize: 22), range: (resultLabel.text! as NSString).range(of: "힘"))
+            attributedStr.addAttribute(NSAttributedString.Key.init(kCTFontAttributeName as String),value: UIFont.boldSystemFont(ofSize: 22), range: (resultLabel.text! as NSString).range(of: "목표"))
+            resultLabel.attributedText = attributedStr
         }
     }
 }

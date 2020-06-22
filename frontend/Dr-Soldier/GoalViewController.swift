@@ -57,15 +57,18 @@ class GoalViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         let navview = Variable_Functions.init()
         self.navigationItem.titleView = navview.navView
-        update()
+        
         Table.rowHeight = UITableView.automaticDimension
         Table.delegate = self
         Table.dataSource = self
-        Label.numberOfLines = 3
-        Label.sizeToFit()
         
         TextView.delegate = self
         TextView.returnKeyType = .done
+        
+        Label.font = UIFont.boldSystemFont(ofSize: 15)
+        Label.numberOfLines = 3
+        Label.sizeToFit()
+        update()
     }
     
     func Button_Tap_f(){
@@ -126,6 +129,12 @@ class GoalViewController: UIViewController, UITableViewDataSource, UITableViewDe
         var complete = 0
         if Data.count == 0 {
             Label.text = "군생활 동안 이룰 목표를 세워봐요. \n 닥터가 응원할게요!"
+            let attributedStr = NSMutableAttributedString(string: Label.text!)
+            attributedStr.addAttribute(.foregroundColor, value:SegmentedBarColor[0]  , range: (Label.text! as NSString).range(of: "닥터"))
+            attributedStr.addAttribute(.foregroundColor, value: SegmentedBarColor[2] , range: (Label.text! as NSString).range(of: "목표"))
+            attributedStr.addAttribute(NSAttributedString.Key.init(kCTFontAttributeName as String),value: UIFont.boldSystemFont(ofSize: 22), range: (Label.text! as NSString).range(of: "닥터"))
+            attributedStr.addAttribute(NSAttributedString.Key.init(kCTFontAttributeName as String),value: UIFont.boldSystemFont(ofSize: 22), range: (Label.text! as NSString).range(of: "목표"))
+            Label.attributedText = attributedStr
         }else{
             for each in Data{
                 if each[1] == "1"{
@@ -137,18 +146,13 @@ class GoalViewController: UIViewController, UITableViewDataSource, UITableViewDe
             }else{
                  Label.text = "총 \(Data.count) 개의 목표중에 \n \(complete) 개의 목표를 이루었습니다.\n 남은목표를 위해 노력해봅시다!"
             }
+            let attributedStr = NSMutableAttributedString(string: Label.text!)
+            attributedStr.addAttribute(.foregroundColor, value:SegmentedBarColor[0]  , range: (Label.text! as NSString).range(of: "\(Data.count)"))
+            attributedStr.addAttribute(.foregroundColor, value: SegmentedBarColor[0] , range: (Label.text! as NSString).range(of: "\(complete)"))
+            attributedStr.addAttribute(NSAttributedString.Key.init(kCTFontAttributeName as String),value: UIFont.boldSystemFont(ofSize: 22), range: (Label.text! as NSString).range(of: "\(Data.count)"))
+            attributedStr.addAttribute(NSAttributedString.Key.init(kCTFontAttributeName as String),value: UIFont.boldSystemFont(ofSize: 22), range: (Label.text! as NSString).range(of: "\(complete)"))
+            Label.attributedText = attributedStr
         }
-        Label.sizeToFit()
-        Label.font = UIFont.boldSystemFont(ofSize: 15)
-        let attributedStr = NSMutableAttributedString(string: Label.text!)
-        
-        attributedStr.addAttribute(.foregroundColor, value:SegmentedBarColor[0]  , range: (Label.text! as NSString).range(of: "\(Data.count)"))
-        
-        attributedStr.addAttribute(.foregroundColor, value: SegmentedBarColor[0] , range: (Label.text! as NSString).range(of: "\(complete)"))
-      
-        attributedStr.addAttribute(NSAttributedString.Key.init(kCTFontAttributeName as String),value: UIFont.boldSystemFont(ofSize: 22), range: (Label.text! as NSString).range(of: "\(Data.count)"))
-        attributedStr.addAttribute(NSAttributedString.Key.init(kCTFontAttributeName as String),value: UIFont.boldSystemFont(ofSize: 22), range: (Label.text! as NSString).range(of: "\(complete)"))
-        Label.attributedText = attributedStr
     }
     
 }
