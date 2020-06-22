@@ -78,7 +78,7 @@ class FinanceViewController: UIViewController, UITextViewDelegate {
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text == "\n" {
             if textView == self.Ratio{
-                
+                CalculateFunction()
             }
             textView.resignFirstResponder()
             return false
@@ -90,6 +90,18 @@ class FinanceViewController: UIViewController, UITextViewDelegate {
         textView.textColor = UIColor.black
         textView.text = ""
         self.activeTextView = textView
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        if textView == self.Money{
+            Moneytmpstring = Money.text
+        }
+        if textView == self.Month{
+            Monthtmpstring = Month.text
+        }
+        if textView == self.Ratio{
+            Ratiotmpstring = Ratio.text
+        }
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
@@ -128,7 +140,6 @@ class FinanceViewController: UIViewController, UITextViewDelegate {
                 Ratio.text = "이율"
                 Ratio.textAlignment = NSTextAlignment.center
             }
-            CalculateFunction()
         }
     }
     
@@ -174,6 +185,7 @@ class FinanceViewController: UIViewController, UITextViewDelegate {
         let Moneytext = Moneytmpstring
         let Ratiotext = Ratiotmpstring
         let Monthtext = Monthtmpstring
+        print(Moneytext,Ratiotext,Moneytext)
         initailize_textview()
         if let Moneyfloat = Float64(Moneytext) , let Ratiofloat = Float64(Ratiotext) , let Monthfloat = Float64(Monthtext){
             var total : Int64 = 0

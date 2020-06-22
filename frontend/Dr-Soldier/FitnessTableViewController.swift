@@ -31,6 +31,8 @@ class FitnessTableViewController: UIViewController,  UITableViewDelegate, UITabl
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let navview = Variable_Functions.init()
+        self.navigationItem.titleView = navview.navView
         mainTable.delegate = self
         mainTable.dataSource = self
         datas = DB.query(statement: Query.SelectStar(Tablename: "Fitness"), ColumnNumber: 6)

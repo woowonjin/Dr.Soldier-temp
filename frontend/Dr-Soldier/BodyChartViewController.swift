@@ -12,11 +12,6 @@ import Charts
 class BodyChartViewController: UIViewController,ChartViewDelegate,UITextViewDelegate,UITableViewDelegate, UITableViewDataSource , IAxisValueFormatter {
     
     func stringForValue(_ value: Double, axis: AxisBase?) -> String {
-        //print(value)
-//
-//        if Data.count == 2 && value == 2.0{
-//            return self.Data[Int(value)-1][0]
-//        }
         if value<0 || Int(value) >=  Data.count{
             return ""
         }else{
@@ -108,6 +103,9 @@ class BodyChartViewController: UIViewController,ChartViewDelegate,UITextViewDele
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
          if text == "\n" {
+            if textView == NowWeight{
+                 RecordButtonTapFuntion()
+            }
              textView.resignFirstResponder()
              return false
          }
@@ -118,12 +116,20 @@ class BodyChartViewController: UIViewController,ChartViewDelegate,UITextViewDele
     func textViewDidBeginEditing(_ textView: UITextView) {
         textView.textColor = UIColor.black
         textView.text = ""
-        
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        if textView == Height{
+            HeightTmpString = Height.text
+        }
+        else if textView == NowWeight{
+            NowWeightTmpString = NowWeight.text
+         }
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView == Height{
-            HeightTmpString = Height.text
+            //HeightTmpString = Height.text
             if let HeightFloat = Float(Height.text!){
                 Height.text = " \(first_suso_cut(number: HeightFloat)) cm"
             }
@@ -134,7 +140,7 @@ class BodyChartViewController: UIViewController,ChartViewDelegate,UITextViewDele
             self.NowWeight.becomeFirstResponder()
         }
         else if textView == NowWeight{
-            NowWeightTmpString = NowWeight.text
+            //NowWeightTmpString = NowWeight.text
             if let NowWeightFloat = Float(NowWeight.text!){
                 NowWeight.text = " \(first_suso_cut(number: NowWeightFloat)) kg"
             }
@@ -142,7 +148,6 @@ class BodyChartViewController: UIViewController,ChartViewDelegate,UITextViewDele
                 NowWeight.textColor = UIColor.gray
                 NowWeight.text = "몸무게"
             }
-            RecordButtonTapFuntion()
          }
     }
     
@@ -164,8 +169,10 @@ class BodyChartViewController: UIViewController,ChartViewDelegate,UITextViewDele
             self.Label.text = "닥터가 관리해드릴게요. \n 기록해보세요!"
             let attributedStr = NSMutableAttributedString(string: Label.text!)
             attributedStr.addAttribute(.foregroundColor, value:UIColor.init(rgb:0x5AC18E) , range: (Label.text! as NSString).range(of: "닥터"))
-            
+            attributedStr.addAttribute(.foregroundColor, value:UIColor.init(rgb:0xe8a87c) , range: (Label.text! as NSString).range(of: "기록"))
+            attributedStr.addAttribute(NSAttributedString.Key.init(kCTFontAttributeName as String),value: UIFont.boldSystemFont(ofSize: 22), range: (Label.text! as NSString).range(of: "닥터"))
             attributedStr.addAttribute(NSAttributedString.Key.init(kCTFontAttributeName as String),value: UIFont.boldSystemFont(ofSize: 22), range: (Label.text! as NSString).range(of: "기록"))
+            Label.attributedText = attributedStr
         }
         else if self.Data.count == 1 {
             self.Label.text = "최근 측정 몸무게는 \n \(Data[0][2])kg 입니다."
@@ -317,6 +324,7 @@ class BodyChartViewController: UIViewController,ChartViewDelegate,UITextViewDele
     
     func RecordButtonTapFuntion(){
          initialize_textview()
+         print(NowWeightTmpString,HeightTmpString)
          if let Weightfloat = Float(NowWeightTmpString) , let Heightfloat = Float(HeightTmpString){
             
             //오늘날짜
