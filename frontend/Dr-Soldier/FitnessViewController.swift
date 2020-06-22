@@ -67,7 +67,7 @@ class FitnessViewController: UIViewController,  UIPickerViewDelegate , UIPickerV
         let navview = Variable_Functions.init()
         
         self.navigationItem.titleView = navview.navView
-        
+
         print("-----------------")
         print(DB.database)
         print(DB.query(statement: Query.SelectStar(Tablename: "Fitness"), ColumnNumber: 6))
