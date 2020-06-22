@@ -4,5 +4,5 @@ from . import views
 app_name = "users"
 
 urlpatterns = [
-    path("kakaologin/", views.kakao_login, name="kakao-login"),
+    path("login/", views.login, name="login"),
 ]

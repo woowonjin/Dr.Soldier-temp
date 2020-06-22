@@ -29,5 +29,6 @@ class Variable_Functions{
         image.contentMode = UIView.ContentMode.scaleAspectFit
         navView.addSubview(label)
         navView.addSubview(image)
+        
     }
 }

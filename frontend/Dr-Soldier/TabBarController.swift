@@ -11,29 +11,36 @@ import Alamofire
 class TabBarController: UITabBarController {
 
     @IBOutlet weak var myTabBar: UITabBar!
-//    let DB = DataBaseAPI.init()
-//    let Query = DataBaseQuery.init()
+    let DB = DataBaseAPI.init()
+    let Query = DataBaseQuery.init()
     var userEmail : String? // UserDefault -> Sqlite
+    
+    override func viewDidAppear(_ animated: Bool) {
+            var fillDefaultColorsDictionary : [String:Int] = [:]
+            let fillDefaultColorsArray = DB.query(statement: Query.SelectStar(Tablename: "Calendar"), ColumnNumber: 2)
+            let _ = fillDefaultColorsArray.map({ each in
+                fillDefaultColorsDictionary.updateValue(Int(each[1])! , forKey: each[0])
+            })
+            for date in fillDefaultColorsArray{
+               AF.request("http://127.0.0.1:8000/create-vacation/?user=\(self.userEmail!)&date=\(date[0])&type=\(date[1])").responseJSON { response in
+               }
+            }
+        }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-//        let result = self.DB.query(statement: self.Query.SelectStar(Tablename: "User") , ColumnNumber: 6)
-//        self.userEmail = result[0][0]
-//        AF.request("http://127.0.0.1:8000/get-notifications-num/?user=\(userEmail!)").responseJSON { response in
-//            switch response.result{
-//            case .success(let value):
-//                let rep = value as! AnyObject
-//                let number = rep["unread"] as! String
-//                if(number != "0"){
-//                    for item in self.myTabBar.items!{
-//                        if(item.title == "Notification"){
-//                            item.badgeValue = number
-//                        }
-//                    }
-//                }
-//            case .failure(let error):
-//                print("Server Error")
-//            }
-//        }
+        let result = self.DB.query(statement: self.Query.SelectStar(Tablename: "User") , ColumnNumber: 6)
+        self.userEmail = result[0][0]
+//        var fillDefaultColorsDictionary : [String:Int] = [:]
+        AF.request("http://127.0.0.1:8000/delete-vacations/?user=\(userEmail!)").responseJSON { response in
+        }
+        usleep(500000)
+//        let fillDefaultColorsArray = DB.query(statement: Query.SelectStar(Tablename: "Calendar"), ColumnNumber: 2)
+//        let _ = fillDefaultColorsArray.map({ each in
+//            fillDefaultColorsDictionary.updateValue(Int(each[1])! , forKey: each[0])
+//        })
+//        for date in fillDefaultColorsArray{
+//
     }
 
 

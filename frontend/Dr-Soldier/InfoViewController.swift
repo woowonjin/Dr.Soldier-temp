@@ -130,6 +130,7 @@ class InfoViewController: UIViewController, UIImagePickerControllerDelegate & UI
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             profileImage.image = image
+           
             profileImage.layer.cornerRadius = profileImage.frame.height / 2
         }
         dismiss(animated: true, completion: nil)
