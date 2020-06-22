@@ -21,7 +21,8 @@ class NotificationViewController: UITableViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        let navview = Variable_Functions.init()
+        self.navigationItem.titleView = navview.navView
         let result = self.DB.query(statement: self.Query.SelectStar(Tablename: "User") , ColumnNumber: 6)
         NotiTable.refreshControl = refreshNoti
         self.refreshNoti.attributedTitle = NSAttributedString(string: "당겨서 새로고침")
@@ -142,7 +143,7 @@ class NotificationViewController: UITableViewController{
         }
         cell.createdLabel.text = noti.created
         if(noti.is_read == false){
-            cell.backgroundColor = UIColor(red:205/255, green: 255/255, blue: 0, alpha: 1)
+            cell.backgroundColor = UIColor(red:250/255, green: 235/255, blue: 215/255, alpha: 0.5)
         }
         else{
             cell.backgroundColor = .white
