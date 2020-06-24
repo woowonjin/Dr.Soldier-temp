@@ -77,7 +77,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
         else{
             like.setImage(UIImage(systemName: "heart"), for: .normal)
         }
-        like.tintColor = .red
+        like.tintColor = UIColor(red: 255, green: 153, blue: 204)
         like.addTarget(self, action: #selector(likePost(_:)), for: .touchUpInside)
         rightView.addSubview(like)
         dislike.frame = CGRect(x:50, y:8, width: 30, height: 30)
@@ -87,7 +87,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
         else{
             dislike.setImage(UIImage(systemName: "hand.thumbsdown"), for: .normal)
         }
-        dislike.tintColor = .blue
+        dislike.tintColor = UIColor(red: 153, green: 204, blue: 255)
         dislike.addTarget(self, action: #selector(dislikePost(_:)), for: .touchUpInside)
         // 라이트 뷰에 버튼 추가
         rightView.addSubview(dislike)
@@ -101,8 +101,14 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
             cell.titleLabel.text = titleString
             cell.descriptionLabel.text = descriptionString
             cell.LikesButton.setTitle(String(likes), for: .normal)
+            cell.LikesButton.titleLabel?.textColor = UIColor(red: 255, green: 153, blue: 204)
+            cell.LikesButton.tintColor = UIColor(red: 255, green: 153, blue: 204)
             cell.DislikesButton.setTitle(String(dislikes), for: .normal)
+            cell.DislikesButton.titleLabel?.textColor = UIColor(red: 153, green: 204, blue: 255)
+            cell.DislikesButton.tintColor = UIColor(red: 153, green: 204, blue: 255)
             cell.CommentsButton.setTitle(String(comments_number), for: .normal)
+            cell.CommentsButton.titleLabel?.textColor = UIColor(red: 90, green: 193, blue: 142)
+            cell.CommentsButton.tintColor = UIColor(red: 90, green: 193, blue: 142)
             self.like.tag = indexPath.row
             self.dislike.tag = indexPath.row
             let temp = firstCell()
@@ -115,14 +121,18 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
             cell.UserNameLabel.text = comment.writer
             cell.DescriptionLabel.text = comment.description
             cell.thumbsUpBtn.setTitle(String(comment.thumbsUp), for: .normal)
+            cell.thumbsUpBtn.titleLabel?.textColor = UIColor(red: 255, green: 153, blue: 204)
+            cell.thumbsUpBtn.tintColor = UIColor(red: 255, green: 153, blue: 204)
             cell.thumbsDownBtn.setTitle(String(comment.thumbsDown), for: .normal)
+            cell.thumbsDownBtn.titleLabel?.textColor = UIColor(red: 153, green: 204, blue: 255)
+            cell.thumbsDownBtn.tintColor = UIColor(red: 153, green: 204, blue: 255)
             let bounds: CGRect = UIScreen.main.bounds
             let commentLike = UIButton(type:.system)
             let commentDislike = UIButton(type:.system)
             commentLike.frame = CGRect(x:bounds.maxX-100, y:8, width: 20, height: 15)
-            commentLike.tintColor = .red
+            commentLike.tintColor = UIColor(red: 255, green: 153, blue: 204)
             commentDislike.frame = CGRect(x:bounds.maxX-50, y:8, width: 20, height: 15)
-            commentDislike.tintColor = .blue
+            commentDislike.tintColor = UIColor(red: 153, green: 204, blue: 255)
             cell.likeBtn = commentLike
             cell.dislikeBtn = commentDislike
 
