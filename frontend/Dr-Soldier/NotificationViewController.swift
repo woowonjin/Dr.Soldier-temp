@@ -21,7 +21,7 @@ class NotificationViewController: UITableViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let navview = Variable_Functions.init()
+        let navview = MakeViewWithNavigationBar.init(InputString: " Feeds",InputImage: UIImage(named: "chats")!)
         self.navigationItem.titleView = navview.navView
         let result = self.DB.query(statement: self.Query.SelectStar(Tablename: "User") , ColumnNumber: 6)
         NotiTable.refreshControl = refreshNoti
@@ -49,7 +49,7 @@ class NotificationViewController: UITableViewController{
                 dateFormatter.dateFormat="yyyy-MM-dd HH:mm:ss"
                 dateFormatter.timeZone = NSTimeZone(name: "UTC") as TimeZone?
                 
-                for (index, element) in responseList.enumerated(){
+                for (index, _) in responseList.enumerated(){
                     //let obj = element["fields"] as! AnyObject
                     let post_pk = responseList[index]["post_pk"] as! Int
                     let is_read = responseList[index]["is_read"] as! Bool
@@ -93,7 +93,7 @@ class NotificationViewController: UITableViewController{
                     }
                 }
             
-            case .failure(let error):
+            case .failure( _):
                 print("getting Notifications failed")
             }
         }
@@ -141,6 +141,11 @@ class NotificationViewController: UITableViewController{
         else if noti.type == "댓글싫어요취소"{
             cell.descriptionLabel.text = "\(noti.user_name)님이 회원님의 댓글 싫어요를 취소했습니다."
         }
+        let AttributedString = MakeAttributedString.init(InputString: cell.descriptionLabel.text!)
+        AttributedString.AddColorAttribute(Color: UIColor.init(rgb:0xe8a87c), WhichPart: "\(noti.user_name)")
+        AttributedString.AddFontAttribute(Font: UIFont.boldSystemFont(ofSize: 20), WhichPart: "\(noti.user_name)")
+        cell.descriptionLabel.attributedText = AttributedString.AttributedString
+        
         cell.createdLabel.text = noti.created
         if(noti.is_read == false){
             cell.backgroundColor = UIColor(red:250/255, green: 235/255, blue: 215/255, alpha: 0.5)

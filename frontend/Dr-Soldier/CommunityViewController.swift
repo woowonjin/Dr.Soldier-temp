@@ -20,10 +20,6 @@ class CommunityViewController: UIViewController, UITableViewDelegate, UITableVie
     var docs : Array<Document> = []
     
     
-//    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-//        print("prefetch : \(indexPaths)")
-//    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return docs.count
     }
@@ -72,7 +68,7 @@ class CommunityViewController: UIViewController, UITableViewDelegate, UITableVie
                 dateFormatter.dateFormat="yyyy-MM-dd HH:mm:ss"
                 dateFormatter.timeZone = NSTimeZone(name: "UTC") as TimeZone?
                 
-                for (index, element) in responseList.enumerated(){
+                for (index, _) in responseList.enumerated(){
                     //let obj = element["fields"] as! AnyObject
                     let title = responseList[index]["title"] as! String
                     let description = responseList[index]["text"] as! String
@@ -113,17 +109,9 @@ class CommunityViewController: UIViewController, UITableViewDelegate, UITableVie
                         self.mainTableView.reloadData()
                     }
                 }
-            case .failure(let error):
+            case .failure( _):
                 print("maybe server down")
             }
-//            let responseList = response.value as! Array<AnyObject>
-//            for (index, element) in responseList.enumerated(){
-//                let obj = element["fields"] as! AnyObject
-//                let title = obj["title"] as! String
-//                let description = obj["text"] as! String
-//                self.docs.insert(Document(title: title, description: description, created: Date(), writer: "leedh2004", thumbsUp: 30, thumbsDown: 10, isDeleted: false), at: index)
-//            }
-           
         }
     }
     
@@ -143,14 +131,10 @@ class CommunityViewController: UIViewController, UITableViewDelegate, UITableVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-//        self.navigationItem.hidesBackButton = true;
-//        self.navigationItem.leftBarButtonItem = nil;
-        //당겨서 새로고침
         mainTableView.refreshControl = refreshControl
         self.refreshControl.attributedTitle = NSAttributedString(string: "당겨서 새로고침")
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
-        let navview = Variable_Functions.init()
+        let navview = MakeViewWithNavigationBar.init(InputString: " Community",InputImage: UIImage(named: "soldier")!)
         self.navigationItem.titleView = navview.navView
         getDocs()
         mainTableView.delegate = self
@@ -169,11 +153,6 @@ class CommunityViewController: UIViewController, UITableViewDelegate, UITableVie
         writeButton.addTarget(self, action: #selector(writeButtonClicked), for: .touchUpInside)
         // 라이트 뷰에 버튼 추가
         rightView.addSubview(writeButton)
-//
-//        let writeButton = UIButton(type: .system)
-//        wrtieButton.frame = CGRect(
-//
-//        let writeButton = UIBarButtonItem(barButtonSystemItem:.add, target: self, action: #selector(buttonClicked))
         
     }
 

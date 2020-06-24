@@ -24,6 +24,12 @@ class InfoViewController: UIViewController, UIImagePickerControllerDelegate & UI
     @IBOutlet weak var bodyButton: UIButton!
     @IBOutlet weak var goalButton: UIButton!
     
+    @IBOutlet weak var GoalButtonText: UIButton!
+    @IBOutlet weak var BodyButtonText: UIButton!
+    @IBOutlet weak var FinanceButtonText: UIButton!
+    @IBOutlet weak var FitnessButtonText: UIButton!
+    
+    
     @IBOutlet weak var percentLabel: UILabel!
     @IBOutlet weak var leftDays: UILabel!
     @IBOutlet weak var hadDays: UILabel!
@@ -135,6 +141,14 @@ class InfoViewController: UIViewController, UIImagePickerControllerDelegate & UI
         }
         dismiss(animated: true, completion: nil)
     }
+    
+    @IBAction func BeginButtonTap(_ sender: Any) {
+        self.startLabel.becomeFirstResponder()
+    }
+    @IBAction func EndButtonTap(_ sender: Any) {
+        self.endLabel.becomeFirstResponder()
+    }
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -142,20 +156,23 @@ class InfoViewController: UIViewController, UIImagePickerControllerDelegate & UI
         bodyButton.imageView?.contentMode = .scaleAspectFit
         FinanceButton.imageView?.contentMode = .scaleAspectFit
         fitnessButton.imageView?.contentMode = .scaleAspectFit
+        
+        GoalButtonText.tintColor = UIColor.systemGray
+        GoalButtonText.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
+        BodyButtonText.tintColor = UIColor.systemGray
+        BodyButtonText.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
+        FinanceButtonText.tintColor = UIColor.systemGray
+        FinanceButtonText.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
+        FitnessButtonText.tintColor = UIColor.systemGray
+        FitnessButtonText.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
+        
         imagePickerController.delegate = self
-        let navview = Variable_Functions.init()
+        let navview = MakeViewWithNavigationBar.init(InputString: " 닥터솔저", InputImage: UIImage(named: "doctor3.png")!)
         self.navigationItem.titleView = navview.navView
         createDatePicker()
         ProgressBar.tintColor = UIColor(red: 90/255.0, green: 193/255.0, blue: 142/255.0, alpha: 1)
         ProgressBar.backgroundColor = UIColor(red: 90/255.0, green: 193/255.0, blue: 142/255.0, alpha: 0.3)
-//        profileImage.layer.borderWidth = 1
     }
-    
-
-        //let fileManager = FileManager.init()
-        //print(fileManager.currentDirectoryPath)
-        //let path = Bundle.main.resourcePath!
-        //print(path)
     
 
 

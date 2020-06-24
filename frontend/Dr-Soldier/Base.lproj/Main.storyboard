@@ -431,7 +431,11 @@
                                                                 <subviews>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bT8-0M-Yt3">
                                                                         <rect key="frame" x="0.0" y="0.0" width="20.666666666666668" height="30.333333333333332"/>
+                                                                        <color key="tintColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <state key="normal" image="calendar" catalog="system"/>
+                                                                        <connections>
+                                                                            <action selector="BeginButtonTap:" destination="JVA-7M-vpp" eventType="touchUpInside" id="YQ2-AZ-1Oy"/>
+                                                                        </connections>
                                                                     </button>
                                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="XXXX-XX-XX" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EVd-Ja-sMD">
                                                                         <rect key="frame" x="25.666666666666657" y="0.0" width="114" height="34"/>
@@ -448,7 +452,11 @@
                                                                 <subviews>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vL2-dD-p1a">
                                                                         <rect key="frame" x="0.0" y="0.0" width="20.666666666666668" height="30.333333333333332"/>
+                                                                        <color key="tintColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <state key="normal" image="calendar" catalog="system"/>
+                                                                        <connections>
+                                                                            <action selector="EndButtonTap:" destination="JVA-7M-vpp" eventType="touchUpInside" id="sAl-6x-U6f"/>
+                                                                        </connections>
                                                                     </button>
                                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="XXXX-XX-XX" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wUF-u1-8z5">
                                                                         <rect key="frame" x="25.666666666666657" y="0.0" width="114" height="34"/>
@@ -524,7 +532,7 @@
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jMa-3z-d8x">
                                                                 <rect key="frame" x="0.0" y="40.666666666666629" width="69.666666666666671" height="41"/>
-                                                                <state key="normal" title="Goal"/>
+                                                                <state key="normal" title="ToDo"/>
                                                                 <connections>
                                                                     <action selector="NavBtnClicked:" destination="JVA-7M-vpp" eventType="touchUpInside" id="vhz-Yv-lQE"/>
                                                                 </connections>
@@ -693,7 +701,11 @@
                     </view>
                     <navigationItem key="navigationItem" id="Dbq-BZ-izz"/>
                     <connections>
+                        <outlet property="BodyButtonText" destination="4Fn-un-hDZ" id="cAr-Fr-cAf"/>
                         <outlet property="FinanceButton" destination="9eL-Za-ZYo" id="O5c-Qj-XCf"/>
+                        <outlet property="FinanceButtonText" destination="pBt-9v-jSg" id="R1w-pY-oz4"/>
+                        <outlet property="FitnessButtonText" destination="3dh-N1-x92" id="9JR-T6-S79"/>
+                        <outlet property="GoalButtonText" destination="jMa-3z-d8x" id="TtC-xJ-ECv"/>
                         <outlet property="ProgressBar" destination="qa2-xr-afr" id="818-BM-Fbw"/>
                         <outlet property="bodyButton" destination="98W-7Q-NfC" id="HKw-Cq-Bob"/>
                         <outlet property="endButton" destination="vL2-dD-p1a" id="Rs9-tq-6gc"/>

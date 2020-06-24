@@ -62,7 +62,7 @@ class BodyChartViewController: UIViewController,ChartViewDelegate,UITextViewDele
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        let navview = Variable_Functions.init()
+        let navview = MakeViewWithNavigationBar.init(InputString: " Body",InputImage: UIImage(named: "body")!)
         self.navigationItem.titleView = navview.navView
         
         //뷰 배경 설정
@@ -166,48 +166,46 @@ class BodyChartViewController: UIViewController,ChartViewDelegate,UITextViewDele
     
     func update_label(){
         if self.Data.count == 0 {
-            self.Label.text = "닥터가 관리해드릴게요. \n 기록해보세요!"
-            let attributedStr = NSMutableAttributedString(string: Label.text!)
-            attributedStr.addAttribute(.foregroundColor, value:UIColor.init(rgb:0x5AC18E) , range: (Label.text! as NSString).range(of: "닥터"))
-            attributedStr.addAttribute(.foregroundColor, value:UIColor.init(rgb:0xe8a87c) , range: (Label.text! as NSString).range(of: "기록"))
-            attributedStr.addAttribute(NSAttributedString.Key.init(kCTFontAttributeName as String),value: UIFont.boldSystemFont(ofSize: 22), range: (Label.text! as NSString).range(of: "닥터"))
-            attributedStr.addAttribute(NSAttributedString.Key.init(kCTFontAttributeName as String),value: UIFont.boldSystemFont(ofSize: 22), range: (Label.text! as NSString).range(of: "기록"))
-            Label.attributedText = attributedStr
+    
+            let AttributedString = MakeAttributedString.init(InputString: "닥터가 관리해드릴게요. \n 기록해보세요!")
+            AttributedString.AddColorAttribute(Color: UIColor.init(rgb:0x5AC18E), WhichPart: "닥터")
+            AttributedString.AddFontAttribute(Font: UIFont.boldSystemFont(ofSize: 22), WhichPart: "닥터")
+            AttributedString.AddColorAttribute(Color: UIColor.init(rgb:0xe8a87c), WhichPart: "기록")
+            AttributedString.AddFontAttribute(Font: UIFont.boldSystemFont(ofSize: 22), WhichPart: "기록")
+            self.Label.attributedText = AttributedString.AttributedString
         }
         else if self.Data.count == 1 {
-            self.Label.text = "최근 측정 몸무게는 \n \(Data[0][2])kg 입니다."
-            let attributedStr = NSMutableAttributedString(string: Label.text!)
-            attributedStr.addAttribute(.foregroundColor, value:UIColor.init(rgb:0x5AC18E) , range: (Label.text! as NSString).range(of: "몸무게"))
-            attributedStr.addAttribute(NSAttributedString.Key.init(kCTFontAttributeName as String),value: UIFont.boldSystemFont(ofSize: 22), range: (Label.text! as NSString).range(of: "몸무게"))
-            attributedStr.addAttribute(.foregroundColor, value:UIColor.init(rgb:0xe8a87c) , range: (Label.text! as NSString).range(of: "\(Data[0][2])kg" ))
-            attributedStr.addAttribute(NSAttributedString.Key.init(kCTFontAttributeName as String),value: UIFont.boldSystemFont(ofSize: 22), range: (Label.text! as NSString).range(of: "\(Data[0][2])kg"))
-            Label.attributedText = attributedStr
+            
+            let AttributedString = MakeAttributedString.init(InputString: "최근 측정 몸무게는 \n \(Data[0][2])kg 입니다.")
+            AttributedString.AddColorAttribute(Color: UIColor.init(rgb:0x5AC18E), WhichPart: "몸무게")
+            AttributedString.AddFontAttribute(Font: UIFont.boldSystemFont(ofSize: 22), WhichPart: "몸무게")
+            AttributedString.AddColorAttribute(Color: UIColor.init(rgb:0xe8a87c), WhichPart: "\(Data[0][2])kg")
+            AttributedString.AddFontAttribute(Font: UIFont.boldSystemFont(ofSize: 22), WhichPart: "\(Data[0][2])kg")
+            self.Label.attributedText = AttributedString.AttributedString
+            
         }else{
             let Inteval = Double(Float(Data[Data.count-1][2])!) - Double(Float(Data[Data.count-2][2])!)
             if Inteval > 0{
-                self.Label.text = "몸무게가 \(Inteval)kg\n증가 하였네요."
-                let attributedStr = NSMutableAttributedString(string: Label.text!)
-                attributedStr.addAttribute(.foregroundColor, value:UIColor.init(rgb:0x5AC18E) , range: (Label.text! as NSString).range(of: "증가"))
-                attributedStr.addAttribute(NSAttributedString.Key.init(kCTFontAttributeName as String),value: UIFont.boldSystemFont(ofSize: 22), range: (Label.text! as NSString).range(of: "증가"))
-                attributedStr.addAttribute(.foregroundColor, value:UIColor.init(rgb:0xe8a87c) , range: (Label.text! as NSString).range(of: "\(Inteval)kg" ))
-                attributedStr.addAttribute(NSAttributedString.Key.init(kCTFontAttributeName as String),value: UIFont.boldSystemFont(ofSize: 22), range: (Label.text! as NSString).range(of: "\(Inteval)kg"))
-                Label.attributedText = attributedStr
+                let AttributedString = MakeAttributedString.init(InputString: "몸무게가 \(Inteval)kg\n증가 하였네요.")
+                AttributedString.AddColorAttribute(Color: UIColor.init(rgb:0x5AC18E), WhichPart: "증가")
+                AttributedString.AddFontAttribute(Font: UIFont.boldSystemFont(ofSize: 22), WhichPart: "증가")
+                AttributedString.AddColorAttribute(Color: UIColor.init(rgb:0xe8a87c), WhichPart: "\(Inteval)kg")
+                AttributedString.AddFontAttribute(Font: UIFont.boldSystemFont(ofSize: 22), WhichPart: "\(Inteval)kg")
+                self.Label.attributedText = AttributedString.AttributedString
             }else if Inteval == 0{
-                self.Label.text = "저번 기록과 \n 몸무게가 동일하네요."
-                let attributedStr = NSMutableAttributedString(string: Label.text!)
-                attributedStr.addAttribute(.foregroundColor, value:UIColor.init(rgb:0x5AC18E) , range: (Label.text! as NSString).range(of: "기록"))
-                attributedStr.addAttribute(NSAttributedString.Key.init(kCTFontAttributeName as String),value: UIFont.boldSystemFont(ofSize: 22), range: (Label.text! as NSString).range(of: "기록"))
-                attributedStr.addAttribute(.foregroundColor, value:UIColor.init(rgb:0xe8a87c) , range: (Label.text! as NSString).range(of: "동일" ))
-                attributedStr.addAttribute(NSAttributedString.Key.init(kCTFontAttributeName as String),value: UIFont.boldSystemFont(ofSize: 22), range: (Label.text! as NSString).range(of: "동일"))
-                Label.attributedText = attributedStr
+                let AttributedString = MakeAttributedString.init(InputString: "저번 기록과 \n 몸무게가 동일하네요.")
+                AttributedString.AddColorAttribute(Color: UIColor.init(rgb:0x5AC18E), WhichPart: "기록")
+                AttributedString.AddFontAttribute(Font: UIFont.boldSystemFont(ofSize: 22), WhichPart: "기록")
+                AttributedString.AddColorAttribute(Color: UIColor.init(rgb:0xe8a87c), WhichPart: "동일")
+                AttributedString.AddFontAttribute(Font: UIFont.boldSystemFont(ofSize: 22), WhichPart: "동일")
+                self.Label.attributedText = AttributedString.AttributedString
             }else{
-                self.Label.text = "몸무게가 \(-Inteval)kg \n 감소 하였네요."
-                let attributedStr = NSMutableAttributedString(string: Label.text!)
-                attributedStr.addAttribute(.foregroundColor, value:UIColor.init(rgb:0x5AC18E) , range: (Label.text! as NSString).range(of: "감소"))
-                attributedStr.addAttribute(NSAttributedString.Key.init(kCTFontAttributeName as String),value: UIFont.boldSystemFont(ofSize: 22), range: (Label.text! as NSString).range(of: "감소"))
-                attributedStr.addAttribute(.foregroundColor, value:UIColor.init(rgb:0xe8a87c) , range: (Label.text! as NSString).range(of: "\(-Inteval)kg" ))
-                attributedStr.addAttribute(NSAttributedString.Key.init(kCTFontAttributeName as String),value: UIFont.boldSystemFont(ofSize: 22), range: (Label.text! as NSString).range(of: "\(-Inteval)kg"))
-                Label.attributedText = attributedStr
+                let AttributedString = MakeAttributedString.init(InputString: "몸무게가 \(-Inteval)kg \n 감소 하였네요.")
+                AttributedString.AddColorAttribute(Color: UIColor.init(rgb:0x5AC18E), WhichPart: "감소")
+                AttributedString.AddFontAttribute(Font: UIFont.boldSystemFont(ofSize: 22), WhichPart: "감소")
+                AttributedString.AddColorAttribute(Color: UIColor.init(rgb:0xe8a87c), WhichPart: "\(-Inteval)kg")
+                AttributedString.AddFontAttribute(Font: UIFont.boldSystemFont(ofSize: 22), WhichPart: "\(-Inteval)kg")
+                self.Label.attributedText = AttributedString.AttributedString
             }
         }
     }

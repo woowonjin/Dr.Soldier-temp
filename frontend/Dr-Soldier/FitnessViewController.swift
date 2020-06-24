@@ -64,10 +64,8 @@ class FitnessViewController: UIViewController,  UIPickerViewDelegate , UIPickerV
     override func viewDidLoad() {
         super.viewDidLoad()
            // Do any additional setup after loading the view.
-        let navview = Variable_Functions.init()
-        
+        let navview = MakeViewWithNavigationBar.init(InputString: " Fitness", InputImage: UIImage(named: "gym")!)
         self.navigationItem.titleView = navview.navView
-
 
         situpSlider.value = 40.0
         pushupSlider.value = 40.0
@@ -196,7 +194,7 @@ class FitnessViewController: UIViewController,  UIPickerViewDelegate , UIPickerV
         if(pkArray.count == 0){
             pk = 0
         }else{
-            pk = Int(pkArray[pkArray.count-1][5])! + 1 ?? 0
+            pk = Int(pkArray[pkArray.count-1][5])! + 1
         }
         print(pk)
         print(DB.query(statement: "SELECT * FROM Level", ColumnNumber: 1))
@@ -266,21 +264,22 @@ class FitnessViewController: UIViewController,  UIPickerViewDelegate , UIPickerV
         
         //라벨 바꾸기
         if(flag){
-            resultLabel.text = "목표를 이루셨군요 축하드려요!!"
-            let attributedStr = NSMutableAttributedString(string: resultLabel.text!)
-            attributedStr.addAttribute(.foregroundColor, value:UIColor.init(rgb:0x5AC18E) , range: (resultLabel.text! as NSString).range(of: "축하"))
-            attributedStr.addAttribute(.foregroundColor, value:UIColor.init(rgb:0xe8a87c) , range: (resultLabel.text! as NSString).range(of: "목표"))
-            attributedStr.addAttribute(NSAttributedString.Key.init(kCTFontAttributeName as String),value: UIFont.boldSystemFont(ofSize: 22), range: (resultLabel.text! as NSString).range(of: "축하"))
-            attributedStr.addAttribute(NSAttributedString.Key.init(kCTFontAttributeName as String),value: UIFont.boldSystemFont(ofSize: 22), range: (resultLabel.text! as NSString).range(of: "목표"))
-            resultLabel.attributedText = attributedStr
+            
+            let AttributedString = MakeAttributedString.init(InputString: "목표를 이루셨군요 축하드려요!!")
+            AttributedString.AddColorAttribute(Color: UIColor.init(rgb:0xe8a87c), WhichPart: "목표")
+            AttributedString.AddFontAttribute(Font: UIFont.boldSystemFont(ofSize: 22), WhichPart: "목표")
+            AttributedString.AddColorAttribute(Color: UIColor.init(rgb:0x5AC18E), WhichPart: "축하")
+            AttributedString.AddFontAttribute(Font: UIFont.boldSystemFont(ofSize: 22), WhichPart: "축하")
+            self.resultLabel.attributedText = AttributedString.AttributedString
+
         }else{
-            resultLabel.text = "목표가 얼마남지 않았어요!\n조금만 더 힘을 냅시다!!"
-            let attributedStr = NSMutableAttributedString(string: resultLabel.text!)
-            attributedStr.addAttribute(.foregroundColor, value:UIColor.init(rgb:0x5AC18E) , range: (resultLabel.text! as NSString).range(of: "힘"))
-            attributedStr.addAttribute(.foregroundColor, value:UIColor.init(rgb:0xe8a87c) , range: (resultLabel.text! as NSString).range(of: "목표"))
-            attributedStr.addAttribute(NSAttributedString.Key.init(kCTFontAttributeName as String),value: UIFont.boldSystemFont(ofSize: 22), range: (resultLabel.text! as NSString).range(of: "힘"))
-            attributedStr.addAttribute(NSAttributedString.Key.init(kCTFontAttributeName as String),value: UIFont.boldSystemFont(ofSize: 22), range: (resultLabel.text! as NSString).range(of: "목표"))
-            resultLabel.attributedText = attributedStr
+            let AttributedString = MakeAttributedString.init(InputString: "목표가 얼마남지 않았어요!\n조금만 더 힘을 냅시다!!")
+            AttributedString.AddColorAttribute(Color: UIColor.init(rgb:0x5AC18E), WhichPart: "힘")
+            AttributedString.AddFontAttribute(Font: UIFont.boldSystemFont(ofSize: 22), WhichPart: "힘")
+            AttributedString.AddColorAttribute(Color: UIColor.init(rgb:0xe8a87c), WhichPart: "목표")
+            AttributedString.AddFontAttribute(Font: UIFont.boldSystemFont(ofSize: 22), WhichPart: "목표")
+            self.resultLabel.attributedText = AttributedString.AttributedString
+            resultLabel.attributedText = AttributedString.AttributedString
         }
     }
 }
