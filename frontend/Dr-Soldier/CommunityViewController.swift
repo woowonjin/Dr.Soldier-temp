@@ -38,8 +38,14 @@ class CommunityViewController: UIViewController, UITableViewDelegate, UITableVie
         cell.descriptionLabel.text = document.description
         cell.informationLabel.text = document.writer + " | " + document.created
         cell.thumbsUpBtn.setTitle(String(document.thumbsUp), for: .normal)
+        cell.thumbsUpBtn.titleLabel?.textColor = UIColor(red: 255, green: 153, blue: 204)
+        cell.thumbsUpBtn.tintColor = UIColor(red: 255, green: 153, blue: 204)
         cell.thumbsDownBtn.setTitle(String(document.thumbsDown), for: .normal)
+        cell.thumbsDownBtn.titleLabel?.textColor = UIColor(red: 153, green: 204, blue: 255)
+        cell.thumbsDownBtn.tintColor = UIColor(red: 153, green: 204, blue: 255)
         cell.commentsBtn.setTitle(String(document.comments), for: .normal)
+        cell.commentsBtn.titleLabel?.textColor = UIColor(red: 90, green: 193, blue: 142)
+        cell.commentsBtn.tintColor = UIColor(red: 90, green: 193, blue: 142)
         return cell
     }
     

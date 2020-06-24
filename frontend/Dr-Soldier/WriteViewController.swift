@@ -9,9 +9,10 @@
 import UIKit
 import Alamofire
 
-class WriteViewController: UIViewController {
+class WriteViewController: UIViewController, UITextViewDelegate {
     
-    @IBOutlet weak var contentTextField: UITextField!
+    
+    @IBOutlet weak var contentTextView: UITextView!
     @IBOutlet weak var titleTextField: UITextField!
     let DB = DataBaseAPI.init()
     let Query = DataBaseQuery.init()
@@ -22,11 +23,36 @@ class WriteViewController: UIViewController {
         "Charset" : "utf-8"
     ]
     
+    func placeholderSetting() {
+            contentTextView.delegate = self // txtvReview가 유저가 선언한 outlet
+            contentTextView.text = "내용을 입력하세요."
+            contentTextView.textColor = UIColor.lightGray
+            
+        }
+        
+        
+    // TextView Place Holder
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.textColor == UIColor.lightGray {
+            textView.text = nil
+            textView.textColor = UIColor.black
+        }
+        
+    }
+    // TextView Place Holder
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.isEmpty {
+            textView.text = "내용을 입력하세요."
+            textView.textColor = UIColor.lightGray
+        }
+    }
+
+    
     @objc func writeButtonClicked(){
         print("write button Clicked!")
         //let user = UserDefaults.standard.dictionary(forKey: "user")
 
-        let params : Parameters = ["title":titleTextField.text!, "content":contentTextField.text!, "user":self.userEmail!]
+        let params : Parameters = ["title":titleTextField.text!, "content":contentTextView.text!, "user":self.userEmail!]
         let url = "http://127.0.0.1:8000/posts/create/"
         
 
@@ -41,6 +67,7 @@ class WriteViewController: UIViewController {
         }
         _ = self.storyboard?.instantiateViewController(withIdentifier: "Community") as! CommunityViewController
         self.navigationController?.popViewController(animated: true)
+//        nextView.refresh()
     }
     
     override func viewDidLoad() {
@@ -63,7 +90,10 @@ class WriteViewController: UIViewController {
         navView.addSubview(label)
         navView.addSubview(image)
         self.navigationItem.titleView = navView
-        
+        placeholderSetting()
+        self.contentTextView.layer.borderWidth = 0.8
+        self.contentTextView.layer.borderColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1.0).cgColor
+        self.contentTextView.layer.cornerRadius = 5
         self.navigationItem.leftBarButtonItem?.tintColor = .white
         self.navigationItem.backBarButtonItem?.tintColor = .white
         

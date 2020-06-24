@@ -113,33 +113,59 @@ class NotificationViewController: UITableViewController{
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = NotiTable.dequeueReusableCell(withIdentifier: "NotificationCell", for: indexPath) as! NotificationCell
         let noti = notis[indexPath.row]
-        cell.titleLabel.text = noti.type
         if noti.type == "좋아요"{
+            cell.titleLabel.text = "좋아요"
             cell.descriptionLabel.text = "\(noti.user_name)님이 회원님의 게시물을 좋아합니다."
+            cell.notiImage.image = UIImage(systemName: "heart.fill")
+            cell.notiImage.tintColor = UIColor(red: 255, green: 153, blue: 204)
         }
         else if noti.type == "좋아요취소"{
+            cell.titleLabel.text = "좋아요 취소"
             cell.descriptionLabel.text = "\(noti.user_name)님이 회원님의 게시물 좋아요를 취소했습니다."
+            cell.notiImage.image = UIImage(systemName: "heart.fill")
+            cell.notiImage.tintColor = UIColor(red: 255, green: 153, blue: 204)
         }
         else if noti.type == "싫어요"{
+            cell.titleLabel.text = "싫어요"
             cell.descriptionLabel.text = "\(noti.user_name)님이 회원님의 게시물을 싫어합니다."
+            cell.notiImage.image = UIImage(systemName: "hand.thumbsdown.fill")
+            cell.notiImage.tintColor = UIColor(red: 153, green: 204, blue: 255)
         }
         else if noti.type == "싫어요취소"{
+            cell.titleLabel.text = "싫어요 취소"
             cell.descriptionLabel.text = "\(noti.user_name)님이 회원님의 게시물 싫어요를 취소했습니다."
+            cell.notiImage.image = UIImage(systemName: "hand.thumbsdown.fill")
+            cell.notiImage.tintColor = UIColor(red: 153, green: 204, blue: 255)
         }
         else if noti.type == "댓글"{
+            cell.titleLabel.text = "댓글"
             cell.descriptionLabel.text = "\(noti.user_name)님이 회원님의 게시물에 댓글을 달았습니다."
+            cell.notiImage.image = UIImage(systemName: "message.fill")
+            cell.notiImage.tintColor = UIColor(red: 90, green: 193, blue: 142)
         }
         else if noti.type == "댓글좋아요"{
+            cell.titleLabel.text = "댓글좋아요"
             cell.descriptionLabel.text = "\(noti.user_name)님이 회원님의 댓글을 좋아합니다."
+            cell.notiImage.image = UIImage(systemName: "heart.fill")
+            cell.notiImage.tintColor = UIColor(red: 255, green: 153, blue: 204)
         }
         else if noti.type == "댓글좋아요취소"{
+            cell.titleLabel.text = "댓글좋아요 취소"
             cell.descriptionLabel.text = "\(noti.user_name)님이 회원님의 댓글 좋아요를 취소했습니다."
+            cell.notiImage.image = UIImage(systemName: "heart.fill")
+            cell.notiImage.tintColor = UIColor(red: 255, green: 153, blue: 204)
         }
         else if noti.type == "댓글싫어요"{
+            cell.titleLabel.text = "댓글싫어요"
             cell.descriptionLabel.text = "\(noti.user_name)님이 회원님의 댓글을 싫어합니다."
+            cell.notiImage.image = UIImage(systemName: "hand.thumbsdown.fill")
+            cell.notiImage.tintColor = UIColor(red: 153, green: 204, blue: 255)
         }
         else if noti.type == "댓글싫어요취소"{
+            cell.titleLabel.text = "댓글싫어요 취소"
             cell.descriptionLabel.text = "\(noti.user_name)님이 회원님의 댓글 싫어요를 취소했습니다."
+            cell.notiImage.image = UIImage(systemName: "hand.thumbsdown.fill")
+            cell.notiImage.tintColor = UIColor(red: 153, green: 204, blue: 255)
         }
         let AttributedString = MakeAttributedString.init(InputString: cell.descriptionLabel.text!)
         AttributedString.AddColorAttribute(Color: UIColor.init(rgb:0xe8a87c), WhichPart: "\(noti.user_name)")
@@ -165,12 +191,13 @@ class NotificationViewController: UITableViewController{
         nextView.comments_number = noti.comments
         nextView.titleString = noti.post_title
         nextView.descriptionString = noti.description
+        notis[indexPath.row].is_read = true
         self.navigationController?.pushViewController(nextView, animated: true)
         if(noti.is_read == false){
             AF.request("http://127.0.0.1:8000/read_notification/?noti_pk=\(noti.pk)").responseJSON { response in
             }
         }
-//        self.refresh()
+        self.refresh()
     }
 
     
