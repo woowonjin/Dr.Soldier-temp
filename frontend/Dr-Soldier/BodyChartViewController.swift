@@ -62,7 +62,7 @@ class BodyChartViewController: UIViewController,ChartViewDelegate,UITextViewDele
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        let navview = MakeViewWithNavigationBar.init(InputString: "체중기록")
+        let navview = MakeViewWithNavigationBar.init(InputString: "Body")
         self.navigationItem.titleView = navview.navView
         
         //뷰 배경 설정

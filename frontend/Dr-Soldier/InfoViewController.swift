@@ -149,5 +149,7 @@ class InfoViewController: UIViewController, UIImagePickerControllerDelegate & UI
         ProgressBar.tintColor = UIColor(red: 90/255.0, green: 193/255.0, blue: 142/255.0, alpha: 1)
         ProgressBar.backgroundColor = UIColor(red: 90/255.0, green: 193/255.0, blue: 142/255.0, alpha: 0.3)
     }
+
+
 }
 

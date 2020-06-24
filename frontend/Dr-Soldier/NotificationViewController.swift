@@ -21,7 +21,7 @@ class NotificationViewController: UITableViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let navview = MakeViewWithNavigationBar.init(InputString: "최근피드")
+        let navview = MakeViewWithNavigationBar.init(InputString: "Feeds")
         self.navigationItem.titleView = navview.navView
         let result = self.DB.query(statement: self.Query.SelectStar(Tablename: "User") , ColumnNumber: 6)
         NotiTable.refreshControl = refreshNoti
@@ -141,6 +141,11 @@ class NotificationViewController: UITableViewController{
         else if noti.type == "댓글싫어요취소"{
             cell.descriptionLabel.text = "\(noti.user_name)님이 회원님의 댓글 싫어요를 취소했습니다."
         }
+        let AttributedString = MakeAttributedString.init(InputString: cell.descriptionLabel.text!)
+        AttributedString.AddColorAttribute(Color: UIColor.init(rgb:0xe8a87c), WhichPart: "\(noti.user_name)")
+        AttributedString.AddFontAttribute(Font: UIFont.boldSystemFont(ofSize: 20), WhichPart: "\(noti.user_name)")
+        cell.descriptionLabel.attributedText = AttributedString.AttributedString
+        
         cell.createdLabel.text = noti.created
         if(noti.is_read == false){
             cell.backgroundColor = UIColor(red:250/255, green: 235/255, blue: 215/255, alpha: 0.5)

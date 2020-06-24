@@ -64,7 +64,7 @@ class FitnessViewController: UIViewController,  UIPickerViewDelegate , UIPickerV
     override func viewDidLoad() {
         super.viewDidLoad()
            // Do any additional setup after loading the view.
-        let navview = MakeViewWithNavigationBar.init(InputString: "체력검정")
+        let navview = MakeViewWithNavigationBar.init(InputString: "Fitness")
         self.navigationItem.titleView = navview.navView
 
         situpSlider.value = 40.0
