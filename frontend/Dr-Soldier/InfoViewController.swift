@@ -157,7 +157,6 @@ class InfoViewController: UIViewController, UIImagePickerControllerDelegate & UI
         FinanceButton.imageView?.contentMode = .scaleAspectFit
         fitnessButton.imageView?.contentMode = .scaleAspectFit
         
-        
         GoalButtonText.tintColor = UIColor.systemGray
         GoalButtonText.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
         BodyButtonText.tintColor = UIColor.systemGray
