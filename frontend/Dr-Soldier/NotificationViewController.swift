@@ -21,7 +21,7 @@ class NotificationViewController: UITableViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let navview = Variable_Functions.init()
+        let navview = MakeViewWithNavigationBar.init(InputString: "최근피드")
         self.navigationItem.titleView = navview.navView
         let result = self.DB.query(statement: self.Query.SelectStar(Tablename: "User") , ColumnNumber: 6)
         NotiTable.refreshControl = refreshNoti
@@ -49,7 +49,7 @@ class NotificationViewController: UITableViewController{
                 dateFormatter.dateFormat="yyyy-MM-dd HH:mm:ss"
                 dateFormatter.timeZone = NSTimeZone(name: "UTC") as TimeZone?
                 
-                for (index, element) in responseList.enumerated(){
+                for (index, _) in responseList.enumerated(){
                     //let obj = element["fields"] as! AnyObject
                     let post_pk = responseList[index]["post_pk"] as! Int
                     let is_read = responseList[index]["is_read"] as! Bool
@@ -93,7 +93,7 @@ class NotificationViewController: UITableViewController{
                     }
                 }
             
-            case .failure(let error):
+            case .failure( _):
                 print("getting Notifications failed")
             }
         }

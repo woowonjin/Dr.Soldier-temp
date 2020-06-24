@@ -143,21 +143,11 @@ class InfoViewController: UIViewController, UIImagePickerControllerDelegate & UI
         FinanceButton.imageView?.contentMode = .scaleAspectFit
         fitnessButton.imageView?.contentMode = .scaleAspectFit
         imagePickerController.delegate = self
-        let navview = Variable_Functions.init()
+        let navview = MakeViewWithNavigationBar.init(InputString: "닥터솔저", InputImage: UIImage(named: "doctor3.png")!)
         self.navigationItem.titleView = navview.navView
         createDatePicker()
         ProgressBar.tintColor = UIColor(red: 90/255.0, green: 193/255.0, blue: 142/255.0, alpha: 1)
         ProgressBar.backgroundColor = UIColor(red: 90/255.0, green: 193/255.0, blue: 142/255.0, alpha: 0.3)
-//        profileImage.layer.borderWidth = 1
     }
-    
-
-        //let fileManager = FileManager.init()
-        //print(fileManager.currentDirectoryPath)
-        //let path = Bundle.main.resourcePath!
-        //print(path)
-    
-
-
 }
 

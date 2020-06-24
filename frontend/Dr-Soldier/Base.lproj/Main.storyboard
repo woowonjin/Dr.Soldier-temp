@@ -524,7 +524,7 @@
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jMa-3z-d8x">
                                                                 <rect key="frame" x="0.0" y="40.666666666666629" width="69.666666666666671" height="41"/>
-                                                                <state key="normal" title="Goal"/>
+                                                                <state key="normal" title="ToDo"/>
                                                                 <connections>
                                                                     <action selector="NavBtnClicked:" destination="JVA-7M-vpp" eventType="touchUpInside" id="vhz-Yv-lQE"/>
                                                                 </connections>
