@@ -28,7 +28,7 @@ class FinanceViewController: UIViewController, UITextViewDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        let navview = MakeViewWithNavigationBar.init(InputString: "Finance")
+        let navview = MakeViewWithNavigationBar.init(InputString: " Finance", InputImage: UIImage(named: "gold")!)
         self.navigationItem.titleView = navview.navView
         
         //텍스트뷰 설정

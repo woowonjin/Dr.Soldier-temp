@@ -21,7 +21,7 @@ class NotificationViewController: UITableViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let navview = MakeViewWithNavigationBar.init(InputString: "Feeds")
+        let navview = MakeViewWithNavigationBar.init(InputString: " Feeds",InputImage: UIImage(named: "chats")!)
         self.navigationItem.titleView = navview.navView
         let result = self.DB.query(statement: self.Query.SelectStar(Tablename: "User") , ColumnNumber: 6)
         NotiTable.refreshControl = refreshNoti

@@ -134,7 +134,7 @@ class CommunityViewController: UIViewController, UITableViewDelegate, UITableVie
         mainTableView.refreshControl = refreshControl
         self.refreshControl.attributedTitle = NSAttributedString(string: "당겨서 새로고침")
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
-        let navview = MakeViewWithNavigationBar.init(InputString: "Community")
+        let navview = MakeViewWithNavigationBar.init(InputString: " Community",InputImage: UIImage(named: "soldier")!)
         self.navigationItem.titleView = navview.navView
         getDocs()
         mainTableView.delegate = self

@@ -55,7 +55,7 @@ class GoalViewController: UIViewController, UITableViewDataSource, UITableViewDe
        super.viewDidLoad()
        // Do any additional setup after loading the view.
         
-        let navview = MakeViewWithNavigationBar.init(InputString: "ToDoList")
+        let navview = MakeViewWithNavigationBar.init(InputString: " ToDoList", InputImage: UIImage(named: "checklist")!)
         self.navigationItem.titleView = navview.navView
         
         Table.rowHeight = UITableView.automaticDimension
