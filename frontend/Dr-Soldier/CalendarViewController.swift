@@ -57,7 +57,7 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
         //네비게이션바 세팅
         self.navigationItem.hidesBackButton = true;
         self.navigationItem.leftBarButtonItem = nil;
-        let navview = Variable_Functions.init()
+        let navview = MakeViewWithNavigationBar.init(InputString: " Vacation", InputImage: UIImage(named: "calendar")!)
         self.navigationItem.titleView = navview.navView
     
         //세그먼트바 세팅

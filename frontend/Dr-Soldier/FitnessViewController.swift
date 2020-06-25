@@ -64,14 +64,8 @@ class FitnessViewController: UIViewController,  UIPickerViewDelegate , UIPickerV
     override func viewDidLoad() {
         super.viewDidLoad()
            // Do any additional setup after loading the view.
-        let navview = Variable_Functions.init()
-        
+        let navview = MakeViewWithNavigationBar.init(InputString: " Fitness", InputImage: UIImage(named: "gym")!)
         self.navigationItem.titleView = navview.navView
-
-        print("-----------------")
-        print(DB.database)
-        print(DB.query(statement: Query.SelectStar(Tablename: "Fitness"), ColumnNumber: 6))
-        print("-----------------")
 
         situpSlider.value = 40.0
         pushupSlider.value = 40.0
@@ -111,7 +105,7 @@ class FitnessViewController: UIViewController,  UIPickerViewDelegate , UIPickerV
         runMinuteTextField.text = String(totalSeconds/60)
         runSecondTextField.text = String(totalSeconds%60)
         if DB.query(statement: "SELECT * FROM Level", ColumnNumber: 1).count == 0 {
-            DB.insert(statement: "INSERT INTO Level (Level) VALUES( '\(0)' )")
+            let _ = DB.insert(statement: "INSERT INTO Level (Level) VALUES( '\(0)' )")
         }else{
             level = Int(DB.query(statement: "SELECT * FROM Level", ColumnNumber: 1)[0][0]) ?? 0
             if(level == 1){
@@ -200,7 +194,7 @@ class FitnessViewController: UIViewController,  UIPickerViewDelegate , UIPickerV
         if(pkArray.count == 0){
             pk = 0
         }else{
-            pk = Int(pkArray[pkArray.count-1][5])! + 1 ?? 0
+            pk = Int(pkArray[pkArray.count-1][5])! + 1
         }
         print(pk)
         print(DB.query(statement: "SELECT * FROM Level", ColumnNumber: 1))
@@ -208,8 +202,8 @@ class FitnessViewController: UIViewController,  UIPickerViewDelegate , UIPickerV
         print(DB.query(statement: "SELECT * FROM Fitness", ColumnNumber: 6))
         print("---------")
 
-        DB.insert(statement: "INSERT INTO Fitness (checked_date, pushup, situp, runMinute, runSecond, pk) VALUES( '\(dateString)','\(pushup)', '\(situp)', '\(runMinute)', '\(runSecond)', '\(pk)')")
-        DB.update(statement: "UPDATE Level SET level = '\(level)' WHERE level >= 0 ")
+        let _ = DB.insert(statement: "INSERT INTO Fitness (checked_date, pushup, situp, runMinute, runSecond, pk) VALUES( '\(dateString)','\(pushup)', '\(situp)', '\(runMinute)', '\(runSecond)', '\(pk)')")
+        let _ = DB.update(statement: "UPDATE Level SET level = '\(level)' WHERE level >= 0 ")
 
     }
     func runSliderValueUpdate(){
@@ -270,9 +264,22 @@ class FitnessViewController: UIViewController,  UIPickerViewDelegate , UIPickerV
         
         //라벨 바꾸기
         if(flag){
-            resultLabel.text = "목표를 이루셨군요 축하드려요!!"
+            
+            let AttributedString = MakeAttributedString.init(InputString: "목표를 이루셨군요 축하드려요!!")
+            AttributedString.AddColorAttribute(Color: UIColor.init(rgb:0xe8a87c), WhichPart: "목표")
+            AttributedString.AddFontAttribute(Font: UIFont.boldSystemFont(ofSize: 22), WhichPart: "목표")
+            AttributedString.AddColorAttribute(Color: UIColor.init(rgb:0x5AC18E), WhichPart: "축하")
+            AttributedString.AddFontAttribute(Font: UIFont.boldSystemFont(ofSize: 22), WhichPart: "축하")
+            self.resultLabel.attributedText = AttributedString.AttributedString
+
         }else{
-            resultLabel.text = "목표가 얼마남지 않았어요! 조금만 더 힘을 냅시다!!"
+            let AttributedString = MakeAttributedString.init(InputString: "목표가 얼마남지 않았어요!\n조금만 더 힘을 냅시다!!")
+            AttributedString.AddColorAttribute(Color: UIColor.init(rgb:0x5AC18E), WhichPart: "힘")
+            AttributedString.AddFontAttribute(Font: UIFont.boldSystemFont(ofSize: 22), WhichPart: "힘")
+            AttributedString.AddColorAttribute(Color: UIColor.init(rgb:0xe8a87c), WhichPart: "목표")
+            AttributedString.AddFontAttribute(Font: UIFont.boldSystemFont(ofSize: 22), WhichPart: "목표")
+            self.resultLabel.attributedText = AttributedString.AttributedString
+            resultLabel.attributedText = AttributedString.AttributedString
         }
     }
 }

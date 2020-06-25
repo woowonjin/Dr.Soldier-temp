@@ -44,7 +44,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
             case .success(let value):
                 let responseList = value as! Array<AnyObject>
                 self.comments.insert(Comment(description: "댓글", created: "방금", writer: "leedh2004", thumbsUp: 100, thumbsDown: 100, isDeleted: false, pk: -1), at: 0)
-                for (index, element) in responseList.enumerated(){
+                for (index, _) in responseList.enumerated(){
                     let text = responseList[index]["text"] as! String
                     let writer = responseList[index]["host_name"] as! String
                     let likes = responseList[index]["likes_number"] as! Int
@@ -56,7 +56,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
                 DispatchQueue.main.async {
                     self.commentTable.reloadData()
                 }
-            case .failure(let error):
+            case .failure( _):
                 print("maybe server down")
             }
         }
@@ -77,7 +77,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
         else{
             like.setImage(UIImage(systemName: "heart"), for: .normal)
         }
-        like.tintColor = .red
+        like.tintColor = UIColor(red: 255, green: 153, blue: 204)
         like.addTarget(self, action: #selector(likePost(_:)), for: .touchUpInside)
         rightView.addSubview(like)
         dislike.frame = CGRect(x:50, y:8, width: 30, height: 30)
@@ -87,7 +87,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
         else{
             dislike.setImage(UIImage(systemName: "hand.thumbsdown"), for: .normal)
         }
-        dislike.tintColor = .blue
+        dislike.tintColor = UIColor(red: 153, green: 204, blue: 255)
         dislike.addTarget(self, action: #selector(dislikePost(_:)), for: .touchUpInside)
         // 라이트 뷰에 버튼 추가
         rightView.addSubview(dislike)
@@ -101,8 +101,14 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
             cell.titleLabel.text = titleString
             cell.descriptionLabel.text = descriptionString
             cell.LikesButton.setTitle(String(likes), for: .normal)
+            cell.LikesButton.titleLabel?.textColor = UIColor(red: 255, green: 153, blue: 204)
+            cell.LikesButton.tintColor = UIColor(red: 255, green: 153, blue: 204)
             cell.DislikesButton.setTitle(String(dislikes), for: .normal)
+            cell.DislikesButton.titleLabel?.textColor = UIColor(red: 153, green: 204, blue: 255)
+            cell.DislikesButton.tintColor = UIColor(red: 153, green: 204, blue: 255)
             cell.CommentsButton.setTitle(String(comments_number), for: .normal)
+            cell.CommentsButton.titleLabel?.textColor = UIColor(red: 90, green: 193, blue: 142)
+            cell.CommentsButton.tintColor = UIColor(red: 90, green: 193, blue: 142)
             self.like.tag = indexPath.row
             self.dislike.tag = indexPath.row
             let temp = firstCell()
@@ -115,14 +121,18 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
             cell.UserNameLabel.text = comment.writer
             cell.DescriptionLabel.text = comment.description
             cell.thumbsUpBtn.setTitle(String(comment.thumbsUp), for: .normal)
+            cell.thumbsUpBtn.titleLabel?.textColor = UIColor(red: 255, green: 153, blue: 204)
+            cell.thumbsUpBtn.tintColor = UIColor(red: 255, green: 153, blue: 204)
             cell.thumbsDownBtn.setTitle(String(comment.thumbsDown), for: .normal)
+            cell.thumbsDownBtn.titleLabel?.textColor = UIColor(red: 153, green: 204, blue: 255)
+            cell.thumbsDownBtn.tintColor = UIColor(red: 153, green: 204, blue: 255)
             let bounds: CGRect = UIScreen.main.bounds
             let commentLike = UIButton(type:.system)
             let commentDislike = UIButton(type:.system)
             commentLike.frame = CGRect(x:bounds.maxX-100, y:8, width: 20, height: 15)
-            commentLike.tintColor = .red
+            commentLike.tintColor = UIColor(red: 255, green: 153, blue: 204)
             commentDislike.frame = CGRect(x:bounds.maxX-50, y:8, width: 20, height: 15)
-            commentDislike.tintColor = .blue
+            commentDislike.tintColor = UIColor(red: 153, green: 204, blue: 255)
             cell.likeBtn = commentLike
             cell.dislikeBtn = commentDislike
 
@@ -145,12 +155,12 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
         AF.request("http://127.0.0.1:8000/alreadylikes/?pk=\(self.post_pk)&user=\(userEmail)").responseJSON { response in
             switch response.result{
             case .success(let value):
-                let rep = value as! AnyObject
+                let rep = value as AnyObject
                 self.likes = rep["likes_number"] as! Int
                 self.dislikes = rep["dislikes_number"] as! Int
                 self.isLike = rep["like"]! as! Bool
                 self.isDislike = rep["dislike"] as! Bool
-            case .failure(let value):
+            case .failure( _):
                 print("like request Error")
             }
         }
@@ -162,7 +172,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
         AF.request("http://127.0.0.1:8000/alreadyCommentLikes/?pk=\(cell.pk!)&user=\(userEmail)").responseJSON { response in
             switch response.result{
             case .success(let value):
-                let rep = value as! AnyObject
+                let rep = value as AnyObject
                 let temp_like = rep["likes_number"] as! Int
                 let temp_dislike = rep["dislikes_number"] as! Int
                 cell.likeBtn.setTitle(String(temp_like), for: .normal)
@@ -191,7 +201,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
                     cell.dislikeBtn.setImage(UIImage(systemName: "hand.thumbsdown"), for: .normal)
 //                    cell.dislikeBtn.isSelected = false
                 }
-            case .failure(let value):
+            case .failure( _):
                 print("commentLike request Error")
             }
         }
@@ -204,7 +214,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
         AF.request("http://127.0.0.1:8000/commentLikes/?pk=\(cell.pk)&user=\(userEmail)").responseJSON { response in
             switch response.result{
             case .success(let value):
-                let rep = value as! AnyObject
+                let rep = value as AnyObject
                 let type = rep["result"] as! String
                 if(type == "create"){
                     let cell = self.commentTable.cellForRow(at: IndexPath(row: sender.tag, section: 0)) as! CommentCell
@@ -222,7 +232,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
                     AF.request("http://127.0.0.1:8000/notification/?post_pk=\(self.post_pk)&user=\(self.userEmail!)&type=comment_like_cancel").responseJSON { response in
                     }
                 }
-            case .failure(let value):
+            case .failure( _):
                 print("something wrong")
             }
         }
@@ -235,7 +245,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
         AF.request("http://127.0.0.1:8000/commentDislikes/?pk=\(cell.pk)&user=\(userEmail!)").responseJSON { response in
             switch response.result{
             case .success(let value):
-                let rep = value as! AnyObject
+                let rep = value as AnyObject
                 let type = rep["result"] as! String
                 if(type == "create"){
                     let cell = self.commentTable.cellForRow(at: IndexPath(row: sender.tag, section: 0)) as! CommentCell
@@ -253,7 +263,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
                     AF.request("http://127.0.0.1:8000/notification/?post_pk=\(self.post_pk)&user=\(self.userEmail!)&type=comment_dislike_cancel").responseJSON { response in
                     }
                 }
-            case .failure(let value):
+            case .failure( _):
                 print("something wrong")
             }
         }
@@ -266,7 +276,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
         AF.request("http://127.0.0.1:8000/likes/?pk=\(self.post_pk)&user=\(userEmail!)").responseJSON { response in
             switch response.result{
             case .success(let value):
-                let rep = value as! AnyObject
+                let rep = value as AnyObject
                 let type = rep["result"] as! String
                 if(type == "create"){
                     self.likes += 1
@@ -284,7 +294,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
                     AF.request("http://127.0.0.1:8000/notification/?post_pk=\(self.post_pk)&user=\(self.userEmail!)&type=like_cancel").responseJSON { response in
                     }
                 }
-            case .failure(let value):
+            case .failure( _):
                 print("something wrong")
             }
         }
@@ -295,7 +305,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
         AF.request("http://127.0.0.1:8000/dislikes/?pk=\(self.post_pk)&user=\(userEmail!)").responseJSON { response in
             switch response.result{
             case .success(let value):
-                let rep = value as! AnyObject
+                let rep = value as AnyObject
                 let type = rep["result"] as! String
                 if(type == "create"){
                     self.dislikes += 1
@@ -313,7 +323,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
                     AF.request("http://127.0.0.1:8000/notification/?post_pk=\(self.post_pk)&user=\(self.userEmail!)&type=dislike_cancel").responseJSON { response in
                     }
                 }
-            case .failure(let value):
+            case .failure( _):
                 print("something wrong")
             }
         }

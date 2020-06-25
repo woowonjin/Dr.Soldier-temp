@@ -31,6 +31,8 @@ class FitnessTableViewController: UIViewController,  UITableViewDelegate, UITabl
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let navview = MakeViewWithNavigationBar.init(InputString: "기록 목록")
+        self.navigationItem.titleView = navview.navView
         mainTable.delegate = self
         mainTable.dataSource = self
         datas = DB.query(statement: Query.SelectStar(Tablename: "Fitness"), ColumnNumber: 6)
@@ -54,7 +56,7 @@ class FitnessTableCell:UITableViewCell{
     let Query = DataBaseQuery.init()
     
     @IBAction func RemoveBtnTapped(_ sender: Any) {
-        DB.delete(statement: Query.Delete(Tablename: "Fitness", Condition: "pk = '\(pk!)'"))
+        let _ = DB.delete(statement: Query.Delete(Tablename: "Fitness", Condition: "pk = '\(pk!)'"))
     }
 }
 

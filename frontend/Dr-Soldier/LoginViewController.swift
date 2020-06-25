@@ -32,9 +32,9 @@ class LoginViewController: UIViewController, ASAuthorizationControllerPresentati
                 email = userEmail!
             }
             
-            self.DB.insert(statement: "DROP TABLE User;")
-                                self.DB.CreateEveryTable()
-                                self.DB.insert(statement: self.Query.insert(Tablename: "User", Values: "'\(email)', '\(username)','','','','' "))
+        let _ = self.DB.insert(statement: "DROP TABLE User;")
+        let _ = self.DB.CreateEveryTable()
+        let _ = self.DB.insert(statement: self.Query.insert(Tablename: "User", Values: "'\(email)', '\(username)','','','','' "))
         post(email: email, nickname: username, method: "apple")
         guard let main = self.storyboard?.instantiateViewController(withIdentifier: "Main") else{
             return

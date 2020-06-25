@@ -28,7 +28,7 @@ class FinanceViewController: UIViewController, UITextViewDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        let navview = Variable_Functions.init()
+        let navview = MakeViewWithNavigationBar.init(InputString: " Finance", InputImage: UIImage(named: "gold")!)
         self.navigationItem.titleView = navview.navView
         
         //텍스트뷰 설정
@@ -64,21 +64,18 @@ class FinanceViewController: UIViewController, UITextViewDelegate {
         Label.lineBreakMode = NSLineBreakMode.byWordWrapping;
         Label.sizeToFit()
         Label.font = UIFont.boldSystemFont(ofSize: 15)
-        Label.text = "계산은 닥터가 할게요. \n 입력만 해주세요!"
-        let attributedStr = NSMutableAttributedString(string: Label.text!)
-        attributedStr.addAttribute(.foregroundColor, value:UIColor.init(rgb:0x5AC18E) , range: (Label.text! as NSString).range(of: "닥터"))
-        
-        attributedStr.addAttribute(NSAttributedString.Key.init(kCTFontAttributeName as String),value: UIFont.boldSystemFont(ofSize: 22), range: (Label.text! as NSString).range(of: "닥터"))
-        attributedStr.addAttribute(.foregroundColor, value:UIColor.init(rgb:0xe8a87c) , range: (Label.text! as NSString).range(of: "입력"))
-        
-        attributedStr.addAttribute(NSAttributedString.Key.init(kCTFontAttributeName as String),value: UIFont.boldSystemFont(ofSize: 22), range: (Label.text! as NSString).range(of: "입력"))
-        Label.attributedText = attributedStr
+        let AttributedString = MakeAttributedString.init(InputString: "계산은 닥터가 할게요. \n 입력만 해주세요!")
+        AttributedString.AddColorAttribute(Color: UIColor.init(rgb:0x5AC18E), WhichPart: "닥터")
+        AttributedString.AddFontAttribute(Font: UIFont.boldSystemFont(ofSize: 22), WhichPart: "닥터")
+        AttributedString.AddColorAttribute(Color: UIColor.init(rgb:0xe8a87c), WhichPart: "입력")
+        AttributedString.AddFontAttribute(Font: UIFont.boldSystemFont(ofSize: 22), WhichPart: "입력")
+        self.Label.attributedText = AttributedString.AttributedString
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text == "\n" {
             if textView == self.Ratio{
-                
+                CalculateFunction()
             }
             textView.resignFirstResponder()
             return false
@@ -90,6 +87,18 @@ class FinanceViewController: UIViewController, UITextViewDelegate {
         textView.textColor = UIColor.black
         textView.text = ""
         self.activeTextView = textView
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        if textView == self.Money{
+            Moneytmpstring = Money.text
+        }
+        if textView == self.Month{
+            Monthtmpstring = Month.text
+        }
+        if textView == self.Ratio{
+            Ratiotmpstring = Ratio.text
+        }
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
@@ -128,7 +137,6 @@ class FinanceViewController: UIViewController, UITextViewDelegate {
                 Ratio.text = "이율"
                 Ratio.textAlignment = NSTextAlignment.center
             }
-            CalculateFunction()
         }
     }
     
@@ -174,6 +182,7 @@ class FinanceViewController: UIViewController, UITextViewDelegate {
         let Moneytext = Moneytmpstring
         let Ratiotext = Ratiotmpstring
         let Monthtext = Monthtmpstring
+        print(Moneytext,Ratiotext,Moneytext)
         initailize_textview()
         if let Moneyfloat = Float64(Moneytext) , let Ratiofloat = Float64(Ratiotext) , let Monthfloat = Float64(Monthtext){
             var total : Int64 = 0
@@ -185,31 +194,27 @@ class FinanceViewController: UIViewController, UITextViewDelegate {
             let totalstring = makemoneyform(Money: total)
             let Moneystring = makemoneyform(Money: Int64(Moneyfloat))
             
-            Label.text = "매달 \(Moneystring)씩 \(Int(Monthfloat))개월 동안\n\(Ratiofloat)의 이율로 계산하였을 때\n만기시 \(totalstring)원을 받으실 수 있어요!"
-            let attributedStr = NSMutableAttributedString(string: Label.text!)
+            let AttributedString = MakeAttributedString.init(InputString:"매달 \(Moneystring)씩 \(Int(Monthfloat))개월 동안\n\(Ratiofloat)의 이율로 계산하였을 때\n만기시 \(totalstring)원을 받으실 수 있어요!")
             
-            attributedStr.addAttribute(.foregroundColor, value:UIColor.init(rgb:0xe8a87c) , range: (Label.text! as NSString).range(of: "\(Moneystring)"))
-            attributedStr.addAttribute(NSAttributedString.Key.init(kCTFontAttributeName as String),value: UIFont.boldSystemFont(ofSize: 22), range: (Label.text! as NSString).range(of: "\(Moneystring)"))
-            
-            attributedStr.addAttribute(.foregroundColor, value:UIColor.init(rgb:0xe8a87c) , range: (Label.text! as NSString).range(of: "\(Int(Monthfloat))"))
-            attributedStr.addAttribute(NSAttributedString.Key.init(kCTFontAttributeName as String),value: UIFont.boldSystemFont(ofSize: 22), range: (Label.text! as NSString).range(of: "\(Int(Monthfloat))"))
-            
-            attributedStr.addAttribute(.foregroundColor, value:UIColor.init(rgb:0xe8a87c) , range: (Label.text! as NSString).range(of: "\(Ratiofloat)"))
-            attributedStr.addAttribute(NSAttributedString.Key.init(kCTFontAttributeName as String),value: UIFont.boldSystemFont(ofSize: 22), range: (Label.text! as NSString).range(of: "\(Ratiofloat)"))
-            
-            
-            attributedStr.addAttribute(.foregroundColor, value:UIColor.init(rgb: 0x5AC18E) , range: (Label.text! as NSString).range(of: "\(totalstring)"))
-            attributedStr.addAttribute(NSAttributedString.Key.init(kCTFontAttributeName as String),value: UIFont.boldSystemFont(ofSize: 22), range: (Label.text! as NSString).range(of: "\(totalstring)"))
-            Label.attributedText = attributedStr
+            AttributedString.AddColorAttribute(Color: UIColor.init(rgb:0xe8a87c), WhichPart: "\(Moneystring)")
+            AttributedString.AddFontAttribute(Font: UIFont.boldSystemFont(ofSize: 22), WhichPart: "\(Moneystring)")
+            AttributedString.AddColorAttribute(Color: UIColor.init(rgb:0xe8a87c), WhichPart: "\(Int(Monthfloat))")
+            AttributedString.AddFontAttribute(Font: UIFont.boldSystemFont(ofSize: 22), WhichPart: "\(Int(Monthfloat))")
+            AttributedString.AddColorAttribute(Color: UIColor.init(rgb:0xe8a87c), WhichPart: "\(Ratiofloat)")
+            AttributedString.AddFontAttribute(Font: UIFont.boldSystemFont(ofSize: 22), WhichPart: "\(Ratiofloat)")
+            AttributedString.AddColorAttribute(Color: UIColor.init(rgb:0x5AC18E), WhichPart: "\(totalstring)")
+            AttributedString.AddFontAttribute(Font: UIFont.boldSystemFont(ofSize: 22), WhichPart: "\(totalstring)")
+            self.Label.attributedText = AttributedString.AttributedString
             
         } else {
-            Label.text = "입력이 잘못되었네요! \n 숫자로만 입력해주세요."
-            let attributedStr = NSMutableAttributedString(string: Label.text!)
-            attributedStr.addAttribute(.foregroundColor, value:UIColor.init(rgb: 0xe8a87c) , range: (Label.text! as NSString).range(of: "입력"))
-            attributedStr.addAttribute(NSAttributedString.Key.init(kCTFontAttributeName as String),value: UIFont.boldSystemFont(ofSize: 22), range: (Label.text! as NSString).range(of: "입력"))
-            attributedStr.addAttribute(.foregroundColor, value:UIColor.init(rgb:0x5AC18E) , range: (Label.text! as NSString).range(of: "숫자"))
-            attributedStr.addAttribute(NSAttributedString.Key.init(kCTFontAttributeName as String),value: UIFont.boldSystemFont(ofSize: 22), range: (Label.text! as NSString).range(of: "숫자"))
-            Label.attributedText = attributedStr
+            
+            let AttributedString = MakeAttributedString.init(InputString:"입력이 잘못되었네요! \n 숫자로만 입력해주세요.")
+            
+            AttributedString.AddColorAttribute(Color: UIColor.init(rgb:0xe8a87c), WhichPart: "입력")
+            AttributedString.AddFontAttribute(Font: UIFont.boldSystemFont(ofSize: 22), WhichPart: "입력")
+            AttributedString.AddColorAttribute(Color: UIColor.init(rgb:0x5AC18E), WhichPart: "숫자")
+            AttributedString.AddFontAttribute(Font: UIFont.boldSystemFont(ofSize: 22), WhichPart: "숫자")
+            self.Label.attributedText = AttributedString.AttributedString
         }
     }
     
