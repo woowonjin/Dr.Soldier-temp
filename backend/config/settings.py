@@ -24,7 +24,7 @@ SECRET_KEY = '#rgr7^2^7#i=w^&4tt!@g30yn_f8&j681#iqog4gv00j-0!bea'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['Dr-Soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com']
 
 # Application definition
 DJANGO_APPS = [
