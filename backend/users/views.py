@@ -11,7 +11,8 @@ def login(request):
     method = request.GET.get("method")
     try:
         user = user_models.User.objects.get(username=email)
-        return
+        response = {"result" : "no"}
+        return JsonResponse(response, status=201)
     except user_models.User.DoesNotExist:
         if(method == "kakao"):
             user = user_models.User.objects.create(
@@ -21,7 +22,8 @@ def login(request):
             )
             user.set_unusable_password()
             user.save()
-            return
+            response = {"result" : "create"}
+            return JsonResponse(response, status=201)
         elif(method == "apple"):
             user = user_models.User.objects.create(
                 username = email,
@@ -30,5 +32,6 @@ def login(request):
             )
             user.set_unusable_password()
             user.save()
-            return
+            response = {"result" : "create"}
+            return JsonResponse(response, status=201)
         

@@ -39,7 +39,9 @@ def notification(request):
     elif noti_type_temp == "comment_dislike_cancel":
         noti_type = noti_models.Notification.COMMENT_DISLIKE_CANCEL
         noti = noti_models.Notification.objects.create(user=user, post=post, noti_type=noti_type)
-    
+    response = {"result" : "ok"}
+    return JsonResponse(response, status=201)
+
 def get_notifications(request):
     user_email = request.GET.get("user")
     user = user_models.User.objects.get(username=user_email)
@@ -55,7 +57,8 @@ def noti_read(request):
     noti = noti_models.Notification.objects.get(pk=noti_pk)
     noti.is_read = True
     noti.save()
-    return HttpResponse("ok")
+    response = {"result" : "ok"}
+    return JsonResponse(response, status=201)
 
 def get_notifications_num(request):
     user_email = request.GET.get("user")

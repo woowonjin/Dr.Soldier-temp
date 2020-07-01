@@ -34,7 +34,8 @@ def post_create(request):
     board = board_models.Board.objects.get(title="All")
     post = Post.objects.create(title=title, text=text, host=user, board=board)
     post.save()
-    return HttpResponse("ok")
+    response = {"result" : "create"}
+    return JsonResponse(response, status=201)
 
 def already_likes(request):
     post_pk = request.GET.get("pk")

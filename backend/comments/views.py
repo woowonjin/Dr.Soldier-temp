@@ -31,7 +31,8 @@ def comment_create(request):
     post = post_models.Post.objects.get(pk=pk)
     comment = Comment.objects.create(text=text, user=user, post=post)
     comment.save()
-    return HttpResponse("ok")
+    response = {"result" : "create"}
+    return JsonResponse(response, status=201)
 
 def already_comment_like(request):
     comment_pk = request.GET.get("pk")

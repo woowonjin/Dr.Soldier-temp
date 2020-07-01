@@ -10,7 +10,6 @@ def likes(request):
     email = request.GET.get("user")
     user = user_models.User.objects.get(username=email)
     post = post_models.Post.objects.get(pk=post_pk)
-    print("like")
     try:
         check_like = like_models.Like.objects.get(user=user, post=post)
         check_like.delete()
