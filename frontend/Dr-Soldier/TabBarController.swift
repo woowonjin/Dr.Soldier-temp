@@ -22,7 +22,7 @@ class TabBarController: UITabBarController {
                 fillDefaultColorsDictionary.updateValue(Int(each[1])! , forKey: each[0])
             })
             for date in fillDefaultColorsArray{
-               AF.request("http://127.0.0.1:8000/create-vacation/?user=\(self.userEmail!)&date=\(date[0])&type=\(date[1])").responseJSON { response in
+               AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/create-vacation/?user=\(self.userEmail!)&date=\(date[0])&type=\(date[1])").responseJSON { response in
                }
             }
         }

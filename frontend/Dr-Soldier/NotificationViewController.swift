@@ -39,7 +39,8 @@ class NotificationViewController: UITableViewController{
     }
     
     func getNotis(){
-        AF.request("http://127.0.0.1:8000/get-notifications/?user=\(userEmail!)").responseJSON { response in
+        
+        AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/get-notifications/?user=\(userEmail!)").responseJSON { response in
             switch response.result{
             case .success(let value):
                 let responseList = value as! Array<AnyObject>
@@ -194,7 +195,7 @@ class NotificationViewController: UITableViewController{
         notis[indexPath.row].is_read = true
         self.navigationController?.pushViewController(nextView, animated: true)
         if(noti.is_read == false){
-            AF.request("http://127.0.0.1:8000/read_notification/?noti_pk=\(noti.pk)").responseJSON { response in
+            AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/read_notification/?noti_pk=\(noti.pk)").responseJSON { response in
             }
         }
         self.refresh()

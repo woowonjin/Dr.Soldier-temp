@@ -64,9 +64,10 @@ class CommunityViewController: UIViewController, UITableViewDelegate, UITableVie
     func getDocs(){
         //self.docs.insert(Document(title: "헬로우 스위프트~", description: "킾고잉~ 코더스하이!", created: "temp", writer: "관리자", thumbsUp: 0, thumbsDown: 0, isDeleted: false, pk: 1), at: 0)
         print("GET Docs")
-        AF.request("http://127.0.0.1:8000/documents/?page=\(page)").responseJSON { response in
+        AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/documents/?page=\(page)").responseJSON { response in
             switch response.result{
             case .success(let value):
+                print("success")
                 let responseList = value as! Array<AnyObject>
                 
                 let dateFormatter = DateFormatter()

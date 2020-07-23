@@ -39,7 +39,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
     //@IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var commentTable: UITableView!
     func getComments(){
-        AF.request("http://127.0.0.1:8000/comments/?pk=\(self.post_pk)").responseJSON { response in
+        AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/comments/?pk=\(self.post_pk)").responseJSON { response in
             switch response.result{
             case .success(let value):
                 let responseList = value as! Array<AnyObject>
@@ -152,7 +152,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
     
     func likeRequest(){
         let userEmail:String = self.userEmail!
-        AF.request("http://127.0.0.1:8000/alreadylikes/?pk=\(self.post_pk)&user=\(userEmail)").responseJSON { response in
+        AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/alreadylikes/?pk=\(self.post_pk)&user=\(userEmail)").responseJSON { response in
             switch response.result{
             case .success(let value):
                 let rep = value as AnyObject
@@ -169,7 +169,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
     
     func commentLikeRequest(cell: CommentCell){
         let userEmail:String = self.userEmail!
-        AF.request("http://127.0.0.1:8000/alreadyCommentLikes/?pk=\(cell.pk!)&user=\(userEmail)").responseJSON { response in
+        AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/alreadyCommentLikes/?pk=\(cell.pk!)&user=\(userEmail)").responseJSON { response in
             switch response.result{
             case .success(let value):
                 let rep = value as AnyObject
@@ -211,7 +211,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
         let userEmail:String = self.userEmail!
         // let user = UserDefaults.standard.dictionary(forKey: "user")
         let cell = comments[sender.tag]
-        AF.request("http://127.0.0.1:8000/commentLikes/?pk=\(cell.pk)&user=\(userEmail)").responseJSON { response in
+        AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/commentLikes/?pk=\(cell.pk)&user=\(userEmail)").responseJSON { response in
             switch response.result{
             case .success(let value):
                 let rep = value as AnyObject
@@ -221,7 +221,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
                     self.comments[sender.tag].thumbsUp += 1
                     cell.thumbsUpBtn.setTitle(String(self.comments[sender.tag].thumbsUp), for: .normal)
                     cell.likeBtn.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-                    AF.request("http://127.0.0.1:8000/notification/?post_pk=\(self.post_pk)&user=\(self.userEmail!)&type=comment_like").responseJSON { response in
+                    AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/notification/?post_pk=\(self.post_pk)&user=\(self.userEmail!)&type=comment_like").responseJSON { response in
                     }
                 }
                 else if(type == "delete"){
@@ -229,7 +229,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
                     self.comments[sender.tag].thumbsUp -= 1
                     cell.thumbsUpBtn.setTitle(String(self.comments[sender.tag].thumbsUp), for: .normal)
                     cell.likeBtn.setImage(UIImage(systemName: "heart"), for: .normal)
-                    AF.request("http://127.0.0.1:8000/notification/?post_pk=\(self.post_pk)&user=\(self.userEmail!)&type=comment_like_cancel").responseJSON { response in
+                    AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/notification/?post_pk=\(self.post_pk)&user=\(self.userEmail!)&type=comment_like_cancel").responseJSON { response in
                     }
                 }
             case .failure( _):
@@ -242,7 +242,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
     @IBAction func dislikeComment(_ sender: UIButton){
         // let user = UserDefaults.standard.dictionary(forKey: "user")
         let cell = comments[sender.tag]
-        AF.request("http://127.0.0.1:8000/commentDislikes/?pk=\(cell.pk)&user=\(userEmail!)").responseJSON { response in
+        AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/commentDislikes/?pk=\(cell.pk)&user=\(userEmail!)").responseJSON { response in
             switch response.result{
             case .success(let value):
                 let rep = value as AnyObject
@@ -252,7 +252,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
                     self.comments[sender.tag].thumbsDown += 1
                     cell.thumbsDownBtn.setTitle(String(self.comments[sender.tag].thumbsDown), for: .normal)
                     cell.dislikeBtn.setImage(UIImage(systemName: "hand.thumbsdown.fill"), for: .normal)
-                    AF.request("http://127.0.0.1:8000/notification/?post_pk=\(self.post_pk)&user=\(self.userEmail!)&type=comment_dislike").responseJSON { response in
+                    AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/notification/?post_pk=\(self.post_pk)&user=\(self.userEmail!)&type=comment_dislike").responseJSON { response in
                     }
                 }
                 else if(type == "delete"){
@@ -260,7 +260,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
                     self.comments[sender.tag].thumbsDown -= 1
                     cell.thumbsDownBtn.setTitle(String(self.comments[sender.tag].thumbsDown), for: .normal)
                     cell.dislikeBtn.setImage(UIImage(systemName: "hand.thumbsdown"), for: .normal)
-                    AF.request("http://127.0.0.1:8000/notification/?post_pk=\(self.post_pk)&user=\(self.userEmail!)&type=comment_dislike_cancel").responseJSON { response in
+                    AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/notification/?post_pk=\(self.post_pk)&user=\(self.userEmail!)&type=comment_dislike_cancel").responseJSON { response in
                     }
                 }
             case .failure( _):
@@ -273,7 +273,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
     
     @IBAction func likePost(_ sender: UIButton) {
         //let user = UserDefaults.standard.dictionary(forKey: "user")
-        AF.request("http://127.0.0.1:8000/likes/?pk=\(self.post_pk)&user=\(userEmail!)").responseJSON { response in
+        AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/likes/?pk=\(self.post_pk)&user=\(userEmail!)").responseJSON { response in
             switch response.result{
             case .success(let value):
                 let rep = value as AnyObject
@@ -283,7 +283,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
                     let cell = self.commentTable.cellForRow(at: IndexPath(row: 0, section: 0)) as! DocumentDetailCell
                     cell.LikesButton.setTitle(String(self.likes), for: .normal)
                     self.like.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-                    AF.request("http://127.0.0.1:8000/notification/?post_pk=\(self.post_pk)&user=\(self.userEmail!)&type=like").responseJSON { response in
+                    AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/notification/?post_pk=\(self.post_pk)&user=\(self.userEmail!)&type=like").responseJSON { response in
                     }
                 }
                 else if(type == "delete"){
@@ -291,7 +291,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
                     let cell = self.commentTable.cellForRow(at: IndexPath(row: 0, section: 0)) as! DocumentDetailCell
                     cell.LikesButton.setTitle(String(self.likes), for: .normal)
                     self.like.setImage(UIImage(systemName: "heart"), for: .normal)
-                    AF.request("http://127.0.0.1:8000/notification/?post_pk=\(self.post_pk)&user=\(self.userEmail!)&type=like_cancel").responseJSON { response in
+                    AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/notification/?post_pk=\(self.post_pk)&user=\(self.userEmail!)&type=like_cancel").responseJSON { response in
                     }
                 }
             case .failure( _):
@@ -302,7 +302,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
     }
     
     @IBAction func dislikePost(_ sender: Any) {
-        AF.request("http://127.0.0.1:8000/dislikes/?pk=\(self.post_pk)&user=\(userEmail!)").responseJSON { response in
+        AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/dislikes/?pk=\(self.post_pk)&user=\(userEmail!)").responseJSON { response in
             switch response.result{
             case .success(let value):
                 let rep = value as AnyObject
@@ -312,7 +312,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
                     let cell = self.commentTable.cellForRow(at: IndexPath(row: 0, section: 0)) as! DocumentDetailCell
                     cell.DislikesButton.setTitle(String(self.dislikes), for: .normal)
                     self.dislike.setImage(UIImage(systemName: "hand.thumbsdown.fill"), for: .normal)
-                    AF.request("http://127.0.0.1:8000/notification/?post_pk=\(self.post_pk)&user=\(self.userEmail!)&type=dislike").responseJSON { response in
+                    AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/notification/?post_pk=\(self.post_pk)&user=\(self.userEmail!)&type=dislike").responseJSON { response in
                     }
                 }
                 else if(type == "delete"){
@@ -320,7 +320,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
                     let cell = self.commentTable.cellForRow(at: IndexPath(row: 0, section: 0)) as! DocumentDetailCell
                     cell.DislikesButton.setTitle(String(self.dislikes), for: .normal)
                     self.dislike.setImage(UIImage(systemName: "hand.thumbsdown"), for: .normal)
-                    AF.request("http://127.0.0.1:8000/notification/?post_pk=\(self.post_pk)&user=\(self.userEmail!)&type=dislike_cancel").responseJSON { response in
+                    AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/notification/?post_pk=\(self.post_pk)&user=\(self.userEmail!)&type=dislike_cancel").responseJSON { response in
                     }
                 }
             case .failure( _):
@@ -359,7 +359,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
         let userEmail:String = self.userEmail!
         let params : Parameters = [ "content":commentTextField.text!]
         print(params)
-        let url = "http://127.0.0.1:8000/comments/create/"
+        let url = "http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/comments/create/"
                 
         let info = url + "?content=\(params["content"]!)&pk=\(self.post_pk)&user=\(userEmail)"
         AF.request(info.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "",
@@ -369,7 +369,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
         DispatchQueue.main.asyncAfter(deadline: time){
             self.refreshComment()
         }
-        AF.request("http://127.0.0.1:8000/notification/?post_pk=\(self.post_pk)&user=\(self.userEmail!)&type=comment").responseJSON { response in
+        AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/notification/?post_pk=\(self.post_pk)&user=\(self.userEmail!)&type=comment").responseJSON { response in
         }
     }
     

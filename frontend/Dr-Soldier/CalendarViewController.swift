@@ -16,7 +16,6 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
     
     @IBOutlet weak var calendar: FSCalendar!
     @IBOutlet weak var SegmentedControl: UISegmentedControl!
-    
     @IBOutlet weak var Label: UILabel!
     
     @IBOutlet weak var Searchtextview: UITextView!
@@ -155,7 +154,7 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
         let date_string = self.dateFormatter.string(from: date)
         
         //서버에 데이터 전송 - 형 이거 서버 꺼져있거나 네트워크 꺼져잇어서 실패했을 때 주석처리해줘
-        AF.request("http://127.0.0.1:8000/create-vacation/?user=\(self.userEmail)&date=\(date_string)&type=\(self.SegmentedControl.selectedSegmentIndex+1)").responseJSON { response in
+        AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/create-vacation/?user=\(self.userEmail)&date=\(date_string)&type=\(self.SegmentedControl.selectedSegmentIndex+1)").responseJSON { response in
         }
         
         self.calendar.currentPage = date
@@ -220,7 +219,7 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
             fillDefaultColorsDictionary.removeAll()
             // 이제 여기서 형이 원격에서 데이터 불러서 저 어레이랑 데이터를 넣어줘야해
             ErrorFlag = true
-            AF.request("http://127.0.0.1:8000/get-vacations/?user=\(self.Searchtextview.text!)").responseJSON { response in
+            AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/get-vacations/?user=\(self.Searchtextview.text!)").responseJSON { response in
                 switch response.result{
                 case .success(let value):
                     

@@ -92,7 +92,7 @@ class LoginViewController: UIViewController, ASAuthorizationControllerPresentati
  
     }
     
-    let Url = "http://127.0.0.1:8000/users/login/"
+    let Url = "http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/users/login/"
 
     let header: HTTPHeaders = [
         "Content-Type" : "application/json",

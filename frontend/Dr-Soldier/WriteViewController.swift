@@ -53,7 +53,7 @@ class WriteViewController: UIViewController, UITextViewDelegate {
         //let user = UserDefaults.standard.dictionary(forKey: "user")
 
         let params : Parameters = ["title":titleTextField.text!, "content":contentTextView.text!, "user":self.userEmail!]
-        let url = "http://127.0.0.1:8000/posts/create/"
+        let url = "http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/posts/create/"
         
 
 //<<<<<<< HEAD
