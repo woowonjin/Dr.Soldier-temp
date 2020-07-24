@@ -194,7 +194,9 @@ class NotificationViewController: UITableViewController{
         nextView.descriptionString = noti.description
         notis[indexPath.row].is_read = true
         self.navigationController?.pushViewController(nextView, animated: true)
+        let cell = NotiTable.dequeueReusableCell(withIdentifier: "NotificationCell", for: indexPath) as! NotificationCell
         if(noti.is_read == false){
+            cell.backgroundColor = .white
             AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/read_notification/?noti_pk=\(noti.pk)").responseJSON { response in
             }
         }
