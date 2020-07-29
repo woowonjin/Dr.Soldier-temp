@@ -8,7 +8,7 @@ target 'Dr-Soldier' do
   pod 'Alamofire', '~> 5.1'
   pod 'FSCalendar'
   pod 'Charts'
-
+  pod 'Firebase/Auth'
   # Pods for Dr-Soldier
 
 end

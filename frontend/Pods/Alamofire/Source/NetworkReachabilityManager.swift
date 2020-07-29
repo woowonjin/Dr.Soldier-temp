@@ -174,7 +174,7 @@ open class NetworkReachabilityManager {
         }
 
         var context = SCNetworkReachabilityContext(version: 0,
-                                                   info: Unmanaged.passUnretained(self).toOpaque(),
+                                                   info: Unmanaged.passRetained(self).toOpaque(),
                                                    retain: nil,
                                                    release: nil,
                                                    copyDescription: nil)

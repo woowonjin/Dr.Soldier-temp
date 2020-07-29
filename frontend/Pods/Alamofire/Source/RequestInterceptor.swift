@@ -181,12 +181,11 @@ open class Interceptor: RequestInterceptor {
     /// Creates an instance from the arrays of `RequestAdapter` and `RequestRetrier` values.
     ///
     /// - Parameters:
-    ///   - adapters:     `RequestAdapter` values to be used.
-    ///   - retriers:     `RequestRetrier` values to be used.
-    ///   - interceptors: `RequestInterceptor`s to be used.
-    public init(adapters: [RequestAdapter] = [], retriers: [RequestRetrier] = [], interceptors: [RequestInterceptor] = []) {
-        self.adapters = adapters + interceptors
-        self.retriers = retriers + interceptors
+    ///   - adapters: `RequestAdapter` values to be used.
+    ///   - retriers: `RequestRetrier` values to be used.
+    public init(adapters: [RequestAdapter] = [], retriers: [RequestRetrier] = []) {
+        self.adapters = adapters
+        self.retriers = retriers
     }
 
     open func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
