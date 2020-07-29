@@ -1300,23 +1300,16 @@ public final class DataStreamRequest: Request {
 }
 
 extension DataStreamRequest.Stream {
-    /// Incoming `Result` values from `Event.stream`.
-    public var result: Result<Success, Failure>? {
-        guard case let .stream(result) = event else { return nil }
-
-        return result
-    }
-
     /// `Success` value of the instance, if any.
     public var value: Success? {
-        guard case let .success(value) = result else { return nil }
+        guard case let .stream(result) = event, case let .success(value) = result else { return nil }
 
         return value
     }
 
     /// `Failure` value of the instance, if any.
     public var error: Failure? {
-        guard case let .failure(error) = result else { return nil }
+        guard case let .stream(result) = event, case let .failure(error) = result else { return nil }
 
         return error
     }
@@ -1515,7 +1508,7 @@ public class DownloadRequest: Request {
     ///
     /// - Returns: The instance.
     @discardableResult
-    override public func cancel() -> Self {
+    public override func cancel() -> Self {
         cancel(producingResumeData: false)
     }
 
@@ -1732,7 +1725,7 @@ public class UploadRequest: DataRequest {
         return stream
     }
 
-    override public func cleanup() {
+    public override func cleanup() {
         defer { super.cleanup() }
 
         guard

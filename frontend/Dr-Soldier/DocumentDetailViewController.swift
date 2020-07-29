@@ -369,6 +369,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
         DispatchQueue.main.asyncAfter(deadline: time){
             self.refreshComment()
         }
+        self.commentTextField.text = ""
         AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/notification/?post_pk=\(self.post_pk)&user=\(self.userEmail!)&type=comment").responseJSON { response in
         }
     }
