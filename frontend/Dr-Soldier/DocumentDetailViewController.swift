@@ -356,21 +356,23 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
     
     @IBAction func submitButtonClicked(_ sender: Any) {
         //let user = UserDefaults.standard.dictionary(forKey: "user")
-        let userEmail:String = self.userEmail!
-        let params : Parameters = [ "content":commentTextField.text!]
-        print(params)
-        let url = "http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/comments/create/"
-                
-        let info = url + "?content=\(params["content"]!)&pk=\(self.post_pk)&user=\(userEmail)"
-        AF.request(info.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "",
-                    method: .post, parameters: params, headers: header).responseJSON { response in
-        }
-        let time = DispatchTime.now() + .milliseconds(500)
-        DispatchQueue.main.asyncAfter(deadline: time){
-            self.refreshComment()
-        }
-        self.commentTextField.text = ""
-        AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/notification/?post_pk=\(self.post_pk)&user=\(self.userEmail!)&type=comment").responseJSON { response in
+        if(self.commentTextField.text != nil && self.commentTextField.text! != ""){
+            let userEmail:String = self.userEmail!
+            let params : Parameters = [ "content":commentTextField.text!]
+            
+            let url = "http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/comments/create/"
+                    
+            let info = url + "?content=\(params["content"]!)&pk=\(self.post_pk)&user=\(userEmail)"
+            AF.request(info.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "",
+                        method: .post, parameters: params, headers: header).responseJSON { response in
+            }
+            let time = DispatchTime.now() + .milliseconds(500)
+            DispatchQueue.main.asyncAfter(deadline: time){
+                self.refreshComment()
+            }
+            self.commentTextField.text = ""
+            AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/notification/?post_pk=\(self.post_pk)&user=\(self.userEmail!)&type=comment").responseJSON { response in
+            }
         }
     }
     

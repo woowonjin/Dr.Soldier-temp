@@ -141,7 +141,7 @@ class LoginViewController: UIViewController, ASAuthorizationControllerPresentati
     @IBOutlet weak var loginProviderStackView: UIStackView!
     
     override func viewDidLoad() {
-        super.viewDidLoad()
+//        super.viewDidLoad()
 //        let firebaseAuth = Auth.auth()
 //        do {
 //          try firebaseAuth.signOut()
