@@ -11,6 +11,7 @@
 import UIKit
 import FSCalendar
 import Alamofire
+import FirebaseAuth
 
 class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendarDelegate, FSCalendarDelegateAppearance, UITextViewDelegate {
     
@@ -154,7 +155,7 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
         let date_string = self.dateFormatter.string(from: date)
         
         //서버에 데이터 전송 - 형 이거 서버 꺼져있거나 네트워크 꺼져잇어서 실패했을 때 주석처리해줘
-        AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/create-vacation/?user=\(self.userEmail)&date=\(date_string)&type=\(self.SegmentedControl.selectedSegmentIndex+1)").responseJSON { response in
+        AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/create-vacation/?user=\(Auth.auth().currentUser?.uid)&date=\(date_string)&type=\(self.SegmentedControl.selectedSegmentIndex+1)").responseJSON { response in
         }
         
         self.calendar.currentPage = date

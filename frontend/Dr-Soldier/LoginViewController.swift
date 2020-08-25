@@ -65,15 +65,23 @@ class LoginViewController: UIViewController, ASAuthorizationControllerPresentati
     }
 
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        print("AppleLogin 1")
         if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
         // Create an account in your system.
         
             // Save authorised user ID for future reference
             UserDefaults.standard.set(appleIDCredential.user, forKey: "appleAuthorizedUserIdKey")
-            let user = appleIDCredential.user
-            let userFirstName = appleIDCredential.fullName?.givenName
-            let userLastName = appleIDCredential.fullName?.familyName
-            let username = userLastName! + userFirstName!
+//            let user = appleIDCredential.user
+//            var userFirstName = appleIDCredential.fullName?.givenName
+//            var userLastName = appleIDCredential.fullName?.familyName
+//            var username  = ""
+//            if userFirstName == nil || userLastName == nil{
+//                username = user
+//            }
+//            else{
+//                username = userLastName! + userFirstName!
+//            }
+            
 //            let _ = self.DB.insert(statement: "DROP TABLE User;")
 //            let _ = self.DB.CreateEveryTable()
 //            let _ = self.DB.insert(statement: self.Query.insert(Tablename: "User", Values: "'\(email)', '\(username)','','','','' "))
@@ -81,7 +89,9 @@ class LoginViewController: UIViewController, ASAuthorizationControllerPresentati
 //            guard let main = self.storyboard?.instantiateViewController(withIdentifier: "Main") else{
 //                return
 //            }
-            UserDefaults.standard.set(username, forKey: "username")
+            
+//            UserDefaults.standard.set(username, forKey: "username")
+            
             // Retrieve the secure nonce generated during Apple sign in
             guard let nonce = currentNonce else {
                 fatalError("Invalid state: A login callback was received, but no login request was sent.")
@@ -124,7 +134,7 @@ class LoginViewController: UIViewController, ASAuthorizationControllerPresentati
     }
 
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-
+        print("AppleLogin Error")
     }
 
 //    private let kakaoLoginButton: KOLoginButton = {
@@ -141,13 +151,13 @@ class LoginViewController: UIViewController, ASAuthorizationControllerPresentati
     @IBOutlet weak var loginProviderStackView: UIStackView!
     
     override func viewDidLoad() {
-//        super.viewDidLoad()
-//        let firebaseAuth = Auth.auth()
-//        do {
-//          try firebaseAuth.signOut()
-//        } catch let signOutError as NSError {
-//          print ("Error signing out: %@", signOutError)
-//        }
+        super.viewDidLoad()
+        let firebaseAuth = Auth.auth()
+        do {
+          try firebaseAuth.signOut()
+        } catch let signOutError as NSError {
+          print ("Error signing out: %@", signOutError)
+        }
         Auth.auth().addStateDidChangeListener({(user, error) in
             if Auth.auth().currentUser != nil{
                 guard let main = self.storyboard?.instantiateViewController(withIdentifier: "Main") else{
@@ -209,7 +219,6 @@ class LoginViewController: UIViewController, ASAuthorizationControllerPresentati
         self.currentNonce = randomNonceString()
         // Set the SHA256 hashed nonce to ASAuthorizationAppleIDRequest
         request.nonce = sha256(currentNonce!)
-        
         let authorizationController = ASAuthorizationController(authorizationRequests: [request])
         authorizationController.delegate = self
         authorizationController.presentationContextProvider = self

@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import FirebaseAuth
 
 class NotificationViewController: UITableViewController{
     
@@ -40,7 +41,7 @@ class NotificationViewController: UITableViewController{
     
     func getNotis(){
         
-        AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/get-notifications/?user=\(userEmail!)").responseJSON { response in
+        AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/get-notifications/?user=\(Auth.auth().currentUser?.uid)").responseJSON { response in
             switch response.result{
             case .success(let value):
                 let responseList = value as! Array<AnyObject>

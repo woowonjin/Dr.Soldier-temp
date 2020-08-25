@@ -7,11 +7,13 @@
 //
 
 import UIKit
+import Alamofire
+import FirebaseAuth
 
 class InfoViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     var user : User?
     let DB = DataBaseAPI.init()
-    let Quary = DataBaseQuery.init()
+    let Query = DataBaseQuery.init()
     var startDate : Date?
     var endDate : Date?
     var mTimer : Timer?
@@ -149,9 +151,50 @@ class InfoViewController: UIViewController, UIImagePickerControllerDelegate & UI
         self.endLabel.becomeFirstResponder()
     }
     
+    let Url = "http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/users/login/"
+    
 
+    let header: HTTPHeaders = [
+        "Content-Type" : "application/json",
+        "Charset" : "utf-8"
+    ]
+    
+    func post(uid:String, email:String, nickname:String, method:String){
+    
+            //let user = User(email: email, nickname: nickname)
+            let user_info : Parameters = [
+                "uid" : uid,
+                "email" : email,
+                "nickname" : nickname,
+                "method" : method
+            ]
+    
+    
+    
+            let info = Url + "?uid=\(uid)?email=\(email)&nickname=\(nickname)&method=\(method)"
+    
+            AF.request(info.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "", method: .post, parameters: user_info, headers: header).responseJSON { response in
+                print("response : ", response)
+            }
+        }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let uid = Auth.auth().currentUser?.uid
+        let userEmail = Auth.auth().currentUser?.email
+        var nickname = Auth.auth().currentUser?.displayName
+        if nickname == nil{
+            nickname = userEmail
+        }
+        
+        self.DB.insert(statement: "DROP TABLE User;")
+        self.DB.CreateEveryTable()
+        self.DB.insert(statement: self.Query.insert(Tablename: "User", Values: "'\(userEmail!)', '\(nickname!)','','','','' "))
+        
+        
+        post(uid: uid!, email: userEmail!, nickname: nickname!, method: "apple")
         goalButton.imageView?.contentMode = .scaleAspectFit
         bodyButton.imageView?.contentMode = .scaleAspectFit
         FinanceButton.imageView?.contentMode = .scaleAspectFit
@@ -165,16 +208,23 @@ class InfoViewController: UIViewController, UIImagePickerControllerDelegate & UI
         FinanceButtonText.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
         FitnessButtonText.tintColor = UIColor.systemGray
         FitnessButtonText.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
-        
         imagePickerController.delegate = self
         let navview = MakeViewWithNavigationBar.init(InputString: " 닥터솔저", InputImage: UIImage(named: "doctor3.png")!)
         self.navigationItem.titleView = navview.navView
         createDatePicker()
         ProgressBar.tintColor = UIColor(red: 90/255.0, green: 193/255.0, blue: 142/255.0, alpha: 1)
         ProgressBar.backgroundColor = UIColor(red: 90/255.0, green: 193/255.0, blue: 142/255.0, alpha: 0.3)
-    }
     
-
-
+        var fillDefaultColorsDictionary : [String:Int] = [:]
+        let fillDefaultColorsArray = DB.query(statement: Query.SelectStar(Tablename: "Calendar"), ColumnNumber: 2)
+        let _ = fillDefaultColorsArray.map({ each in
+            fillDefaultColorsDictionary.updateValue(Int(each[1])! , forKey: each[0])
+        })
+        for date in fillDefaultColorsArray{
+            AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/create-vacation/?user=\(Auth.auth().currentUser?.uid)&date=\(date[0])&type=\(date[1])").responseJSON { response in
+           }
+        }
+    }
 }
+
 

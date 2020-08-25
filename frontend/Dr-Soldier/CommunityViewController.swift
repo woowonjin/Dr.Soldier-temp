@@ -63,7 +63,6 @@ class CommunityViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func getDocs(){
         //self.docs.insert(Document(title: "헬로우 스위프트~", description: "킾고잉~ 코더스하이!", created: "temp", writer: "관리자", thumbsUp: 0, thumbsDown: 0, isDeleted: false, pk: 1), at: 0)
-        print("GET Docs")
         AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/documents/?page=\(page)").responseJSON { response in
             switch response.result{
             case .success(let value):
@@ -112,10 +111,8 @@ class CommunityViewController: UIViewController, UITableViewDelegate, UITableVie
                     }
                     
                     self.docs.insert(Document(title: title, description: description, created: createdStr, writer: writer, thumbsUp: likes, thumbsDown: dislikes, isDeleted: false, pk: pk, comments: comments), at: index+(self.page-1)*20)
-                    DispatchQueue.main.async {
-                        self.mainTableView.reloadData()
-                    }
                 }
+                self.mainTableView.reloadData()
             case .failure( _):
                 print("maybe server down")
             }
@@ -135,6 +132,9 @@ class CommunityViewController: UIViewController, UITableViewDelegate, UITableVie
         self.refreshControl.endRefreshing()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        getDocs()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

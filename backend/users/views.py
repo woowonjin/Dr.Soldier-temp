@@ -12,14 +12,14 @@ def login(request):
     nickname = request.GET.get("nickname")
     method = request.GET.get("method")
     try:
-        user = user_models.User.objects.get(username=email)
+        user = user_models.User.objects.get(uid=uid)
         response = {"result": "no"}
         return JsonResponse(response, status=201)
     except user_models.User.DoesNotExist:
         if(method == "kakao"):
             user = user_models.User.objects.create(
                 uid=uid,
-                username=email,
+                username=uid,
                 nickname=nickname,
                 login_method=user_models.User.LOGIN_KAKAO,
             )
@@ -30,7 +30,7 @@ def login(request):
         elif(method == "apple"):
             user = user_models.User.objects.create(
                 uid=uid,
-                username=email,
+                username=uid,
                 nickname=nickname,
                 login_method=user_models.User.LOGIN_APPLE,
             )

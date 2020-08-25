@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import FirebaseAuth
 
 class WriteViewController: UIViewController, UITextViewDelegate {
     
@@ -52,7 +53,7 @@ class WriteViewController: UIViewController, UITextViewDelegate {
         print("write button Clicked!")
         //let user = UserDefaults.standard.dictionary(forKey: "user")
 
-        let params : Parameters = ["title":titleTextField.text!, "content":contentTextView.text!, "user":self.userEmail!]
+        let params : Parameters = ["title":titleTextField.text!, "content":contentTextView.text!, "user":Auth.auth().currentUser?.uid]
         let url = "http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/posts/create/"
         
 
@@ -61,7 +62,7 @@ class WriteViewController: UIViewController, UITextViewDelegate {
 //        AF.request(info.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "",
 //                   method: .post, parameters: params, headers: header).responseJSON { response in
 //=======
-        let info = url + "?title=\(params["title"]!)&content=\(params["content"]!)&user=\(params["user"]!)"
+        let info = url + "?title=\(params["title"]!)&content=\(params["content"]!)&user=\(Auth.auth().currentUser?.uid)"
         AF.request(info.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "", method: .post, parameters: params, headers: header).responseJSON { response in
 //>>>>>>> 6222f7cdb359bb1a2d20f6efa6f9979a98055b91
         }
