@@ -21,6 +21,10 @@ class InfoViewController: UIViewController, UIImagePickerControllerDelegate & UI
     let startDatePicker = UIDatePicker()
     let endDatePicker = UIDatePicker()
     
+    var uid : String?
+    var userEmail : String?
+    var nickname : String?
+    
     @IBOutlet weak var fitnessButton: UIButton!
     @IBOutlet weak var FinanceButton: UIButton!
     @IBOutlet weak var bodyButton: UIButton!
@@ -70,6 +74,9 @@ class InfoViewController: UIViewController, UIImagePickerControllerDelegate & UI
         let dateString = dateFormatter.string(from: startDatePicker.date)
         self.startDate = dateFormatter.date(from: dateString)
         self.startLabel.text = dateString
+        self.DB.insert(statement: "DROP TABLE User;")
+        self.DB.CreateEveryTable()
+        self.DB.insert(statement: self.Query.insert(Tablename: "User", Values: "'\(userEmail!)', '\(nickname!)','','\(self.startLabel.text!)','\(self.endLabel.text!)','' "))
         self.view.endEditing(true)
         self.renewDate()
     }
@@ -81,6 +88,9 @@ class InfoViewController: UIViewController, UIImagePickerControllerDelegate & UI
         let dateString = dateFormatter.string(from: endDatePicker.date)
         self.endDate = dateFormatter.date(from: dateString)
         self.endLabel.text = dateString
+        self.DB.insert(statement: "DROP TABLE User;")
+        self.DB.CreateEveryTable()
+        self.DB.insert(statement: self.Query.insert(Tablename: "User", Values: "'\(userEmail!)', '\(nickname!)','','\(self.startLabel.text!)','\(self.endLabel.text!)','' "))
         self.view.endEditing(true)
         self.renewDate()
     }
@@ -171,7 +181,7 @@ class InfoViewController: UIViewController, UIImagePickerControllerDelegate & UI
     
     
     
-            let info = Url + "?uid=\(uid)?email=\(email)&nickname=\(nickname)&method=\(method)"
+            let info = Url + "?uid=\(uid)&email=\(email)&nickname=\(nickname)&method=\(method)"
     
             AF.request(info.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "", method: .post, parameters: user_info, headers: header).responseJSON { response in
                 print("response : ", response)
@@ -179,20 +189,43 @@ class InfoViewController: UIViewController, UIImagePickerControllerDelegate & UI
         }
     
     
+    override func viewWillAppear(_ animated: Bool) {
+        let data = DB.query(statement: Query.SelectStar(Tablename: "User") , ColumnNumber: 5)
+        print("DB data : ", data)
+        
+        if data[0][0] == ""{
+            self.DB.insert(statement: "DROP TABLE User;")
+            self.DB.CreateEveryTable()
+            self.DB.insert(statement: self.Query.insert(Tablename: "User", Values: "'\(userEmail!)', '\(nickname!)','','','','' "))
+        }
+        if(data[0][3] != ""){
+            let dateFormatter = DateFormatter()
+            dateFormatter.locale = Locale.current
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            self.startLabel.text = data[0][3]
+            self.startDate = dateFormatter.date(from: self.startLabel.text!)
+        }
+        if(data[0][4] != ""){
+            let dateFormatter = DateFormatter()
+            dateFormatter.locale = Locale.current
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            self.endLabel.text = data[0][4]
+            self.endDate = dateFormatter.date(from: self.endLabel.text!)
+        }
+        if(self.startDate != nil && self.endDate != nil){
+            renewDate()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let uid = Auth.auth().currentUser?.uid
-        let userEmail = Auth.auth().currentUser?.email
-        var nickname = Auth.auth().currentUser?.displayName
+        uid = Auth.auth().currentUser?.uid
+        userEmail = Auth.auth().currentUser?.email
+        nickname = Auth.auth().currentUser?.displayName
         if nickname == nil{
             nickname = userEmail
         }
-        
-        self.DB.insert(statement: "DROP TABLE User;")
-        self.DB.CreateEveryTable()
-        self.DB.insert(statement: self.Query.insert(Tablename: "User", Values: "'\(userEmail!)', '\(nickname!)','','','','' "))
-        
         
         post(uid: uid!, email: userEmail!, nickname: nickname!, method: "apple")
         goalButton.imageView?.contentMode = .scaleAspectFit
@@ -221,7 +254,7 @@ class InfoViewController: UIViewController, UIImagePickerControllerDelegate & UI
             fillDefaultColorsDictionary.updateValue(Int(each[1])! , forKey: each[0])
         })
         for date in fillDefaultColorsArray{
-            AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/create-vacation/?user=\(Auth.auth().currentUser?.uid)&date=\(date[0])&type=\(date[1])").responseJSON { response in
+            AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/create-vacation/?user=\(uid!)&date=\(date[0])&type=\(date[1])").responseJSON { response in
            }
         }
     }

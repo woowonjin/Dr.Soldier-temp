@@ -52,8 +52,8 @@ class WriteViewController: UIViewController, UITextViewDelegate {
     @objc func writeButtonClicked(){
         print("write button Clicked!")
         //let user = UserDefaults.standard.dictionary(forKey: "user")
-
-        let params : Parameters = ["title":titleTextField.text!, "content":contentTextView.text!, "user":Auth.auth().currentUser?.uid]
+        let uid = Auth.auth().currentUser?.uid
+        let params : Parameters = ["title":titleTextField.text!, "content":contentTextView.text!, "user":uid!]
         let url = "http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/posts/create/"
         
 
@@ -62,7 +62,7 @@ class WriteViewController: UIViewController, UITextViewDelegate {
 //        AF.request(info.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "",
 //                   method: .post, parameters: params, headers: header).responseJSON { response in
 //=======
-        let info = url + "?title=\(params["title"]!)&content=\(params["content"]!)&user=\(Auth.auth().currentUser?.uid)"
+        let info = url + "?title=\(params["title"]!)&content=\(params["content"]!)&user=\(uid!)"
         AF.request(info.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "", method: .post, parameters: params, headers: header).responseJSON { response in
 //>>>>>>> 6222f7cdb359bb1a2d20f6efa6f9979a98055b91
         }

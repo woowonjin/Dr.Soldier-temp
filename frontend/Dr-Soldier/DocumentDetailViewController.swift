@@ -10,15 +10,17 @@ import UIKit
 import Alamofire
 import FirebaseAuth
 
-class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITableViewDataSource {
+class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UITextViewDelegate {
      private var refreshControl = UIRefreshControl()
     @IBOutlet weak var commentTextField: UITextField!
     //var user: User?
+    @IBOutlet weak var commentTextView: UITextView!
+    @IBOutlet weak var commentView: UIStackView!
     let like = UIButton(type:.system)
     let dislike = UIButton(type:.system)
     let DB = DataBaseAPI.init()
     let Query = DataBaseQuery.init()
-    
+    let uid = Auth.auth().currentUser?.uid
     var userEmail : String? // UserDefault -> Sqlite
     var titleString : String = ""
     var descriptionString : String = ""
@@ -69,29 +71,65 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
     
     func firstCell()->UIView{
         let rightView = UIView()
-        let bounds: CGRect = UIScreen.main.bounds
-        rightView.frame = CGRect(x: bounds.maxX-100, y: 0, width: 80, height: 40)
-        like.frame = CGRect(x:10, y:8, width: 30, height: 30)
-        if isLike{
-            like.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+        AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/alreadylikes/?pk=\(self.post_pk)&user=\(uid!)").responseJSON { response in
+            switch response.result{
+            case .success(let value):
+                let rep = value as AnyObject
+                self.likes = rep["likes_number"] as! Int
+                self.dislikes = rep["dislikes_number"] as! Int
+                self.isLike = rep["like"]! as! Bool
+                self.isDislike = rep["dislike"] as! Bool
+                let bounds: CGRect = UIScreen.main.bounds
+                rightView.frame = CGRect(x: bounds.maxX-100, y: 0, width: 80, height: 40)
+                self.like.frame = CGRect(x:10, y:8, width: 30, height: 30)
+                if self.isLike{
+                    self.like.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+                }
+                else{
+                    self.like.setImage(UIImage(systemName: "heart"), for: .normal)
+                }
+                self.like.tintColor = UIColor(red: 255, green: 153, blue: 204)
+                self.like.addTarget(self, action: #selector(self.likePost(_:)), for: .touchUpInside)
+                rightView.addSubview(self.like)
+                self.dislike.frame = CGRect(x:50, y:8, width: 30, height: 30)
+                if self.isDislike{
+                    self.dislike.setImage(UIImage(systemName: "hand.thumbsdown.fill"), for: .normal)
+                }
+                else{
+                    self.dislike.setImage(UIImage(systemName: "hand.thumbsdown"), for: .normal)
+                }
+                self.dislike.tintColor = UIColor(red: 153, green: 204, blue: 255)
+                self.dislike.addTarget(self, action: #selector(self.dislikePost(_:)), for: .touchUpInside)
+                // 라이트 뷰에 버튼 추가
+                rightView.addSubview(self.dislike)
+            case .failure( _):
+                print("like request Error")
+            }
         }
-        else{
-            like.setImage(UIImage(systemName: "heart"), for: .normal)
-        }
-        like.tintColor = UIColor(red: 255, green: 153, blue: 204)
-        like.addTarget(self, action: #selector(likePost(_:)), for: .touchUpInside)
-        rightView.addSubview(like)
-        dislike.frame = CGRect(x:50, y:8, width: 30, height: 30)
-        if isDislike{
-            dislike.setImage(UIImage(systemName: "hand.thumbsdown.fill"), for: .normal)
-        }
-        else{
-            dislike.setImage(UIImage(systemName: "hand.thumbsdown"), for: .normal)
-        }
-        dislike.tintColor = UIColor(red: 153, green: 204, blue: 255)
-        dislike.addTarget(self, action: #selector(dislikePost(_:)), for: .touchUpInside)
-        // 라이트 뷰에 버튼 추가
-        rightView.addSubview(dislike)
+//        let rightView = UIView()
+//        let bounds: CGRect = UIScreen.main.bounds
+//        rightView.frame = CGRect(x: bounds.maxX-100, y: 0, width: 80, height: 40)
+//        like.frame = CGRect(x:10, y:8, width: 30, height: 30)
+//        if isLike{
+//            like.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+//        }
+//        else{
+//            like.setImage(UIImage(systemName: "heart"), for: .normal)
+//        }
+//        like.tintColor = UIColor(red: 255, green: 153, blue: 204)
+//        like.addTarget(self, action: #selector(likePost(_:)), for: .touchUpInside)
+//        rightView.addSubview(like)
+//        dislike.frame = CGRect(x:50, y:8, width: 30, height: 30)
+//        if isDislike{
+//            dislike.setImage(UIImage(systemName: "hand.thumbsdown.fill"), for: .normal)
+//        }
+//        else{
+//            dislike.setImage(UIImage(systemName: "hand.thumbsdown"), for: .normal)
+//        }
+//        dislike.tintColor = UIColor(red: 153, green: 204, blue: 255)
+//        dislike.addTarget(self, action: #selector(dislikePost(_:)), for: .touchUpInside)
+//        // 라이트 뷰에 버튼 추가
+//        rightView.addSubview(dislike)
         return rightView
     }
     
@@ -151,26 +189,25 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
         return UITableView.automaticDimension
     }
     
-    func likeRequest(){
-        let userEmail:String = self.userEmail!
-        AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/alreadylikes/?pk=\(self.post_pk)&user=\(Auth.auth().currentUser?.uid)").responseJSON { response in
-            switch response.result{
-            case .success(let value):
-                let rep = value as AnyObject
-                self.likes = rep["likes_number"] as! Int
-                self.dislikes = rep["dislikes_number"] as! Int
-                self.isLike = rep["like"]! as! Bool
-                self.isDislike = rep["dislike"] as! Bool
-            case .failure( _):
-                print("like request Error")
-            }
-        }
-
-    }
+//    func likeRequest(){
+//        AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/alreadylikes/?pk=\(self.post_pk)&user=\(uid!)").responseJSON { response in
+//            switch response.result{
+//            case .success(let value):
+//                let rep = value as AnyObject
+//                self.likes = rep["likes_number"] as! Int
+//                self.dislikes = rep["dislikes_number"] as! Int
+//                self.isLike = rep["like"]! as! Bool
+//                self.isDislike = rep["dislike"] as! Bool
+//            case .failure( _):
+//                print("like request Error")
+//            }
+//        }
+//
+//    }
     
     func commentLikeRequest(cell: CommentCell){
         let userEmail:String = self.userEmail!
-        AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/alreadyCommentLikes/?pk=\(cell.pk!)&user=\(Auth.auth().currentUser?.uid)").responseJSON { response in
+        AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/alreadyCommentLikes/?pk=\(cell.pk!)&user=\(uid!)").responseJSON { response in
             switch response.result{
             case .success(let value):
                 let rep = value as AnyObject
@@ -179,9 +216,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
                 cell.likeBtn.setTitle(String(temp_like), for: .normal)
                 cell.dislikeBtn.setTitle(String(temp_dislike), for: .normal)
                 cell.isLike = rep["like"]! as! Bool
-                print("cell", cell.isLike)
                 cell.isDislike = rep["dislike"] as! Bool
-                print("cell", cell.isDislike)
                 if cell.isLike{
 //                    self.comments[cel l.likeBtn.tag].isLike = true
                     cell.likeBtn.setImage(UIImage(systemName: "heart.fill"), for: .normal)
@@ -212,7 +247,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
         let userEmail:String = self.userEmail!
         // let user = UserDefaults.standard.dictionary(forKey: "user")
         let cell = comments[sender.tag]
-        AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/commentLikes/?pk=\(cell.pk)&user=\(Auth.auth().currentUser?.uid)").responseJSON { response in
+        AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/commentLikes/?pk=\(cell.pk)&user=\(uid!)").responseJSON { response in
             switch response.result{
             case .success(let value):
                 let rep = value as AnyObject
@@ -222,7 +257,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
                     self.comments[sender.tag].thumbsUp += 1
                     cell.thumbsUpBtn.setTitle(String(self.comments[sender.tag].thumbsUp), for: .normal)
                     cell.likeBtn.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-                    AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/notification/?post_pk=\(self.post_pk)&user=\(Auth.auth().currentUser?.uid)&type=comment_like").responseJSON { response in
+                    AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/notification/?post_pk=\(self.post_pk)&user=\(self.uid!)&type=comment_like").responseJSON { response in
                     }
                 }
                 else if(type == "delete"){
@@ -230,7 +265,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
                     self.comments[sender.tag].thumbsUp -= 1
                     cell.thumbsUpBtn.setTitle(String(self.comments[sender.tag].thumbsUp), for: .normal)
                     cell.likeBtn.setImage(UIImage(systemName: "heart"), for: .normal)
-                    AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/notification/?post_pk=\(self.post_pk)&user=\(Auth.auth().currentUser?.uid)&type=comment_like_cancel").responseJSON { response in
+                    AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/notification/?post_pk=\(self.post_pk)&user=\(self.uid!)&type=comment_like_cancel").responseJSON { response in
                     }
                 }
             case .failure( _):
@@ -243,7 +278,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
     @IBAction func dislikeComment(_ sender: UIButton){
         // let user = UserDefaults.standard.dictionary(forKey: "user")
         let cell = comments[sender.tag]
-        AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/commentDislikes/?pk=\(cell.pk)&user=\(Auth.auth().currentUser?.uid)").responseJSON { response in
+        AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/commentDislikes/?pk=\(cell.pk)&user=\(self.uid!)").responseJSON { response in
             switch response.result{
             case .success(let value):
                 let rep = value as AnyObject
@@ -253,7 +288,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
                     self.comments[sender.tag].thumbsDown += 1
                     cell.thumbsDownBtn.setTitle(String(self.comments[sender.tag].thumbsDown), for: .normal)
                     cell.dislikeBtn.setImage(UIImage(systemName: "hand.thumbsdown.fill"), for: .normal)
-                    AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/notification/?post_pk=\(self.post_pk)&user=\(Auth.auth().currentUser?.uid)&type=comment_dislike").responseJSON { response in
+                    AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/notification/?post_pk=\(self.post_pk)&user=\(self.uid!)&type=comment_dislike").responseJSON { response in
                     }
                 }
                 else if(type == "delete"){
@@ -261,7 +296,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
                     self.comments[sender.tag].thumbsDown -= 1
                     cell.thumbsDownBtn.setTitle(String(self.comments[sender.tag].thumbsDown), for: .normal)
                     cell.dislikeBtn.setImage(UIImage(systemName: "hand.thumbsdown"), for: .normal)
-                    AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/notification/?post_pk=\(self.post_pk)&user=\(Auth.auth().currentUser?.uid)&type=comment_dislike_cancel").responseJSON { response in
+                    AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/notification/?post_pk=\(self.post_pk)&user=\(self.uid!)&type=comment_dislike_cancel").responseJSON { response in
                     }
                 }
             case .failure( _):
@@ -274,7 +309,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
     
     @IBAction func likePost(_ sender: UIButton) {
         //let user = UserDefaults.standard.dictionary(forKey: "user")
-        AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/likes/?pk=\(self.post_pk)&user=\(Auth.auth().currentUser?.uid)").responseJSON { response in
+        AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/likes/?pk=\(self.post_pk)&user=\(self.uid!)").responseJSON { response in
             switch response.result{
             case .success(let value):
                 let rep = value as AnyObject
@@ -284,7 +319,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
                     let cell = self.commentTable.cellForRow(at: IndexPath(row: 0, section: 0)) as! DocumentDetailCell
                     cell.LikesButton.setTitle(String(self.likes), for: .normal)
                     self.like.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-                    AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/notification/?post_pk=\(self.post_pk)&user=\(Auth.auth().currentUser?.uid)&type=like").responseJSON { response in
+                    AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/notification/?post_pk=\(self.post_pk)&user=\(self.uid!)&type=like").responseJSON { response in
                     }
                 }
                 else if(type == "delete"){
@@ -292,7 +327,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
                     let cell = self.commentTable.cellForRow(at: IndexPath(row: 0, section: 0)) as! DocumentDetailCell
                     cell.LikesButton.setTitle(String(self.likes), for: .normal)
                     self.like.setImage(UIImage(systemName: "heart"), for: .normal)
-                    AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/notification/?post_pk=\(self.post_pk)&user=\(Auth.auth().currentUser?.uid)&type=like_cancel").responseJSON { response in
+                    AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/notification/?post_pk=\(self.post_pk)&user=\(self.uid!)&type=like_cancel").responseJSON { response in
                     }
                 }
             case .failure( _):
@@ -303,7 +338,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
     }
     
     @IBAction func dislikePost(_ sender: Any) {
-        AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/dislikes/?pk=\(self.post_pk)&user=\(Auth.auth().currentUser?.uid)").responseJSON { response in
+        AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/dislikes/?pk=\(self.post_pk)&user=\(self.uid!)").responseJSON { response in
             switch response.result{
             case .success(let value):
                 let rep = value as AnyObject
@@ -313,7 +348,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
                     let cell = self.commentTable.cellForRow(at: IndexPath(row: 0, section: 0)) as! DocumentDetailCell
                     cell.DislikesButton.setTitle(String(self.dislikes), for: .normal)
                     self.dislike.setImage(UIImage(systemName: "hand.thumbsdown.fill"), for: .normal)
-                    AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/notification/?post_pk=\(self.post_pk)&user=\(Auth.auth().currentUser?.uid)&type=dislike").responseJSON { response in
+                    AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/notification/?post_pk=\(self.post_pk)&user=\(self.uid!)&type=dislike").responseJSON { response in
                     }
                 }
                 else if(type == "delete"){
@@ -321,7 +356,7 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
                     let cell = self.commentTable.cellForRow(at: IndexPath(row: 0, section: 0)) as! DocumentDetailCell
                     cell.DislikesButton.setTitle(String(self.dislikes), for: .normal)
                     self.dislike.setImage(UIImage(systemName: "hand.thumbsdown"), for: .normal)
-                    AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/notification/?post_pk=\(self.post_pk)&user=\(Auth.auth().currentUser?.uid)&type=dislike_cancel").responseJSON { response in
+                    AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/notification/?post_pk=\(self.post_pk)&user=\(self.uid!)&type=dislike_cancel").responseJSON { response in
                     }
                 }
             case .failure( _):
@@ -331,39 +366,110 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
         print("dislike btn clicked")
     }
     
+    @objc private func keyboardWillShow(_ notification: Foundation.Notification) {
+      if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+        let keybaordRectangle = keyboardFrame.cgRectValue
+        let keyboardHeight = keybaordRectangle.height
+        self.commentView.frame.origin.y -= keyboardHeight-45
+      }
+    }
+    
+    @objc private func keyboardWillHide(_ notification: Foundation.Notification) {
+      if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+        let keybaordRectangle = keyboardFrame.cgRectValue
+        let keyboardHeight = keybaordRectangle.height
+        self.commentView.frame.origin.y += keyboardHeight-45
+      }
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if(text == "\n") {
+            textView.resignFirstResponder()
+            return false
+        }
+        return true
+    }
+    
+    func placeholderSetting() {
+            commentTextView.delegate = self // txtvReview가 유저가 선언한 outlet
+            commentTextView.text = "댓글을 입력하세요."
+            commentTextView.textColor = UIColor.lightGray
+            
+        }
+        
+    
+    // TextView Place Holder
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.textColor == UIColor.lightGray {
+            textView.text = nil
+            textView.textColor = UIColor.black
+        }
+        
+    }
+    // TextView Place Holder
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.isEmpty {
+            textView.text = "내용을 입력하세요."
+            textView.textColor = UIColor.lightGray
+        }
+    }
+    
+    @objc func viewTapped(gestureReconizer: UIGestureRecognizer){
+        commentTextView.resignFirstResponder()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let gesture = UITapGestureRecognizer(target: self, action:  #selector(self.viewTapped(gestureReconizer:)))
+        self.view.addGestureRecognizer(gesture)
+        //키보드 조정
+//        self.commentTextField.delegate = self
+        self.commentTextView.layer.borderWidth = 0.8
+        self.commentTextView.layer.borderColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1.0).cgColor
+        self.commentTextView.layer.cornerRadius = 5
+        placeholderSetting()
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        
         let result = self.DB.query(statement: self.Query.SelectStar(Tablename: "User") , ColumnNumber: 6)
         self.userEmail = result[0][0]
         commentTable.refreshControl = refreshControl
         self.refreshControl.attributedTitle = NSAttributedString(string: "당겨서 새로고침")
         refreshControl.addTarget(self, action: #selector(refreshComment), for: .valueChanged)
-        getComments()
-        likeRequest()
+//        getComments()
+//        likeRequest()
+        self.commentView.translatesAutoresizingMaskIntoConstraints = false
         commentTable.delegate = self
         commentTable.dataSource = self
         commentTable.estimatedRowHeight = 100
         commentTable.rowHeight = UITableView.automaticDimension
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        comments.removeAll()
+        getComments()
+//        likeRequest()
+        commentTable.reloadData()
+    }
+    
     @objc func refreshComment(){
         comments.removeAll()
         getComments()
-        likeRequest()
+//        likeRequest()
         commentTable.reloadData()
         self.refreshControl.endRefreshing()
     }
     
     @IBAction func submitButtonClicked(_ sender: Any) {
         //let user = UserDefaults.standard.dictionary(forKey: "user")
-        if(self.commentTextField.text != nil && self.commentTextField.text! != ""){
+        if(self.commentTextView.text != nil && self.commentTextView.text! != ""){
             let userEmail:String = self.userEmail!
-            let params : Parameters = [ "content":commentTextField.text!]
+            let params : Parameters = [ "content":commentTextView.text!]
             
             let url = "http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/comments/create/"
                     
-            let info = url + "?content=\(params["content"]!)&pk=\(self.post_pk)&user=\(Auth.auth().currentUser?.uid)"
+            let info = url + "?content=\(params["content"]!)&pk=\(self.post_pk)&user=\(self.uid!)"
             AF.request(info.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "",
                         method: .post, parameters: params, headers: header).responseJSON { response in
             }
@@ -371,9 +477,10 @@ class DocumentDetailViewController : UIViewController, UITableViewDelegate, UITa
             DispatchQueue.main.asyncAfter(deadline: time){
                 self.refreshComment()
             }
-            self.commentTextField.text = ""
-            AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/notification/?post_pk=\(self.post_pk)&user=\(Auth.auth().currentUser?.uid)&type=comment").responseJSON { response in
+            self.commentTextView.text = ""
+            AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/notification/?post_pk=\(self.post_pk)&user=\(self.uid!)&type=comment").responseJSON { response in
             }
+            self.commentTextView.resignFirstResponder()
         }
     }
     

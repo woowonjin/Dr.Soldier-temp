@@ -13,12 +13,16 @@ import FirebaseAuth
 class NotificationViewController: UITableViewController{
     
     @IBOutlet var NotiTable: UITableView!
-    
+    let uid = Auth.auth().currentUser?.uid
     let refreshNoti = UIRefreshControl()
     var notis : Array<Notification> = []
     let DB = DataBaseAPI.init()
     let Query = DataBaseQuery.init()
     var userEmail : String? // UserDefault -> Sqlite
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.refresh()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +33,7 @@ class NotificationViewController: UITableViewController{
         self.refreshNoti.attributedTitle = NSAttributedString(string: "당겨서 새로고침")
         self.refreshNoti.addTarget(self, action: #selector(refresh), for: .valueChanged)
         self.userEmail = result[0][0]
-        getNotis()
+//        getNotis()
     }
     
     @objc func refresh(){
@@ -41,7 +45,7 @@ class NotificationViewController: UITableViewController{
     
     func getNotis(){
         
-        AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/get-notifications/?user=\(Auth.auth().currentUser?.uid)").responseJSON { response in
+        AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/get-notifications/?user=\(self.uid!)").responseJSON { response in
             switch response.result{
             case .success(let value):
                 let responseList = value as! Array<AnyObject>
@@ -201,7 +205,6 @@ class NotificationViewController: UITableViewController{
             AF.request("http://dr-soldier.eba-8wqpammg.ap-northeast-2.elasticbeanstalk.com/read_notification/?noti_pk=\(noti.pk)").responseJSON { response in
             }
         }
-        self.refresh()
     }
 
     

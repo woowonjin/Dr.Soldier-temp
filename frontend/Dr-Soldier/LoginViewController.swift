@@ -65,7 +65,6 @@ class LoginViewController: UIViewController, ASAuthorizationControllerPresentati
     }
 
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-        print("AppleLogin 1")
         if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
         // Create an account in your system.
         
@@ -152,12 +151,12 @@ class LoginViewController: UIViewController, ASAuthorizationControllerPresentati
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let firebaseAuth = Auth.auth()
-        do {
-          try firebaseAuth.signOut()
-        } catch let signOutError as NSError {
-          print ("Error signing out: %@", signOutError)
-        }
+//        let firebaseAuth = Auth.auth()
+//        do {
+//          try firebaseAuth.signOut()
+//        } catch let signOutError as NSError {
+//          print ("Error signing out: %@", signOutError)
+//        }
         Auth.auth().addStateDidChangeListener({(user, error) in
             if Auth.auth().currentUser != nil{
                 guard let main = self.storyboard?.instantiateViewController(withIdentifier: "Main") else{

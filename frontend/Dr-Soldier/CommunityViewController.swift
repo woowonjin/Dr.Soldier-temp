@@ -133,7 +133,7 @@ class CommunityViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        getDocs()
+        refresh()
     }
     
     override func viewDidLoad() {
@@ -143,7 +143,7 @@ class CommunityViewController: UIViewController, UITableViewDelegate, UITableVie
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         let navview = MakeViewWithNavigationBar.init(InputString: " Community",InputImage: UIImage(named: "soldier")!)
         self.navigationItem.titleView = navview.navView
-        getDocs()
+//        getDocs()
         mainTableView.delegate = self
         mainTableView.dataSource = self
         // 라이트 뷰 생성
