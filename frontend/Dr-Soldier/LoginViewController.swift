@@ -14,7 +14,7 @@ import FirebaseAuth
 import CryptoKit
 
 class LoginViewController: UIViewController, ASAuthorizationControllerPresentationContextProviding, ASAuthorizationControllerDelegate {
-    
+
     fileprivate var currentNonce: String?
     
     private func randomNonceString(length: Int = 32) -> String {
@@ -112,7 +112,7 @@ class LoginViewController: UIViewController, ASAuthorizationControllerPresentati
             let firebaseCredential = OAuthProvider.credential(withProviderID: "apple.com",
                                                               idToken: idTokenString,
                                                               rawNonce: nonce)
-            
+            self.DB.CreateEveryTable()
             Auth.auth().signIn(with: firebaseCredential) { [weak self] (authResult, error) in
                 // Do something after Firebase sign in completed
                 guard let main = self?.storyboard?.instantiateViewController(withIdentifier: "Main") else{
@@ -120,7 +120,6 @@ class LoginViewController: UIViewController, ASAuthorizationControllerPresentati
                         }
                 
                             //화면 전환 애니메이션을 설정합니다.
-                
                             main.modalPresentationStyle = .fullScreen
                             main.modalTransitionStyle = UIModalTransitionStyle.coverVertical
                 

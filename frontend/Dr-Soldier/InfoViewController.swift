@@ -193,19 +193,19 @@ class InfoViewController: UIViewController, UIImagePickerControllerDelegate & UI
         let data = DB.query(statement: Query.SelectStar(Tablename: "User") , ColumnNumber: 5)
         print("DB data : ", data)
         
-        if data[0][0] == ""{
+        if data.count == 0 || data[0][0] == ""{
             self.DB.insert(statement: "DROP TABLE User;")
             self.DB.CreateEveryTable()
             self.DB.insert(statement: self.Query.insert(Tablename: "User", Values: "'\(userEmail!)', '\(nickname!)','','','','' "))
         }
-        if(data[0][3] != ""){
+        if(data.count != 0 && data[0][3] != ""){
             let dateFormatter = DateFormatter()
             dateFormatter.locale = Locale.current
             dateFormatter.dateFormat = "yyyy-MM-dd"
             self.startLabel.text = data[0][3]
             self.startDate = dateFormatter.date(from: self.startLabel.text!)
         }
-        if(data[0][4] != ""){
+        if(data.count != 0 && data[0][4] != ""){
             let dateFormatter = DateFormatter()
             dateFormatter.locale = Locale.current
             dateFormatter.dateFormat = "yyyy-MM-dd"
